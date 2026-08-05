@@ -1,0 +1,41 @@
+# GPE Research Swarm — configuration
+project: "Global Pact for the Environment — Dissertation Research Swarm"
+dissertation_title_fa: "شکل‌گیری پیمان جهانی محیط زیست و تأثیرات آن بر موافقت‌نامه‌های چندجانبه محیط‌زیستی"
+language: fa
+citation_style: "chicago"   # TODO: confirm with user (Chicago w/ page numbers assumed)
+
+paths:
+  sources: "03_sources"
+  manifest: "08_manifest/sources_manifest.json"
+  prompts: "04_prompts"
+  outputs: "07_outputs"
+  guidelines: "02_guidelines"
+  proposal: "00_proposal"
+  scenario: "01_scenario_and_tasks"
+
+# LLM backend is intentionally unset — awaiting user decision on framework.
+llm:
+  provider: "TBD"     # e.g. abacusai | openai | ...
+  model: "TBD"
+
+agents:
+  - id: orchestrator
+    prompt: "04_prompts/00_orchestrator.prompt.md"
+  - id: source_analyst          # Task 1
+    prompt: "04_prompts/01_source_analyst.prompt.md"
+    output: "07_outputs/01_source_analysis"
+  - id: database_researcher     # Task 2
+    prompt: "04_prompts/02_database_researcher.prompt.md"
+    output: "07_outputs/02_database_search"
+  - id: question_hypothesis_evaluator  # Task 3
+    prompt: "04_prompts/03_question_hypothesis_evaluator.prompt.md"
+    output: "07_outputs/03_questions_hypotheses"
+  - id: scenario_analyst        # Task 4
+    prompt: "04_prompts/04_scenario_analyst.prompt.md"
+    output: "07_outputs/04_scenario_analysis"
+  - id: synthesis_writer        # Task 5
+    prompt: "04_prompts/05_synthesis_writer.prompt.md"
+    output: "07_outputs/05_final_scenario"
+
+# Execution order (orchestrator dispatches sequentially; 1 feeds 3,4,5)
+pipeline: [source_analyst, database_researcher, question_hypothesis_evaluator, scenario_analyst, synthesis_writer]
