@@ -13,7 +13,7 @@ WEB = os.path.join(ROOT, "web")
 
 # --- repo slug used to build links to source PDFs on GitHub -----------------
 # Update REPO_SLUG after the GitHub repo is created (owner/repo).
-REPO_SLUG = os.environ.get("REPO_SLUG", "h-jamali-rad/gpe-swarm")
+REPO_SLUG = os.environ.get("REPO_SLUG", "h-jamali-rad/GPE-Swarm")
 BRANCH = os.environ.get("REPO_BRANCH", "main")
 RAW_BASE = f"https://github.com/{REPO_SLUG}/blob/{BRANCH}/03_sources/"
 
