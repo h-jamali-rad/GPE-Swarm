@@ -1,82 +1,59 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>سوارم پژوهشی پیمان جهانی محیط زیست</title>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <title>مغز پروژه — پیمان جهانی محیط زیست</title>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./brain.css" />
+  <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap header-inner">
+  <header class="hdr">
+    <div class="wrap hdr-in">
       <div class="brand">
         <div class="logo">GPE</div>
-        <div class="brand-text">
-          <strong>سوارم پژوهشی</strong>
-          <span>پیمان جهانی محیط زیست</span>
-        </div>
+        <div><b>مغز پروژه</b><span>پیمان جهانی محیط زیست</span></div>
       </div>
-      <nav class="topnav">
-        <a href="#overview">نمای کلی</a>
-        <a href="#tasks">وظایف</a>
-        <a href="#agents">ایجنت‌ها</a>
-        <a href="#sources">منابع</a>
-        <a href="#outputs">خروجی‌ها</a>
+      <nav class="tabs" id="tabs">
+        <button class="tab active" data-view="overview">نمای کلی</button>
+        <button class="tab" data-view="graph">نقشه دانش</button>
+        <button class="tab" data-view="matrix">ماتریس ارتباط</button>
+        <button class="tab" data-view="dossiers">پرونده منابع</button>
+        <button class="tab" data-view="chapters">نمای رساله</button>
+        <button class="tab" data-view="gaps">شکاف‌ها و نوآوری</button>
       </nav>
+      <div class="hdr-tools">
+        <button class="icon-btn" id="themeBtn" title="تغییر تم">🌙</button>
+      </div>
     </div>
   </header>
 
-  <section class="hero" id="overview">
-    <div class="wrap">
-      <h1 id="hero-title">…</h1>
-      <p class="hero-sub" id="hero-sub">…</p>
-      <div class="stats" id="stats"></div>
-      <p class="hero-note" id="repo-note"></p>
-    </div>
-  </section>
+  <main class="wrap" id="main">
+    <div class="loading" id="loading">در حال بارگذاری مغز پروژه…</div>
 
-  <main class="wrap">
-    <!-- TASKS -->
-    <section id="tasks" class="block">
-      <h2 class="block-title">وظایف پژوهشی <span class="muted">(استخراج‌شده از سناریو)</span></h2>
-      <div class="pipeline" id="pipeline"></div>
-      <div class="research-frame" id="research-frame"></div>
-    </section>
-
-    <!-- AGENTS -->
-    <section id="agents" class="block">
-      <h2 class="block-title">معماری سوارم <span class="muted">(نگاشت وظیفه ← ایجنت)</span></h2>
-      <div class="agent-grid" id="agent-grid"></div>
-    </section>
-
-    <!-- SOURCES -->
-    <section id="sources" class="block">
-      <h2 class="block-title">کتابخانه منابع <span class="muted" id="src-count"></span></h2>
-      <div class="controls">
-        <input type="search" id="search" placeholder="جستجو در نام منابع…" />
-        <div class="chips" id="cat-chips"></div>
-      </div>
-      <div class="src-list" id="src-list"></div>
-      <p class="empty" id="src-empty" hidden>موردی یافت نشد.</p>
-    </section>
-
-    <!-- OUTPUTS -->
-    <section id="outputs" class="block">
-      <h2 class="block-title">خروجی‌های پژوهش</h2>
-      <p class="muted outputs-hint">با تولید نتایج توسط هر ایجنت، خروجی‌ها این‌جا فعال و قابل‌مشاهده می‌شوند.</p>
-      <div class="output-grid" id="output-grid"></div>
-    </section>
+    <!-- OVERVIEW -->
+    <section class="view active hero" id="view-overview"></section>
+    <!-- GRAPH -->
+    <section class="view" id="view-graph"></section>
+    <!-- MATRIX -->
+    <section class="view" id="view-matrix"></section>
+    <!-- DOSSIERS -->
+    <section class="view" id="view-dossiers"></section>
+    <!-- CHAPTERS -->
+    <section class="view" id="view-chapters"></section>
+    <!-- GAPS -->
+    <section class="view" id="view-gaps"></section>
   </main>
 
-  <footer class="site-footer">
+  <div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
+
+  <footer class="ft">
     <div class="wrap">
-      <p id="footer-title">سوارم پژوهشی پیمان جهانی محیط زیست</p>
-      <p class="muted" id="footer-meta"></p>
+      <p id="ftmeta">مغز پروژه — سامانه سوارم پژوهشی</p>
     </div>
   </footer>
 
-  <script src="./app.js"></script>
+  <script src="./brain.js"></script>
 </body>
 </html>

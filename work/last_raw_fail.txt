@@ -1,0 +1,141 @@
+
+{
+  "title": "گزارش کارگروه ویژه با ترکیب باز تأسیس‌شده بر اساس قطعنامه 72/277 مجمع عمومی",
+  "authors": "کارگروه ویژه با ترکیب باز تأسیس‌شده بر اساس قطعنامه 72/277 مجمع عمومی",
+  "year": "2019",
+  "doc_type": "un_document",
+  "language": "en",
+  "summary_fa": "این سند گزارش نهایی کارگروه ویژه با ترکیب باز (ad hoc open-ended working group) است که بر اساس قطعنامه 72/277 مجمع عمومی با عنوان «به سوی پیمان جهانی محیط زیست» تشکیل شده بود. این گزارش شامل خلاصه‌ای از جلسات برگزار شده (سازمانی، اول، دوم و سوم ماهوی) و توصیه‌های نهایی کارگروه به مجمع عمومی سازمان ملل متحد است. توصیه‌ها بر تقویت اجرای حقوق بین‌الملل محیط زیست، انسجام سیاست‌ها و همکاری بین موافقت‌نامه‌های چندجانبه محیط‌زیستی (MEAs) تأکید دارند و به بررسی شکاف‌ها در حقوق بین‌الملل محیط زیست می‌پردازند.",
+  "why_included_fa": "این منبع مستقیماً به موضوع اصلی رساله، یعنی «پیمان جهانی محیط زیست» و فرآیند شکل‌گیری آن مربوط است. این گزارش، توصیه‌های نهایی کارگروه مسئول بررسی امکان‌سنجی و دامنه چنین پیمانی را ارائه می‌دهد و به طور خاص به شکاف‌های حقوقی و تأثیرات احتمالی بر MEAها اشاره می‌کند. این سند برای درک مواضع کشورها، ارزش افزوده احتمالی پیمان و نقش آن در انسجام و کارآمدی MEAها حیاتی است.",
+  "key_claims": [
+    {
+      "claim_fa": "کارگروه ویژه با ترکیب باز مأموریت خود را برای بررسی شکاف‌ها در حقوق بین‌الملل محیط زیست و ارائه گزینه‌هایی برای رفع آن‌ها، از جمله امکان‌سنجی یک سند بین‌المللی، به انجام رسانده است.",
+      ""pages": [
+        3
+      ]
+    },
+    {
+      "claim_fa": "توصیه‌های کارگروه بر تقویت اجرای حقوق بین‌الملل محیط زیست و ابزارهای مرتبط با محیط زیست، بدون تضعیف اسناد و چارچوب‌های قانونی موجود، متمرکز است.",
+      "pages": [
+        11
+      ]
+    },
+    {
+      "claim_fa": "کارگروه بر نقش برنامه محیط زیست سازمان ملل متحد (UNEP) به عنوان مرجع اصلی محیط زیست جهانی و همچنین بر اهمیت تقویت همکاری و انسجام سیاست‌ها بین موافقت‌نامه‌های چندجانبه محیط‌زیستی (MEAs) تأکید دارد.",
+      "pages": [
+        11,
+        12
+      ]
+    },
+    {
+      "claim_fa": "توصیه‌ها شامل تشویق کشورها به تصویب و اجرای مؤثر MEAها، تقویت قوانین و سیاست‌های ملی محیط زیست، و ادغام ملاحظات محیط زیستی در سیاست‌های بخشی و برنامه‌های توسعه ملی است.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "claim_fa": "کارگروه پیشنهاد می‌کند که مجمع عمومی توصیه‌ها را به کشورهای عضو و نهادهای حاکم بر MEAها برای بررسی و اقدام ارسال کند و از مجمع محیط زیست سازمان ملل متحد بخواهد که یک اعلامیه سیاسی برای نشست سطح بالا در سال 2021 آماده کند.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "claim_fa": "برخی کشورها (مصر، اتحادیه اروپا، ایالات متحده) در مورد توصیه‌ها، به ویژه در زمینه تأمین مالی و ابزارهای اجرا، توضیحات و ملاحظات خاص خود را ارائه کرده‌اند که نشان‌دهنده اختلاف نظرها در این حوزه‌ها است.",
+      "pages": [
+        12,
+        13
+      ]
+    }
+  ],
+  "citable_excerpts": [
+    {
+      "quote": "By its resolution 72/277 of 10 May 2018, entitled “Towards a Global Pact for the Environment”, the General Assembly requested the Secretary-General to submit to the Assembly at its seventy-third session, in 2018, a technical and evidence-based report that identified and assessed possible gaps in international environmental law and environment-related instruments with a view to strengthening their implementation. The Assembly also decided to establish an ad hoc open-ended working group under its auspices to consider the report and discuss possible options to address possible gaps in international environmental law and environment-related instruments, as appropriate, and, if deemed necessary, the scope, parameters and feasibility of an international instrument, with a view to making recommendations, which might include the convening of an intergovernmental conference to adopt an international instrument, to the Assembly during the first half of 2019.",
+      "page": 3,
+      "note_fa": "این گزیده مأموریت اصلی کارگروه را تشریح می‌کند که شامل شناسایی شکاف‌ها و بررسی امکان‌سنجی یک سند بین‌المللی است و مستقیماً به پرسش اصلی رساله در مورد شکل‌گیری پیمان جهانی محیط زیست مربوط می‌شود."
+    },
+    {
+      "quote": "The ad hoc open-ended working group has fulfilled its mandate and agreed on concrete recommendations to the General Assembly.",
+      "page": 2,
+      "note_fa": "این جمله نشان‌دهنده اتمام کار کارگروه و ارائه توصیه‌های مشخص است که نقطه عطفی در فرآیند شکل‌گیری پیمان جهانی محیط زیست محسوب می‌شود."
+    },
+    {
+      "quote": "Objectives guiding the recommendations\n(a) Reinforce the protection of the environment for present and future generations;\n(b) Uphold the respective obligations and commitments under international environmental law of States Members of the United Nations and members of specialized agencies;\n(c) Contribute to the strengthening of the implementation of international environmental law and environment-related instruments;\n(d) Support the full implementation of the 2030 Agenda for Sustainable Development, as well as the outcome document of the United Nations Conference on Sustainable Development, entitled “The future we want”, including its paragraphs 88 and 89;\n(e) Not undermine existing relevant legal instruments and frameworks and relevant global, regional and sectoral bodies.",
+      "page": 11,
+      "note_fa": "این بخش اهداف کلیدی توصیه‌ها را بیان می‌کند که شامل تقویت حفاظت از محیط زیست، اجرای تعهدات موجود، و عدم تضعیف اسناد قانونی فعلی است. این اهداف برای ارزیابی ارزش افزوده پیمان و تأثیر آن بر MEAها بسیار مهم هستند."
+    },
+    {
+      "quote": "Invite the governing bodies of the multilateral environmental agreements, while preserving their independence and respective mandates, to increase their efforts to promote policy coherence across environmental instruments at all relevant levels and to consider identifying and addressing implementation challenges in their regimes, with a view to strengthening implementation at the national and international levels;",
+      "page": 11,
+      "note_fa": "این توصیه مستقیماً به یکی از پرسش‌های فرعی رساله در مورد نقش پیمان بر انسجام و کارآمدی MEAها پاسخ می‌دهد و بر اهمیت هماهنگی سیاست‌ها و رفع چالش‌های اجرا تأکید دارد."
+    },
+    {
+      "quote": "Encourage all that have not yet done so to consider ratifying multilateral environmental agreements and to effectively implement them;",
+      "page": 12,
+      "note_fa": "این گزیده به اهمیت تصویب و اجرای مؤثر MEAها اشاره دارد که با فرضیه اصلی رساله در مورد تبدیل حقوق نرم به سخت و تقویت پایبندی مرتبط است."
+    },
+    {
+      "quote": "The representative of the United States of America provided clarification of its understanding and views on aspects of the recommendations. With respect to recommendations relating to multilateral environment agreements, including recommendations referring to policy coherence, the representative clarified that the governing bodies of the multilateral environmental agreements decided their priorities to be addressed under those agreements and by their secretariats. Regarding the language in recommendation 2 (b) above addressing means of implementation, that language did not imply a call for increased support from any particular country, and there was a need for an expanded pool of donors beyond traditional donors.",
+      "page": 13,
+      "note_fa": "این نقل‌قول نشان‌دهنده مواضع و نگرانی‌های برخی کشورها، به ویژه ایالات متحده، در مورد استقلال MEAها و مسائل مربوط به تأمین مالی است که برای تحلیل انتقادی تأثیر پیمان بر MEAها و چالش‌های پیش رو ضروری است."
+    }
+  ],
+  "dissertation_mapping": [
+    {
+      "chapter": "فصل ۲: تحول حقوق بین‌الملل محیط‌زیست و شکل‌گیری پیمان (۱۹۷۲–۲۰۲۲)",
+      "how_fa": "این منبع به طور مستقیم به فرآیند شکل‌گیری پیمان جهانی محیط زیست، از جمله قطعنامه مجمع عمومی و تشکیل کارگروه ویژه، می‌پردازد و اطلاعات تاریخی و رویه‌ای مهمی را ارائه می‌دهد."
+    },
+    {
+      "chapter": "فصل ۳: خلأها بر پایه گزارش دبیرکل A/73/419 و ابتکار پیمان",
+      "how_fa": "این گزارش به بررسی شکاف‌ها در حقوق بین‌الملل محیط زیست اشاره دارد و توصیه‌هایی برای رفع آن‌ها ارائه می‌دهد که می‌تواند به تحلیل خلأهای هنجاری و نهادی کمک کند."
+    },
+    {
+      "chapter": "فصل ۴: تأثیر پیمان بر MEAها و آینده‌پژوهی (سند پراکندگی A/CN.4/L.682)",
+      "how_fa": "توصیه‌های کارگروه در مورد تقویت انسجام سیاست‌ها، همکاری بین MEAها و چالش‌های اجرا، مستقیماً به تأثیرات احتمالی پیمان بر موافقت‌نامه‌های چندجانبه محیط‌زیستی می‌پردازد و برای آینده‌پژوهی در این زمینه مفید است."
+    }
+  ],
+  "question_hypothesis_links": [
+    "پرسش اصلی: شکل‌گیری «پیمان جهانی محیط زیست» (Global Pact for the Environment) چه تأثیری بر «موافقت‌نامه‌های چندجانبه محیط‌زیستی» (MEAs) خواهد داشت؟",
+    "فرضیه اصلی: نظر به پراکندگی و خلأهای هنجاری و فقدان سند الزام‌آور حاوی اصول بنیادین، پیمانِ الزام‌آور موجب نظم و توسعه هنجاری اصول و تبدیل حقوق نرم به حقوق سخت می‌شود.",
+    "پرسش فرعی (۱): ارزش افزوده پیمان برای IEL",
+    "پرسش فرعی (۲): مواضع کشورها درباره پیش‌نویس",
+    "پرسش فرعی (۴): نقش پیمان بر انسجام/کارآمدی/حکمرانی MEAها"
+  ],
+  "research_gaps_fa": [
+    "این گزارش به طور کلی به شکاف‌ها اشاره می‌کند اما جزئیات عمیقی در مورد ماهیت دقیق این شکاف‌ها و چگونگی رفع آن‌ها توسط یک پیمان الزام‌آور ارائه نمی‌دهد. این امر نیاز به تحلیل بیشتر در رساله را برجسته می‌کند.",
+    "مواضع کشورها در مورد جزئیات و ماهیت الزام‌آور بودن پیمان به طور کامل در این گزارش منعکس نشده است، به ویژه در مورد چگونگی تأمین مالی و ابزارهای اجرا که نیاز به بررسی دقیق‌تر دارد.",
+    "تأثیر عملی توصیه‌ها بر رفتار کشورها و عملکرد MEAها در آینده، نیازمند تحلیل و پیش‌بینی است که این گزارش به آن نمی‌پردازد."
+  ],
+  "novelty_fa": [
+    "این منبع به عنوان یک سند رسمی سازمان ملل، دیدگاه‌های اولیه و توصیه‌های کارگروه مسئول را ارائه می‌دهد که می‌تواند به عنوان مبنایی برای تحلیل نوآورانه در مورد چگونگی تأثیرگذاری این توصیه‌ها بر توسعه حقوق بین‌الملل محیط زیست و MEAها استفاده شود.",
+    "با تحلیل انتقادی مواضع کشورها که در این گزارش به صورت خلاصه آمده است، می‌توان به درک عمیق‌تری از چالش‌ها و فرصت‌های پیش روی پیمان جهانی محیط زیست دست یافت و نوآوری رساله را در ارائه راهکارهای عملی تقویت کرد."
+  ],
+  "relationships": [
+    {
+      "type": "supports",
+      "topic_fa": "نیاز به تقویت اجرای حقوق بین‌الملل محیط زیست"
+    },
+    {
+      "type": "complements",
+      "topic_fa": "بررسی شکاف‌های حقوقی در حقوق بین‌الملل محیط زیست"
+    },
+    {
+      "type": "extends",
+      "topic_fa": "گفتگوهای بین‌المللی در مورد حکمرانی محیط زیست"
+    },
+    {
+      "type": "supports",
+      "topic_fa": "اهمیت انسجام و همکاری بین MEAها"
+    }
+  ],
+  "themes": [
+    "پیمان جهانی محیط زیست",
+    "حقوق بین‌الملل محیط زیست",
+    "موافقت‌نامه‌های چندجانبه محیط‌زیستی (MEAs)",
+    "شکاف‌های حقوقی",
+    "حکمرانی محیط زیست",
+    "اجرا و پایبندی"
+  ],
+  "importance": "core",
+  "importance_reason_fa": "این سند گزارش نهایی کارگروه ویژه مسئول بررسی امکان‌سنجی و دامنه «پیمان جهانی محیط زیست» است و توصیه‌های کلیدی را ارائه می‌دهد که مستقیماً به پرسش اصلی و فرضیه رساله مربوط می‌شود. این منبع برای درک فرآیند شکل‌گیری پیمان و تأثیرات احتمالی آن بر MEAها حیاتی است.",
+  "confidence": "high"
+}

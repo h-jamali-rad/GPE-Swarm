@@ -1,0 +1,166 @@
+{
+  "title": "Implementation of Multilateral Environmental Agreements: Rationale and Design of the Environmental Conventions Index",
+  "authors": "",
+  "year": "",
+  "doc_type": "article",
+  "language": "en",
+  "summary_fa": "این منبع به معرفی و تشریح شاخص کنوانسیون‌های زیست‌محیطی (ECI) می‌پردازد که ابزاری برای ارزیابی و مقایسه اجرای موافقت‌نامه‌های چندجانبه زیست‌محیطی (MEAs) است. ECI با استفاده از گزارش‌های ملی کشورها، امکان تحلیل روندهای زمانی و شناسایی نقاط قوت و ضعف در اجرای تعهدات زیست‌محیطی را فراهم می‌کند. این مقاله همچنین به محدودیت‌های ECI از جمله اتکا به خودارزیابی‌ها، شکاف‌های اطلاعاتی و عدم ارتباط سیستماتیک بین اجرا و اثربخشی می‌پردازد و بر اهمیت شواهد تجربی در این زمینه تأکید می‌کند.",
+  "why_included_fa": "این منبع به دلیل تمرکز بر ارزیابی اجرای موافقت‌نامه‌های چندجانبه زیست‌محیطی (MEAs) و شناسایی چالش‌ها و شکاف‌های موجود در این زمینه، برای رساله ما بسیار مرتبط است. پیمان جهانی محیط زیست به دنبال رفع برخی از این خلأها و بهبود انسجام و کارآمدی MEAها است. درک دقیق چالش‌های فعلی اجرا و ارزیابی MEAها، به ما کمک می‌کند تا تأثیر بالقوه پیمان جهانی را بر این چالش‌ها بهتر تحلیل کنیم.",
+  "key_claims": [
+    {
+      "claim_fa": "شاخص کنوانسیون‌های زیست‌محیطی (ECI) با ارزیابی اجرای موافقت‌نامه‌های چندجانبه زیست‌محیطی (MEAs) بر اساس پارامترهای یکسان و با استفاده از مجموعه‌ای از شاخص‌ها که از گزارش‌های ملی کشورهای امضاکننده به دبیرخانه‌های کنوانسیون‌ها استخراج شده‌اند، امکان تحلیل و مقایسه چندوجهی را فراهم می‌کند. این شاخص همچنین روندهای زمانی را برای کشورهای منفرد، گروه‌های کشورها و کنوانسیون‌های مختلف شناسایی می‌کند.",
+      "pages": [
+        16
+      ]
+    },
+    {
+      "claim_fa": "یکی از محدودیت‌های اصلی ECI این است که منبع اصلی اطلاعات آن، گزارش‌های ملی است که نگرانی‌هایی را در مورد خودارزیابی‌ها به عنوان یک منبع داده قابل اعتماد ایجاد می‌کند. این گزارش‌ها ممکن است حاوی اطلاعات نادرست در مورد اجرا یا عدم اجرای تعهدات باشند. با این حال، استفاده از گزارش‌های ملی تضمین می‌کند که همه کشورها با یک معیار یکسان سنجیده می‌شوند و سوگیری محقق را از بین می‌برد.",
+      "pages": [
+        16
+      ]
+    },
+    {
+      "claim_fa": "گزارش‌های ملی دارای شکاف‌های اطلاعاتی از جمله سوالات بی‌پاسخ یا ناقص، عدم ثبات در متغیرها و شاخص‌ها، و عدم ارائه گزارش‌های ملی هستند. همچنین ممکن است حوزه‌های کلیدی اجرا توسط سوالات موجود در الگوی گزارش‌های ملی پوشش داده نشوند. این شکاف‌ها نشان‌دهنده کاستی‌ها در شاخص‌های حکمرانی و نیاز به گزارش‌دهی بهتر، جمع‌آوری داده‌ها و مکانیزم‌های نظارتی برای حکمرانی زیست‌محیطی است.",
+      "pages": [
+        16
+      ]
+    },
+    {
+      "claim_fa": "ECI بر اساس داده‌های موجود در آخرین گزارش هر کشور برای هر کنوانسیون ساخته شده است، بنابراین ممکن است داده‌ها قدیمی باشند و ارزیابی از اجرا را منعکس کنند که دیگر معتبر نیست. این موضوع اهمیت استفاده از ECI را به عنوان یک خط مبنا برای مطالعات موردی کیفی ملی برجسته می‌کند.",
+      "pages": [
+        16
+      ]
+    },
+    {
+      "claim_fa": "ECI بر اساس شاخص‌ها و متغیرهایی است که وزن یکسانی در نمره نهایی دارند، در حالی که برخی متغیرها و شاخص‌ها ممکن است برای فرآیند اجرا ضروری‌تر باشند. این می‌تواند منجر به دیدگاهی ناقص در مورد ابعاد مختلف فرآیند اجرا شود و نیاز به رویکردهای چندمعیاره برای تعیین وزن‌های متفاوت برای متغیرها را نشان می‌دهد.",
+      "pages": [
+        16
+      ]
+    },
+    {
+      "claim_fa": "یک کمبود مهم، عدم ارتباط سیستماتیک داده‌ها بین اجرای کنوانسیون‌های زیست‌محیطی جهانی و اثربخشی این توافق‌نامه‌ها در حل مشکلات زیست‌محیطی است. ارزیابی اثربخشی نیازمند داده‌های مقایسه‌ای در مورد وضعیت محیط زیست در طول زمان، نظارت، گزارش‌دهی مداوم، تحلیل و راستی‌آزمایی است.",
+      "pages": [
+        17
+      ]
+    },
+    {
+      "claim_fa": "اجرا، فرآیند اصلی برای تبدیل تعهدات به اقدامات است و شایسته توجه ویژه است. فقدان شواهد تجربی سیستماتیک در مورد اجرا، یک شکاف کلیدی در ادبیات علمی و ارزیابی‌های سیاستی است.",
+      "pages": [
+        17
+      ]
+    },
+    {
+      "claim_fa": "شاخص کنوانسیون‌های زیست‌محیطی (ECI) با ارائه شواهد تجربی برای تحلیل اجرا، به کشورها و کنوانسیون‌ها در مورد میزان پیشرفتشان در انجام تعهدات بین‌المللی زیست‌محیطی اطلاع می‌دهد و یک خط مبنا برای مقایسه نتایج در بین کشورها و کنوانسیون‌ها فراهم می‌کند.",
+      "pages": [
+        18
+      ]
+    },
+    {
+      "claim_fa": "ECI می‌تواند به عنوان یک منبع اطلاعات عمومی مهم عمل کند و داده‌های غنی در مورد حوزه‌های اجرا که نیاز به پیشرفت بیشتری دارند، ارائه دهد. این شاخص می‌تواند برای تعریف مکانیزم‌های هدفمند ظرفیت‌سازی برای بهبود عملکرد ملی و همچنین مداخلات دبیرخانه‌های کنوانسیون‌ها برای رسیدگی بهتر به مشکلات زیست‌محیطی استفاده شود.",
+      "pages": [
+        18
+      ]
+    }
+  ],
+  "citable_excerpts": [
+    {
+      "quote": "By evaluating implementation under the same parameters, using a set of indicators based on the national reports that signatory countries submit to the convention secretariats, the Index allows for multifaceted analysis and comparison. It also identifies trends over time for individual countries, groups of countries, and the different conventions.",
+      "page": 16,
+      "note_fa": "این نقل قول به روش‌شناسی ECI و توانایی آن در تحلیل و مقایسه اجرای MEAها اشاره دارد."
+    },
+    {
+      "quote": "First and foremost, the fact that the main source of information comes from national reports raises concerns about self-evaluations as a reliable data source. It is possible that the reports reflect inaccurate information both about implementation and the lack thereof. Yet, the fact that the source of information is the national reports ensures that all countries are measured with the same yardstick and since all the data are self-reported, it eliminates researcher bias.",
+      "page": 16,
+      "note_fa": "این نقل قول به محدودیت اصلی ECI یعنی اتکا به گزارش‌های ملی و نگرانی‌های مربوط به خودارزیابی‌ها می‌پردازد، اما در عین حال مزیت آن را در حذف سوگیری محقق بیان می‌کند."
+    },
+    {
+      "quote": "Importantly, the national reports have data gaps in terms of unanswered or incomplete questions, lack of consistency across variables and indicators, and the absence of national reports. There is also the possibility that key areas of implementation are not covered by the questions included in the national reports template. The scope of these data gaps evidences the shortcomings in governance indicators and the need for better reporting, data collection, and monitoring mechanisms for environmental governance [117].",
+      "page": 16,
+      "note_fa": "این نقل قول به شکاف‌های اطلاعاتی در گزارش‌های ملی و نیاز به بهبود مکانیزم‌های گزارش‌دهی و نظارت اشاره دارد."
+    },
+    {
+      "quote": "Second, the ECI reflects the score constructed based on the data included in the latest available report for each country for each convention. Therefore, data may be outdated and reflect an assessment of implementation that is no longer valid.",
+      "page": 16,
+      "note_fa": "این نقل قول به محدودیت مربوط به به‌روز نبودن داده‌ها در ECI اشاره دارد."
+    },
+    {
+      "quote": "Finally, there is a lack of systematic data connection between the implementation of global environmental conventions and the effectiveness of these agreements in the resolution of environmental problems. Assessing the effectiveness of the conventions requires comparative data on the state of the environment over time, monitoring, consistent reporting, analysis, and verification.",
+      "page": 17,
+      "note_fa": "این نقل قول به فقدان ارتباط سیستماتیک بین اجرا و اثربخشی MEAها و نیاز به داده‌های مقایسه‌ای برای ارزیابی اثربخشی اشاره دارد."
+    },
+    {
+      "quote": "However, implementation is “the central process to turn commitments into actions” [30] and deserves special attention. Previous scholarship has conceptualized the conflict of implementation and assessed its levels, but “very little empirical research [had tried] to answer these questions in a systematic way” [28]. This lack of systematic empirical evidence constitutes a key gap in both the scholarly literature and in policy assessments.",
+      "page": 17,
+      "note_fa": "این نقل قول بر اهمیت اجرا به عنوان فرآیند اصلی تبدیل تعهدات به اقدامات تأکید می‌کند و فقدان شواهد تجربی سیستماتیک در این زمینه را یک شکاف کلیدی می‌داند."
+    },
+    {
+      "quote": "The index brings empirical evidence to the analysis of implementation and informs countries and conventions about the extent of their progress in fulfilling their international environmental obligations providing a baseline and allowing for comparison of results across countries and conventions.",
+      "page": 18,
+      "note_fa": "این نقل قول به نقش ECI در ارائه شواهد تجربی برای تحلیل اجرا و اطلاع‌رسانی به کشورها و کنوانسیون‌ها اشاره دارد."
+    },
+    {
+      "quote": "Ultimately, the Environmental Conventions Index would provide an important public information resource. Since the Index is composed of specific information on issues such as legislation, institutions, information, technical environmental operations, and finances, it offers a wealth of data on areas of implementation that require more progress.",
+      "page": 18,
+      "note_fa": "این نقل قول به نقش ECI به عنوان یک منبع اطلاعات عمومی مهم و ارائه داده‌های غنی در مورد حوزه‌های نیازمند پیشرفت اشاره دارد."
+    }
+  ],
+  "dissertation_mapping": [
+    {
+      "chapter": "فصل۳ خلأها بر پایه گزارش دبیرکل A/73/419 و ابتکار پیمان",
+      "how_fa": "این منبع با شناسایی شکاف‌های اطلاعاتی و چالش‌های موجود در اجرای MEAها، به تبیین خلأهای هنجاری و عملیاتی که پیمان جهانی محیط زیست قصد رفع آن‌ها را دارد، کمک می‌کند. به ویژه، بحث در مورد عدم ارتباط سیستماتیک بین اجرا و اثربخشی، و فقدان شواهد تجربی سیستماتیک، می‌تواند به عنوان زمینه‌ای برای توجیه نیاز به یک سند جامع‌تر مانند پیمان جهانی مورد استفاده قرار گیرد."
+    },
+    {
+      "chapter": "فصل۴ تأثیر پیمان بر MEAها و آینده‌پژوهی (سند پراکندگی A/CN.4/L.682)",
+      "how_fa": "این منبع با ارائه چارچوبی برای ارزیابی اجرای MEAها و شناسایی نقاط ضعف آن، به ما کمک می‌کند تا تأثیر بالقوه پیمان جهانی را بر بهبود انسجام، کارآمدی و حکمرانی MEAها تحلیل کنیم. بحث در مورد نیاز به گزارش‌دهی بهتر، جمع‌آوری داده‌ها و مکانیزم‌های نظارتی، می‌تواند به عنوان معیاری برای ارزیابی چگونگی کمک پیمان جهانی به تقویت این جنبه‌ها مورد استفاده قرار گیرد."
+    }
+  ],
+  "question_hypothesis_links": [
+    "پشتیبانی از فرضیه اصلی: نظر به پراکندگی و خلأهای هنجاری و فقدان سند الزام‌آور حاوی اصول بنیادین، پیمانِ الزام‌آور موجب نظم و توسعه هنجاری اصول و تبدیل حقوق نرم به حقوق سخت می‌شود. (با نشان دادن خلأها در اجرای MEAها)",
+    "پشتیبانی از پرسش فرعی (۳): نقش پیمان بر اجرا/پایبندی/ضمانت اجرا/حاکمیت قانون (با تبیین چالش‌های فعلی در اجرا و نیاز به بهبود مکانیزم‌ها)",
+    "پشتیبانی از پرسش فرعی (۴): نقش پیمان بر انسجام/کارآمدی/حکمرانی MEAها (با اشاره به نیاز به گزارش‌دهی بهتر و مکانیزم‌های نظارتی)"
+  ],
+  "research_gaps_fa": [
+    "شکاف‌های اطلاعاتی در گزارش‌های ملی (سوالات بی‌پاسخ یا ناقص، عدم ثبات در متغیرها و شاخص‌ها، عدم ارائه گزارش‌های ملی).",
+    "عدم پوشش حوزه‌های کلیدی اجرا توسط سوالات موجود در الگوی گزارش‌های ملی.",
+    "قدیمی بودن داده‌ها در ECI و عدم اعتبار ارزیابی‌های اجرا به دلیل به‌روز نبودن اطلاعات.",
+    "عدم ارتباط سیستماتیک داده‌ها بین اجرای کنوانسیون‌های زیست‌محیطی جهانی و اثربخشی این توافق‌نامه‌ها در حل مشکلات زیست‌محیطی.",
+    "فقدان شواهد تجربی سیستماتیک در مورد چگونگی تبدیل تعهدات به اقدامات در ادبیات علمی و ارزیابی‌های سیاستی."
+  ],
+  "novelty_fa": [
+    "این منبع با برجسته کردن شکاف‌های موجود در اجرای MEAها و نیاز به مکانیزم‌های گزارش‌دهی و نظارتی بهتر، می‌تواند به تقویت نوآوری رساله در زمینه ارائه راهکارهایی برای بهبود کارآمدی و انسجام MEAها از طریق پیمان جهانی کمک کند. به ویژه، تأکید بر فقدان ارتباط بین اجرا و اثربخشی، می‌تواند به ما در طراحی چارچوبی برای ارزیابی تأثیر پیمان بر اثربخشی واقعی MEAها یاری رساند."
+  ],
+  "relationships": [
+    {
+      "type": "supports",
+      "topic_fa": "نیاز به یک سند جامع برای رفع خلأهای هنجاری و عملیاتی در حقوق بین‌الملل محیط زیست"
+    },
+    {
+      "type": "complements",
+      "topic_fa": "تحلیل چالش‌های اجرای موافقت‌نامه‌های چندجانبه زیست‌محیطی"
+    },
+    {
+      "type": "extends",
+      "topic_fa": "بحث در مورد حکمرانی و کارآمدی MEAها"
+    }
+  ],
+  "themes": [
+    "اجرای موافقت‌نامه‌های چندجانبه زیست‌محیطی (MEAs)",
+    "شاخص‌سازی و ارزیابی عملکرد زیست‌محیطی",
+    "محدودیت‌ها و چالش‌های جمع‌آوری و تحلیل داده‌ها",
+    "شکاف‌های اطلاعاتی و نیاز به بهبود حکمرانی زیست‌محیطی",
+    "ارتباط بین اجرا و اثربخشی توافق‌نامه‌های زیست‌محیطی",
+    "نقش شواهد تجربی در سیاست‌گذاری زیست‌محیطی"
+  ],
+  "importance": "core",
+  "importance_reason_fa": "این منبع به طور مستقیم به موضوع اجرای موافقت‌نامه‌های چندجانبه زیست‌محیطی می‌پردازد و چالش‌ها و خلأهای موجود در این زمینه را شناسایی می‌کند که برای درک ضرورت و تأثیر بالقوه پیمان جهانی محیط زیست بر MEAها حیاتی است.",
+  "confidence": "high",
+  "id": "S119",
+  "filename": "Implementation of Multilateral Environmental Agreements Rationale and Design of the Environmental Conventions Index.pdf",
+  "category": "MEAs/articles",
+  "relpath": "MEAs/articles/Implementation of Multilateral Environmental Agreements Rationale and Design of the Environmental Conventions Index.pdf",
+  "ext": "pdf",
+  "n_pages": 23,
+  "chars": 83336,
+  "_tier": 2,
+  "_elapsed": 77.1
+}
