@@ -3,54 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مغز پروژه — پیمان جهانی محیط زیست</title>
+  <title>Project Brain — پیمان جهانی محیط زیست</title>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
   <link rel="stylesheet" href="./brain.css" />
   <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+  <!-- Ambient glow blobs -->
+  <div class="ambient a1"></div>
+  <div class="ambient a2"></div>
+  <div class="ambient a3"></div>
+
   <header class="hdr">
     <div class="wrap hdr-in">
       <div class="brand">
-        <div class="logo">GPE</div>
-        <div><b>مغز پروژه</b><span>پیمان جهانی محیط زیست</span></div>
+        <div class="logo-ring"><div class="logo">GPE</div></div>
+        <div class="brand-text">
+          <b>Project Brain</b>
+          <span>Global Pact for the Environment — Dissertation Research Intelligence</span>
+        </div>
       </div>
       <nav class="tabs" id="tabs">
-        <button class="tab active" data-view="overview">نمای کلی</button>
-        <button class="tab" data-view="graph">نقشه دانش</button>
-        <button class="tab" data-view="matrix">ماتریس ارتباط</button>
-        <button class="tab" data-view="dossiers">پرونده منابع</button>
-        <button class="tab" data-view="chapters">نمای رساله</button>
-        <button class="tab" data-view="gaps">شکاف‌ها و نوآوری</button>
+        <button class="tab active" data-view="overview"><i data-lucide="layout-dashboard" class="tab-ic"></i><span>نمای کلی</span></button>
+        <button class="tab" data-view="graph"><i data-lucide="share-2" class="tab-ic"></i><span>نقشه دانش</span></button>
+        <button class="tab" data-view="matrix"><i data-lucide="grid-3x3" class="tab-ic"></i><span>ماتریس</span></button>
+        <button class="tab" data-view="dossiers"><i data-lucide="library" class="tab-ic"></i><span>پرونده‌ها</span></button>
+        <button class="tab" data-view="chapters"><i data-lucide="book-open" class="tab-ic"></i><span>فصل‌ها</span></button>
+        <button class="tab" data-view="gaps"><i data-lucide="scan-search" class="tab-ic"></i><span>شکاف‌ و نوآوری</span></button>
       </nav>
       <div class="hdr-tools">
-        <button class="icon-btn" id="themeBtn" title="تغییر تم">🌙</button>
+        <button class="icon-btn" id="themeBtn" title="تغییر تم">
+          <i data-lucide="moon" id="themeIcon"></i>
+        </button>
       </div>
     </div>
   </header>
 
   <main class="wrap" id="main">
-    <div class="loading" id="loading">در حال بارگذاری مغز پروژه…</div>
+    <div class="loading" id="loading">
+      <div class="pulse-ring"></div>
+      <p>در حال بارگذاری مغز پروژه…</p>
+    </div>
 
-    <!-- OVERVIEW -->
-    <section class="view active hero" id="view-overview"></section>
-    <!-- GRAPH -->
+    <section class="view active" id="view-overview"></section>
     <section class="view" id="view-graph"></section>
-    <!-- MATRIX -->
     <section class="view" id="view-matrix"></section>
-    <!-- DOSSIERS -->
     <section class="view" id="view-dossiers"></section>
-    <!-- CHAPTERS -->
     <section class="view" id="view-chapters"></section>
-    <!-- GAPS -->
     <section class="view" id="view-gaps"></section>
   </main>
 
   <div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
 
   <footer class="ft">
-    <div class="wrap">
-      <p id="ftmeta">مغز پروژه — سامانه سوارم پژوهشی</p>
+    <div class="wrap ft-in">
+      <p id="ftmeta">Project Brain — Research Swarm System</p>
+      <p class="ft-attr">HJR's Agentic Architecture @2026 — Dedicated for Dr. Masoud Ahsannejad</p>
     </div>
   </footer>
 
