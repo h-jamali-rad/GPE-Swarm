@@ -1,0 +1,8 @@
+03_sources/
+00_proposal/
+02_guidelines/
+07_outputs/**/*.pdf
+07_outputs/**/*.docx
+.git/
+__pycache__/
+work_extract/
