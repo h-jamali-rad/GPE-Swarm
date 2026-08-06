@@ -15,6 +15,8 @@ const isFa = s => /[\u0600-\u06FF]/.test(s || "");
 const fmt = n => new Intl.NumberFormat("fa-IR").format(n);
 
 let B = null;   // brain data
+let DBM = null; // database-mining data
+let RI = null;  // research-intelligence data
 let cy = null;  // cytoscape instance
 const byId = {};
 
@@ -55,6 +57,8 @@ async function boot() {
     return;
   }
   B.sources.forEach(s => byId[s.id] = s);
+  try { DBM = await (await fetch("./db_mining.json", { cache: "no-store" })).json(); } catch (e) { DBM = null; }
+  try { RI = await (await fetch("./research_intel.json", { cache: "no-store" })).json(); } catch (e) { RI = null; }
   $("#loading").remove();
   $("#ftmeta").textContent = `Project Brain — ${fmt(B.stats.sources)} منبع دیجست‌شده · آخرین به‌روزرسانی: ${new Date(B.generated).toLocaleString("fa-IR")}`;
 
@@ -63,6 +67,8 @@ async function boot() {
   renderChapters();
   renderGaps();
   renderMatrix();
+  renderDatabases();
+  renderFindings();
 
   // Use event delegation on the tabs container to handle clicks on icons/spans inside tabs
   $("#tabs").addEventListener("click", e => {
@@ -612,3 +618,206 @@ function renderGaps() {
 
 // ─── Launch ───
 boot();
+
+// ━━━━━━━━━━ CITATION DATABASES ━━━━━━━━━━
+const DBCOLORS = { "Scopus": "var(--accent2)", "HeinOnline": "var(--violet)", "Westlaw": "var(--accent3)" };
+function renderDatabases() {
+  const v = $("#view-databases");
+  if (!DBM) { v.innerHTML = `<div class="view-head"><h2>پایگاه‌های استنادی</h2><p class="muted">داده در دسترس نیست.</p></div>`; return; }
+  const m = DBM.meta, pr = DBM.prisma;
+  const counts = {};
+  DBM.articles.forEach(a => counts[a.db] = (counts[a.db] || 0) + 1);
+
+  let html = `
+    <div class="view-head">
+      <h2>${icon("database")}${esc(m.title_fa)}</h2>
+      <p>${esc(m.subtitle_fa)}</p>
+    </div>
+    <div class="db-note">${icon("info")}<div>${esc(m.note_fa)}</div></div>
+
+    <div class="db-metrics">
+      <div class="db-metric"><b>${fmt(pr.identified)}</b><span>شناسایی‌شده</span></div>
+      <div class="db-metric"><b>${fmt(pr.after_dedup)}</b><span>پس از حذف تکراری</span></div>
+      <div class="db-metric"><b>${fmt(pr.eligible)}</b><span>واجد شرایط</span></div>
+      <div class="db-metric hi"><b>${fmt(pr.included)}</b><span>واردشده</span></div>
+    </div>
+    <p class="muted" style="margin:-4px 0 20px">${esc(pr.note_fa)}</p>
+
+    <div class="card db-method">
+      <h3>${icon("microscope")}روش‌شناسی و بازهٔ زمانی</h3>
+      <p>${esc(m.methodology_fa)}</p>
+      <p><b>بازهٔ زمانی:</b> ${esc(m.date_range_fa)}</p>
+    </div>
+
+    <h3 class="sec-title">${icon("filter")}پروتکل جست‌وجو به تفکیک پایگاه</h3>
+    <div class="proto-grid">`;
+
+  DBM.protocols.forEach(p => {
+    html += `
+      <div class="proto-card" style="--dbc:${DBCOLORS[p.db] || 'var(--accent)'}">
+        <div class="proto-head"><span class="db-chip" style="background:${DBCOLORS[p.db] || 'var(--accent)'}">${esc(p.db)}</span><b>${esc(p.db_fa)}</b></div>
+        <p class="proto-scope">${esc(p.scope_fa)}</p>
+        <div class="proto-field">${icon("search")}<span>${esc(p.search_field_fa)}</span></div>
+        <div class="proto-q">
+          ${p.queries.map(q => `<code>${esc(q)}</code>`).join("")}
+        </div>
+        <div class="proto-filters">
+          <b>${icon("sliders-horizontal")}فیلترها و محدودیت‌ها</b>
+          <ul>${p.filters_fa.map(f => `<li>${esc(f)}</li>`).join("")}</ul>
+        </div>
+      </div>`;
+  });
+  html += `</div>`;
+
+  // Article corpus with filter
+  html += `
+    <h3 class="sec-title">${icon("book-marked")}منابع شناسایی‌شده <span class="badge" style="background:var(--accent)">${fmt(DBM.articles.length)}</span></h3>
+    <div class="db-filterbar" id="dbFilterBar">
+      <button class="db-fbtn active" data-db="all">همه (${fmt(DBM.articles.length)})</button>
+      ${Object.keys(counts).map(k => `<button class="db-fbtn" data-db="${k}"><span class="dot" style="background:${DBCOLORS[k]}"></span>${esc(k)} (${fmt(counts[k])})</button>`).join("")}
+    </div>
+    <div class="art-list" id="artList"></div>`;
+
+  v.innerHTML = html;
+
+  function drawArts(db) {
+    const arts = (db === "all" ? DBM.articles : DBM.articles.filter(a => a.db === db))
+      .slice().sort((a, b) => b.relevance - a.relevance);
+    $("#artList").innerHTML = arts.map(a => `
+      <div class="art-card" style="--dbc:${DBCOLORS[a.db] || 'var(--accent)'}">
+        <div class="art-top">
+          <span class="db-chip sm" style="background:${DBCOLORS[a.db] || 'var(--accent)'}">${esc(a.db)}</span>
+          <span class="rel-badge" title="امتیاز ارتباط">${icon("target")}${a.relevance}٪</span>
+        </div>
+        <h4 class="art-title">${esc(a.title)}</h4>
+        <p class="art-meta">${esc(a.authors)} · <span>${a.year}</span></p>
+        <p class="art-venue">${esc(a.venue)}</p>
+        ${a.doi ? `<a class="art-doi" href="https://doi.org/${esc(a.doi)}" target="_blank" rel="noopener">${icon("link")}DOI: ${esc(a.doi)}</a>` : (a.url ? `<a class="art-doi" href="${esc(a.url)}" target="_blank" rel="noopener">${icon("external-link")}مشاهدهٔ منبع</a>` : "")}
+        <div class="art-finding"><b>یافتهٔ کلیدی:</b> ${esc(a.finding_fa)}</div>
+        <div class="art-sw">
+          <div class="sw s"><b>${icon("plus-circle")}قوت</b>${esc(a.strength_fa)}</div>
+          <div class="sw w"><b>${icon("minus-circle")}ضعف</b>${esc(a.weakness_fa)}</div>
+        </div>
+        <div class="art-tags">
+          ${(a.chapters || []).map(c => `<span class="tag ch">${esc(c)}</span>`).join("")}
+          ${(a.questions || []).map(q => `<span class="tag q">پرسش ${esc(q)}</span>`).join("")}
+        </div>
+        <div class="art-note">${icon("quote")}${esc(a.citation_note_fa)}</div>
+      </div>`).join("");
+    refreshIcons($("#artList"));
+  }
+  drawArts("all");
+
+  $("#dbFilterBar").addEventListener("click", e => {
+    const b = e.target.closest(".db-fbtn");
+    if (!b) return;
+    $$("#dbFilterBar .db-fbtn").forEach(x => x.classList.toggle("active", x === b));
+    drawArts(b.dataset.db);
+  });
+
+  refreshIcons(v);
+}
+
+// ━━━━━━━━━━ FINDINGS & RESEARCH TRAJECTORY ━━━━━━━━━━
+function renderFindings() {
+  const v = $("#view-findings");
+  if (!RI) { v.innerHTML = `<div class="view-head"><h2>نتایج و مسیر پژوهش</h2><p class="muted">داده در دسترس نیست.</p></div>`; return; }
+  const m = RI.meta;
+
+  let html = `
+    <div class="view-head">
+      <h2>${icon("compass")}${esc(m.title_fa)}</h2>
+      <p>${esc(m.subtitle_fa)}</p>
+    </div>
+    <div class="db-note">${icon("brain")}<div>${esc(m.note_fa)}</div></div>
+
+    <h3 class="sec-title">${icon("lightbulb")}یافته‌های محتمل پژوهش <span class="badge" style="background:var(--accent)">${fmt(RI.findings.length)}</span></h3>
+    <div class="find-grid">`;
+
+  RI.findings.forEach((f, i) => {
+    html += `
+      <div class="find-card">
+        <div class="find-head">
+          <span class="find-num">${i + 1}</span>
+          <h4>${esc(f.title_fa)}</h4>
+        </div>
+        <p class="find-thesis">${esc(f.thesis_fa)}</p>
+        <div class="find-conf">
+          <span>اطمینان استدلالی</span>
+          <div class="conf-bar"><div class="conf-fill" style="width:${f.confidence}%"></div></div>
+          <b>${f.confidence}٪</b>
+        </div>
+        <div class="find-ev"><b>${icon("list-checks")}شواهد:</b>
+          <ul>${f.evidence_fa.map(e => `<li>${esc(e)}</li>`).join("")}</ul>
+        </div>
+        <div class="find-foot">
+          <span class="find-map">${icon("git-branch")}${esc(f.maps_to_fa)}</span>
+          <div class="find-src">${(f.sources || []).map(s => `<span class="tag">${esc(s)}</span>`).join("")}</div>
+        </div>
+      </div>`;
+  });
+  html += `</div>`;
+
+  // Q/H evaluation
+  const qh = RI.qh_evaluation;
+  html += `
+    <h3 class="sec-title">${icon("clipboard-check")}ارزیابی و ارتقای پرسش‌ها و فرضیه‌ها</h3>
+    <p class="muted" style="margin-top:-6px">${esc(qh.intro_fa)}</p>
+    <div class="qh-list">`;
+  qh.items.forEach(it => {
+    html += `
+      <div class="qh-card">
+        <div class="qh-top"><span class="qh-type">${esc(it.type_fa)}</span><span class="qh-prio p-${it.priority === 'بالا' ? 'hi' : 'mid'}">${esc(it.priority)}</span></div>
+        ${it.current_fa && it.current_fa !== "—" ? `<div class="qh-row"><b>متن فعلی:</b> ${esc(it.current_fa)}</div>` : ""}
+        <div class="qh-row asm"><b>${icon("search-check")}ارزیابی:</b> ${esc(it.assessment_fa)}</div>
+        <div class="qh-row sug"><b>${icon("arrow-up-circle")}پیشنهاد ارتقا:</b> ${esc(it.suggestion_fa)}</div>
+      </div>`;
+  });
+  html += `</div>`;
+
+  // Scenario improvement
+  const sc = RI.scenario_improvement;
+  html += `
+    <h3 class="sec-title">${icon("layout-list")}تحلیل و ارتقای سناریوی رساله</h3>
+    <p class="muted" style="margin-top:-6px">${esc(sc.intro_fa)}</p>
+    <div class="two-col">
+      <div class="col">
+        <h3>${icon("check-circle")}نقاط قوت</h3>
+        ${sc.strengths_fa.map(s => `<div class="gn-item n">${esc(s)}</div>`).join("")}
+      </div>
+      <div class="col">
+        <h3>${icon("alert-triangle")}خلأهای پوششی و رفع آن‌ها</h3>
+        ${sc.gaps_fa.map(g => `<div class="gn-item g">${esc(g)}</div>`).join("")}
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px"><h3>${icon("scale")}کفایت پرداخت به پیمان جهانی</h3><p>${esc(sc.gpe_depth_fa)}</p></div>`;
+
+  // Proposed TOC
+  const toc = RI.toc_proposed;
+  html += `
+    <h3 class="sec-title">${icon("list-tree")}فهرست مطالب پیشنهادی</h3>
+    <p class="muted" style="margin-top:-6px">${esc(toc.intro_fa)}</p>
+    <div class="toc-wrap">`;
+  toc.chapters.forEach(c => {
+    html += `
+      <div class="toc-ch">
+        <div class="toc-ch-head"><b>${esc(c.num)}</b><span>${esc(c.title_fa)}</span>${c.cap_fa ? `<em class="toc-cap">${esc(c.cap_fa)}</em>` : ""}</div>
+        <ul>${c.sections_fa.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
+      </div>`;
+  });
+  html += `</div>`;
+
+  // Article blueprint
+  const bp = RI.article_blueprint;
+  html += `
+    <h3 class="sec-title">${icon("route")}نقشهٔ نگارش رساله (جریان استدلال)</h3>
+    <p class="muted" style="margin-top:-6px">${esc(bp.intro_fa)}</p>
+    <div class="flow">
+      ${bp.argument_flow_fa.map((s, i) => `<div class="flow-step"><span class="flow-n">${i + 1}</span><p>${esc(s)}</p></div>`).join("")}
+    </div>
+    <div class="card contrib">${icon("award")}<div><b>مشارکت اصیل رساله:</b> ${esc(bp.expected_contribution_fa)}</div></div>
+    <div class="card"><h3>${icon("pen-tool")}نکات نگارشی</h3><ul class="tick">${bp.writing_notes_fa.map(n => `<li>${esc(n)}</li>`).join("")}</ul></div>`;
+
+  v.innerHTML = html;
+  refreshIcons(v);
+}
