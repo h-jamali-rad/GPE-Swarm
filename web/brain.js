@@ -731,6 +731,20 @@ function renderFindings() {
     </div>
     <div class="db-note">${icon("brain")}<div>${esc(m.note_fa)}</div></div>
 
+    <div class="thesis-banner">
+      <div class="thesis-banner-txt">
+        ${icon("file-text")}
+        <div>
+          <b>پیش‌نویس رساله در حال نگارش است</b>
+          <span>فصل اول (چارچوب پژوهش) به‌طور کامل و آغاز فصل دوم — منطبق بر آیین‌نامهٔ نگارش ۱۴۰۰، با استناد پانویسی به منابع پایگاه‌های استنادی.</span>
+        </div>
+      </div>
+      <div class="thesis-banner-btns">
+        <a class="tbtn tbtn-primary" href="thesis_draft.docx" download>${icon("download")}دریافت Word</a>
+        <a class="tbtn" href="thesis_draft.pdf" target="_blank">${icon("eye")}مشاهدهٔ PDF</a>
+      </div>
+    </div>
+
     <h3 class="sec-title">${icon("lightbulb")}یافته‌های محتمل پژوهش <span class="badge" style="background:var(--accent)">${fmt(RI.findings.length)}</span></h3>
     <div class="find-grid">`;
 
