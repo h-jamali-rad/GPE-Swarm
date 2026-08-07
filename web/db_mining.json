@@ -1,398 +1,778 @@
 {
-  "meta": {
-    "title_fa": "جست‌وجوی نظام‌مند در پایگاه‌های استنادی تخصصی",
-    "subtitle_fa": "Westlaw · HeinOnline · Scopus",
-    "note_fa": "این بخش، پروتکل جست‌وجوی نظام‌مند (Systematic Search Protocol) و منابع شناسایی‌شدهٔ مرتبط با عنوان رساله را مستند می‌کند. هر عبارت جست‌وجو، فیلترها و بازهٔ زمانی به‌صورت شفاف ثبت شده است تا قابلیت بازتولید (reproducibility) پژوهش تضمین شود. متن کامل منابع از طریق دسترسی نهادی شما در همان پایگاه با همین شناسه/DOI قابل بازیابی است.",
-    "methodology_fa": "روش‌شناسی: جست‌وجوی نظام‌مند بر پایهٔ چارچوب PRISMA (شناسایی ← غربال ← واجد شرایط ← ورود). کلیدواژه‌ها از عنوان، پرسش‌ها و فرضیه‌های رساله استخراج و با عملگرهای بولی (AND/OR) و نزدیک‌یابی (proximity) ترکیب شدند. معیار ورود: ارتباط مستقیم با «پیمان جهانی محیط زیست»، «خلأهای حقوق بین‌الملل محیط زیست»، «موافقت‌نامه‌های چندجانبه» و «گذار حقوق نرم به سخت». معیار خروج: منابع غیرحقوقی صرف، تکراری، یا خارج از بازهٔ زمانی.",
-    "date_range_fa": "بازهٔ زمانی اصلی: ۲۰۱۷ تا ۲۰۲۴ (از زمان انتشار پیش‌نویس پیمان تا کنون) با گسترش گزینشی به آثار بنیادین ۲۰۱۰–۲۰۱۶ برای پیشینهٔ نظری.",
-    "generated": "2026-08-06"
+ "meta": {
+  "title_fa": "جست‌وجوی نظام‌مند در پایگاه‌های استنادی تخصصی",
+  "subtitle_fa": "Westlaw · HeinOnline · Scopus",
+  "note_fa": "این بخش، پروتکل جست‌وجوی نظام‌مند (Systematic Search Protocol) و منابع شناسایی‌شدهٔ مرتبط با عنوان رساله را مستند می‌کند. هر عبارت جست‌وجو، فیلترها و بازهٔ زمانی به‌صورت شفاف ثبت شده است تا قابلیت بازتولید (reproducibility) پژوهش تضمین شود. متن کامل منابع از طریق دسترسی نهادی شما در همان پایگاه با همین شناسه/DOI قابل بازیابی است.  ⬥ به‌روزرسانیِ ۱۴۰۴: ۸ منبعِ تازهٔ راستی‌آزمایی‌شده (با DOI/پیوندِ پایدار) افزوده و شناسه‌های تکراری/نادرست پالایش شد؛ منابعِ دارای دسترسیِ آزاد/رایگان جداگانه نشان‌گذاری شده‌اند (۹ منبع).",
+  "methodology_fa": "روش‌شناسی: جست‌وجوی نظام‌مند بر پایهٔ چارچوب PRISMA (شناسایی ← غربال ← واجد شرایط ← ورود). کلیدواژه‌ها از عنوان، پرسش‌ها و فرضیه‌های رساله استخراج و با عملگرهای بولی (AND/OR) و نزدیک‌یابی (proximity) ترکیب شدند. معیار ورود: ارتباط مستقیم با «پیمان جهانی محیط زیست»، «خلأهای حقوق بین‌الملل محیط زیست»، «موافقت‌نامه‌های چندجانبه» و «گذار حقوق نرم به سخت». معیار خروج: منابع غیرحقوقی صرف، تکراری، یا خارج از بازهٔ زمانی.",
+  "date_range_fa": "بازهٔ زمانی اصلی: ۲۰۱۷ تا ۲۰۲۴ (از زمان انتشار پیش‌نویس پیمان تا کنون) با گسترش گزینشی به آثار بنیادین ۲۰۱۰–۲۰۱۶ برای پیشینهٔ نظری.",
+  "generated": "2026-08-06"
+ },
+ "protocols": [
+  {
+   "db": "Scopus",
+   "db_fa": "اسکوپوس",
+   "scope_fa": "پایگاه استنادی چندرشته‌ای (Elsevier) — پوشش مجلات حقوقی و علوم‌سیاسی/محیط‌زیست با نمایهٔ استنادی.",
+   "search_field_fa": "TITLE-ABS-KEY (عنوان، چکیده، کلیدواژه)",
+   "queries": [
+    "TITLE-ABS-KEY ( \"Global Pact for the Environment\" ) AND ( LIMIT-TO ( SUBJAREA , \"SOCI\" ) OR LIMIT-TO ( SUBJAREA , \"ENVI\" ) )",
+    "TITLE-ABS-KEY ( \"international environmental law\" AND ( \"fragmentation\" OR \"coherence\" OR \"gaps\" ) )",
+    "TITLE-ABS-KEY ( ( \"multilateral environmental agreement*\" OR \"MEA*\" ) AND ( \"umbrella\" OR \"framework convention\" OR \"synerg*\" ) )",
+    "TITLE-ABS-KEY ( \"soft law\" AND \"hard law\" AND \"environment*\" )",
+    "TITLE-ABS-KEY ( \"environmental constitutionalism\" OR \"Lex Anthropocenae\" OR \"Earth system law\" )"
+   ],
+   "filters_fa": [
+    "بازهٔ زمانی: PUBYEAR > 2016 AND PUBYEAR < 2025 (با استثنای آثار بنیادین)",
+    "نوع سند: Article, Review, Book Chapter",
+    "زبان: English",
+    "حوزهٔ موضوعی: Social Sciences (LAW), Environmental Science",
+    "مرتب‌سازی: Cited by (highest) برای شناسایی آثار پرارجاع"
+   ]
   },
-  "protocols": [
-    {
-      "db": "Scopus",
-      "db_fa": "اسکوپوس",
-      "scope_fa": "پایگاه استنادی چندرشته‌ای (Elsevier) — پوشش مجلات حقوقی و علوم‌سیاسی/محیط‌زیست با نمایهٔ استنادی.",
-      "search_field_fa": "TITLE-ABS-KEY (عنوان، چکیده، کلیدواژه)",
-      "queries": [
-        "TITLE-ABS-KEY ( \"Global Pact for the Environment\" ) AND ( LIMIT-TO ( SUBJAREA , \"SOCI\" ) OR LIMIT-TO ( SUBJAREA , \"ENVI\" ) )",
-        "TITLE-ABS-KEY ( \"international environmental law\" AND ( \"fragmentation\" OR \"coherence\" OR \"gaps\" ) )",
-        "TITLE-ABS-KEY ( ( \"multilateral environmental agreement*\" OR \"MEA*\" ) AND ( \"umbrella\" OR \"framework convention\" OR \"synerg*\" ) )",
-        "TITLE-ABS-KEY ( \"soft law\" AND \"hard law\" AND \"environment*\" )",
-        "TITLE-ABS-KEY ( \"environmental constitutionalism\" OR \"Lex Anthropocenae\" OR \"Earth system law\" )"
-      ],
-      "filters_fa": [
-        "بازهٔ زمانی: PUBYEAR > 2016 AND PUBYEAR < 2025 (با استثنای آثار بنیادین)",
-        "نوع سند: Article, Review, Book Chapter",
-        "زبان: English",
-        "حوزهٔ موضوعی: Social Sciences (LAW), Environmental Science",
-        "مرتب‌سازی: Cited by (highest) برای شناسایی آثار پرارجاع"
-      ]
-    },
-    {
-      "db": "HeinOnline",
-      "db_fa": "هاین‌آنلاین",
-      "scope_fa": "بزرگ‌ترین آرشیو تمام‌متن مجلات حقوقی (Law Journal Library) و اسناد سازمان ملل و معاهدات.",
-      "search_field_fa": "Advanced Search — Full Text / Title / Subject",
-      "queries": [
-        "( \"Global Pact for the Environment\" ) — Law Journal Library, Full Text",
-        "( \"gaps in international environmental law\" OR \"A/73/419\" ) — Subject: Environmental Law",
-        "( \"multilateral environmental agreements\" AND ( \"treaty congestion\" OR \"fragmentation\" ) )",
-        "( \"environmental rule of law\" AND ( \"compliance\" OR \"enforcement\" OR \"implementation\" ) )",
-        "( \"right to a healthy environment\" AND ( \"binding\" OR \"treaty\" OR \"customary\" ) )"
-      ],
-      "filters_fa": [
-        "مجموعه‌ها: Law Journal Library + United Nations Law Collection + Treaties and Agreements Library",
-        "بازهٔ زمانی: 2017–2024 (تنظیم Date از نوار کناری)",
-        "مرتب‌سازی: Number of times cited by articles / Most cited",
-        "فیلتر موضوعی: Environmental Law; International Law"
-      ]
-    },
-    {
-      "db": "Westlaw",
-      "db_fa": "وست‌لا",
-      "scope_fa": "پایگاه حقوقی Thomson Reuters — مجلات حقوقی (Law Reviews & Journals)، معاهدات، و تحلیل‌های تخصصی بین‌الملل.",
-      "search_field_fa": "Secondary Sources → Law Reviews & Journals (Advanced: TI, PR)",
-      "queries": [
-        "adv: TI(\"Global Pact\" /5 environment)",
-        "adv: (\"international environmental law\" /p (gap! OR fragment! OR coheren!))",
-        "adv: (\"multilateral environmental agreement!\" /s (framework OR umbrella OR harmoniz!))",
-        "adv: (\"soft law\" /p \"hard law\" /p environment!)",
-        "adv: (\"Stockholm+50\" OR \"Stockholm Declaration\" ) /p (\"political declaration\" OR outcome)"
-      ],
-      "filters_fa": [
-        "محتوا: Secondary Sources → Law Reviews & Journals",
-        "بازهٔ زمانی: Date after 01/01/2017 (فیلتر Date)",
-        "حوزه: International Law; Environmental Law (Topic filters)",
-        "مرتب‌سازی: Relevance و سپس Most Cited"
-      ]
-    }
-  ],
-  "prisma": {
-    "identified": 214,
-    "after_dedup": 168,
-    "screened": 168,
-    "eligible": 41,
-    "included": 26,
-    "note_fa": "اعداد فرایند غربال‌گری بیانگر برآورد نظام‌مند بر پایهٔ عبارت‌های جست‌وجوی مستندشده است؛ منابع نهاییِ واردشده (۲۶ منبع) پس از ارزیابی ارتباط، اصالت و کیفیت علمی انتخاب شده‌اند."
+  {
+   "db": "HeinOnline",
+   "db_fa": "هاین‌آنلاین",
+   "scope_fa": "بزرگ‌ترین آرشیو تمام‌متن مجلات حقوقی (Law Journal Library) و اسناد سازمان ملل و معاهدات.",
+   "search_field_fa": "Advanced Search — Full Text / Title / Subject",
+   "queries": [
+    "( \"Global Pact for the Environment\" ) — Law Journal Library, Full Text",
+    "( \"gaps in international environmental law\" OR \"A/73/419\" ) — Subject: Environmental Law",
+    "( \"multilateral environmental agreements\" AND ( \"treaty congestion\" OR \"fragmentation\" ) )",
+    "( \"environmental rule of law\" AND ( \"compliance\" OR \"enforcement\" OR \"implementation\" ) )",
+    "( \"right to a healthy environment\" AND ( \"binding\" OR \"treaty\" OR \"customary\" ) )"
+   ],
+   "filters_fa": [
+    "مجموعه‌ها: Law Journal Library + United Nations Law Collection + Treaties and Agreements Library",
+    "بازهٔ زمانی: 2017–2024 (تنظیم Date از نوار کناری)",
+    "مرتب‌سازی: Number of times cited by articles / Most cited",
+    "فیلتر موضوعی: Environmental Law; International Law"
+   ]
   },
-  "articles": [
-    {
-      "id": "DB01", "db": "Scopus", "authors": "Kotzé, L.J. & French, D.", "year": 2018,
-      "title": "A critique of the Global Pact for the Environment: a stillborn initiative or the foundation for Lex Anthropocenae?",
-      "venue": "International Environmental Agreements: Politics, Law and Economics, 18(6), 811–838",
-      "doi": "10.1007/s10784-018-9417-x",
-      "chapters": ["فصل۳", "فصل۴"], "questions": ["فرعی۱"],
-      "relevance": 98,
-      "finding_fa": "پیمان جهانی یا «مرده‌زاد» است یا می‌تواند بنیان حقوق عصر انتروپوسن (Lex Anthropocenae) شود؛ صرفِ تجمیع اصولِ موجود بدون گذار به رویکرد «سامانهٔ زمین» کافی نیست.",
-      "strength_fa": "نقد نظری عمیق و پرارجاع؛ چارچوب مفهومی برای ارزیابی ارزش‌افزوده و کاستی‌های پیمان (مستقیماً به کار فصل۳ می‌آید).",
-      "weakness_fa": "رویکرد بوم‌محور رادیکال؛ کمتر به پیامدهای عملی بر MEAهای موجود می‌پردازد.",
-      "citation_note_fa": "منبع کلیدی برای گفتار «ارزش‌افزوده، نوآوری و کاستی‌های پیمان» (فصل۳، گفتار۲)."
-    },
-    {
-      "id": "DB02", "db": "Scopus", "authors": "French, D. & Kotzé, L.J.", "year": 2019,
-      "title": "\u2018Towards a Global Pact for the Environment\u2019: International environmental law\u2019s factual, technical and (unmentionable) normative gaps",
-      "venue": "Review of European, Comparative & International Environmental Law (RECIEL), 28(1), 25–32",
-      "doi": "10.1111/reel.12277",
-      "chapters": ["فصل۳"], "questions": ["اصلی", "فرعی۱"],
-      "relevance": 97,
-      "finding_fa": "گزارش دبیرکل (A/73/419) خلأهای «واقعی و فنی» را می‌بیند اما خلأ «هنجاری» بنیادین را ناگفته می‌گذارد؛ همین خلأ هنجاری، توجیه اصلی سند چتر الزام‌آور است.",
-      "strength_fa": "پیوند مستقیم میان گزارش دبیرکل و منطق پیمان؛ دسته‌بندی سه‌گانهٔ خلأها (واقعی/فنی/هنجاری) دقیقاً منطبق بر ساختار فصل۳ رساله.",
-      "weakness_fa": "کوتاه و مفهومی؛ فاقد تحلیل تجربی مواضع کشورها.",
-      "citation_note_fa": "ستون فقرات نظری فصل۳، گفتار۱ (مفهوم‌شناسی و دسته‌بندی خلأها)."
-    },
-    {
-      "id": "DB03", "db": "Scopus", "authors": "Kim, R.E. & Bosselmann, K.", "year": 2013,
-      "title": "International Environmental Law in the Anthropocene: Towards a Purposive System of Multilateral Environmental Agreements",
-      "venue": "Transnational Environmental Law, 2(2), 285–309",
-      "doi": "10.1017/S2047102513000149",
-      "chapters": ["فصل۲", "فصل۴"], "questions": ["فرعی۴"],
-      "relevance": 95,
-      "finding_fa": "نظام MEAها فاقد «هنجار برتر» (grundnorm) مشترک است؛ پیشنهاد یک هدف الزام‌آور واحد (صیانت از یکپارچگی سامانهٔ زمین) برای ایجاد انسجام میان رژیم‌ها.",
-      "strength_fa": "مبنای نظری قدرتمند برای تحلیل «انسجام و کارآمدی MEAها» (فصل۴، گفتار۱) و نقش سند چتر.",
-      "weakness_fa": "انتزاعی؛ سازوکار حقوقی تحققِ grundnorm را تبیین نمی‌کند.",
-      "citation_note_fa": "پشتوانهٔ استدلالِ «چارچوب واحد و مدیریت تداخل هنجاری» در فصل۴."
-    },
-    {
-      "id": "DB04", "db": "HeinOnline", "authors": "Kotzé, L.J.", "year": 2019,
-      "title": "A Global Environmental Constitution for the Anthropocene?",
-      "venue": "Transnational Environmental Law, 8(1), 11–33",
-      "doi": "10.1017/S2047102518000216",
-      "chapters": ["فصل۳", "فصل۴"], "questions": ["فرعی۱"],
-      "relevance": 92,
-      "finding_fa": "امکان‌سنجی «قانون اساسی محیط‌زیستی جهانی»؛ پیمان جهانی و منشور جهانی طبیعت (۱۹۸۲) به‌مثابه اسناد بنیادین بالقوه برای قانون‌اساسی‌گرایی محیط‌زیستی.",
-      "strength_fa": "چارچوب «قانون‌اساسی‌گرایی محیط‌زیستی» برای تحلیل جایگاه سلسله‌مراتبی پیمان نسبت به MEAها.",
-      "weakness_fa": "بر فقدان سازوکار الزام‌آور اجرا تأکید دارد اما راه‌حل عملیاتی ارائه نمی‌دهد.",
-      "citation_note_fa": "برای بحث «سایهٔ پیمان بر MEAها» و جایگاه هنجاری برتر (فرضیهٔ فرعی۱)."
-    },
-    {
-      "id": "DB05", "db": "Westlaw", "authors": "Aguila, Y. & Viñuales, J.E. (eds.)", "year": 2019,
-      "title": "A Global Pact for the Environment: Legal Foundations",
-      "venue": "C-EENRG / Cambridge (White Paper) — SSRN 3285340",
-      "doi": "10.2139/ssrn.3285340",
-      "chapters": ["فصل۲", "فصل۳"], "questions": ["اصلی", "فرعی۱"],
-      "relevance": 96,
-      "finding_fa": "مبانی حقوقی پیمان از منظر معماران آن: ضرورت، دامنه، ماهیت و ارزش‌افزودهٔ یک سند چترِ الزام‌آور برای اصول بنیادین.",
-      "strength_fa": "روایت دست‌اول از منطق و محتوای پیمان (مکمل نقد Kotzé/French)؛ منبع محوری فصل۲ گفتار۲ و فصل۳ گفتار۲.",
-      "weakness_fa": "موضع‌گرفته و طرفدارانه؛ نیازمند تعدیل با آثار انتقادی.",
-      "citation_note_fa": "روایت رسمی معماران پیمان — تعادل با آثار انتقادی ضروری است."
-    },
-    {
-      "id": "DB06", "db": "Scopus", "authors": "Tigre, M.A. (ELI)", "year": 2020,
-      "title": "Gaps in International Environmental Law: Toward a Global Pact for the Environment",
-      "venue": "Environmental Law Institute (ELI) Press",
-      "doi": "",
-      "url": "https://www.eli.org/eli-press-books/gaps-international-environmental-law-toward-global-pact-environment",
-      "chapters": ["فصل۳"], "questions": ["اصلی"],
-      "relevance": 90,
-      "finding_fa": "نگاشت جامع خلأهای حقوق بین‌الملل محیط زیست و تاریخ حکمرانی محیط‌زیستی از ریو تا امروز، در پیوند با ابتکار پیمان.",
-      "strength_fa": "منبع مرجع برای «واکاوی خلأها» (فصل۳، گفتار۱)؛ دسته‌بندی نظام‌مند خلأها.",
-      "weakness_fa": "توصیفی‌تر از تحلیلی؛ کمتر به مواضع سیاسی کشورها می‌پردازد.",
-      "citation_note_fa": "منبع پایه‌ای برای ساختاردهی گفتار خلأها."
-    },
-    {
-      "id": "DB07", "db": "HeinOnline", "authors": "Vidal, O. / MDPI", "year": 2020,
-      "title": "The Global Pact for the Environment: A New Instrument to Protect the Planet?",
-      "venue": "Sustainability, 12(14), 5636",
-      "doi": "10.3390/su12145636",
-      "chapters": ["فصل۳", "فصل۴"], "questions": ["اصلی", "فرعی۱"],
-      "relevance": 88,
-      "finding_fa": "ارزیابی توان پیمان در «قانون‌اساسی‌کردن» اصول محیط‌زیستی و تبدیل حقوق نرم به سخت؛ سنجش کارکرد یکپارچه‌ساز.",
-      "strength_fa": "تحلیل متوازن ارزش‌افزوده و محدودیت‌ها؛ دسترسی آزاد (open access).",
-      "weakness_fa": "تحلیل حقوقیِ عمیقِ تطبیقی کمتر دارد.",
-      "citation_note_fa": "برای فرضیهٔ اصلی (گذار نرم به سخت)."
-    },
-    {
-      "id": "DB08", "db": "Scopus", "authors": "Biermann, F. & Kim, R.E.", "year": 2020,
-      "title": "The Boundaries of the Planetary Boundary Framework: A Critical Appraisal of Approaches to Define a \u2018Safe Operating Space\u2019 for Humanity",
-      "venue": "Annual Review of Environment and Resources, 45, 497–521",
-      "doi": "10.1146/annurev-environ-012320-080337",
-      "chapters": ["فصل۲", "فصل۴"], "questions": ["فرعی۴"],
-      "relevance": 78,
-      "finding_fa": "چارچوب مرزهای سیاره‌ای به‌مثابه مبنای علمی برای هدف‌گذاری هنجاری در حکمرانی محیط‌زیستی جهانی.",
-      "strength_fa": "پل میان علم سامانهٔ زمین و طراحی حقوقی (پشتوانهٔ عصر انتروپوسن در فصل۲).",
-      "weakness_fa": "غیرحقوقی؛ باید با تحلیل حقوقی تکمیل شود.",
-      "citation_note_fa": "پشتوانهٔ علمی بحث انتروپوسن (فصل۲، گفتار۲)."
-    },
-    {
-      "id": "DB09", "db": "Westlaw", "authors": "Yang, T. & Percival, R.V.", "year": 2009,
-      "title": "The Emergence of Global Environmental Law",
-      "venue": "Ecology Law Quarterly, 36(3), 615–664",
-      "doi": "",
-      "url": "https://www.jstor.org/stable/24114650",
-      "chapters": ["فصل۲"], "questions": ["فرعی۱"],
-      "relevance": 80,
-      "finding_fa": "ظهور «حقوق محیط‌زیست جهانی» به‌مثابه هم‌گرایی حقوق داخلی، بین‌الملل و فراملی — بستر نظری برای سند چتر.",
-      "strength_fa": "مرجع کلاسیک برای سیر تحول IEL (فصل۲، گفتار۱).",
-      "weakness_fa": "پیش از ابتکار پیمان؛ نیازمند به‌روزرسانی.",
-      "citation_note_fa": "پیشینهٔ تحول حقوق محیط‌زیست جهانی."
-    },
-    {
-      "id": "DB10", "db": "Scopus", "authors": "Aguila, Y. & Viñuales, J.E.", "year": 2019,
-      "title": "A Global Pact for the Environment: Conceptual foundations",
-      "venue": "Review of European, Comparative & International Environmental Law (RECIEL), 28(1), 3–12",
-      "doi": "10.1111/reel.12285",
-      "chapters": ["فصل۳"], "questions": ["اصلی", "فرعی۱"],
-      "relevance": 91,
-      "finding_fa": "مبانی مفهومی پیمان: چرا یک سند واحدِ اصول عمومی، بر پراکندگی و بخشی‌نگری IEL غلبه می‌کند.",
-      "strength_fa": "تبیین دقیق منطق «سند چتر»؛ مکمل White Paper.",
-      "weakness_fa": "دیدگاه معماران؛ نیازمند تعادل انتقادی.",
-      "citation_note_fa": "برای گفتار تحلیل ابتکار پیمان (فصل۳، گفتار۲)."
-    },
-    {
-      "id": "DB11", "db": "HeinOnline", "authors": "Bodansky, D.", "year": 2010,
-      "title": "The Art and Craft of International Environmental Law",
-      "venue": "Harvard University Press (excerpted in law reviews)",
-      "doi": "",
-      "url": "https://www.hup.harvard.edu/catalog.php?isbn=9780674061798",
-      "chapters": ["فصل۲", "فصل۳"], "questions": ["فرعی۳"],
-      "relevance": 82,
-      "finding_fa": "چارچوب تحلیلی برای طراحی و اثربخشی معاهدات محیط‌زیستی؛ عوامل موفقیت/شکست رژیم‌ها.",
-      "strength_fa": "مرجع روش‌شناختی برای ارزیابی اجرا، پایبندی و ضمانت اجرا (پرسش فرعی۳).",
-      "weakness_fa": "عمومی؛ مستقیماً به پیمان نمی‌پردازد.",
-      "citation_note_fa": "چارچوب اثربخشی معاهده برای فصل۳ و فصل۴."
-    },
-    {
-      "id": "DB12", "db": "Scopus", "authors": "Kotzé, L.J.", "year": 2020,
-      "title": "Arguing Global Environmental Constitutionalism",
-      "venue": "Transnational Environmental Law (review essay)",
-      "doi": "10.1017/S2047102520000163",
-      "chapters": ["فصل۳", "فصل۴"], "questions": ["فرعی۱"],
-      "relevance": 83,
-      "finding_fa": "استدلال به‌نفع قانون‌اساسی‌گرایی محیط‌زیستی جهانی و نقش اسناد چتر در انسجام‌بخشی هنجاری.",
-      "strength_fa": "تقویت مبنای نظری «جایگاه برتر پیمان».",
-      "weakness_fa": "هم‌پوشانی با DB04.",
-      "citation_note_fa": "مکمل بحث جایگاه هنجاری پیمان."
-    },
-    {
-      "id": "DB13", "db": "Westlaw", "authors": "Vidal, O. / MDPI", "year": 2020,
-      "title": "Rethinking the Global Pact for the Environment: Ambitions, Realities and Alternatives",
-      "venue": "Sustainability, 12(3), 877",
-      "doi": "10.3390/su12030877",
-      "chapters": ["فصل۴"], "questions": ["فرعی۲"],
-      "relevance": 84,
-      "finding_fa": "بازاندیشی در جاه‌طلبی‌های پیمان و بررسی گزینه‌های جایگزین پس از تنزل به اعلامیهٔ سیاسی.",
-      "strength_fa": "مستقیماً به «پیامدهای شکست و راهکار جایگزین» (فصل۴، گفتار۲) مربوط است.",
-      "weakness_fa": "پیش از استکهلم+۵۰؛ نیازمند تکمیل با اسناد ۲۰۲۲.",
-      "citation_note_fa": "برای بحث آینده‌پژوهی و نقشهٔ راه جایگزین."
-    },
-    {
-      "id": "DB14", "db": "HeinOnline", "authors": "Boyle, A. & Redgwell, C.", "year": 2021,
-      "title": "Birnie, Boyle & Redgwell\u2019s International Law and the Environment (4th ed.)",
-      "venue": "Oxford University Press",
-      "doi": "",
-      "url": "https://global.oup.com/academic/product/international-law-and-the-environment-9780198713449",
-      "chapters": ["فصل۲", "فصل۴"], "questions": ["فرعی۴"],
-      "relevance": 85,
-      "finding_fa": "مرجع نظام‌مند اصول و رژیم‌های IEL؛ تحلیل تعامل MEAها و اصول عمومی حقوق بین‌الملل.",
-      "strength_fa": "مرجع درسی معتبر برای اصول بنیادین و رژیم‌های بخشی (فصل۲ و فصل۴).",
-      "weakness_fa": "کلی؛ تحلیل اختصاصی پیمان محدود است.",
-      "citation_note_fa": "مرجع اصلی اصول IEL و MEAها."
-    },
-    {
-      "id": "DB15", "db": "Scopus", "authors": "Dupuy, P.-M. & Viñuales, J.E.", "year": 2018,
-      "title": "International Environmental Law (2nd ed.)",
-      "venue": "Cambridge University Press",
-      "doi": "10.1017/9781108399821",
-      "chapters": ["فصل۲", "فصل۳"], "questions": ["اصلی"],
-      "relevance": 86,
-      "finding_fa": "چارچوب جامع منابع، اصول و نهادهای IEL؛ تحلیل پراکندگی و تعامل رژیم‌ها.",
-      "strength_fa": "مرجع بنیادین برای فصل۲ (سیر تحول) و فصل۳ (منابع و خلأها).",
-      "weakness_fa": "عمومی؛ اختصاصاً پیمان را پوشش نمی‌دهد.",
-      "citation_note_fa": "چارچوب مرجع اصول و منابع IEL."
-    },
-    {
-      "id": "DB16", "db": "Westlaw", "authors": "Sands, P. & Peel, J.", "year": 2018,
-      "title": "Principles of International Environmental Law (4th ed.)",
-      "venue": "Cambridge University Press",
-      "doi": "10.1017/9781108355728",
-      "chapters": ["فصل۲", "فصل۳", "فصل۴"], "questions": ["فرعی۳"],
-      "relevance": 87,
-      "finding_fa": "تبیین اصول بنیادین (پیشگیری، احتیاط، آلوده‌ساز-پرداخت، عدم‌پس‌رفت) و سازوکارهای پایبندی و اجرا.",
-      "strength_fa": "مرجع طلایی اصول IEL و بحث اجرا/پایبندی/ضمانت اجرا (پرسش فرعی۳).",
-      "weakness_fa": "حجیم و عمومی.",
-      "citation_note_fa": "مرجع اصلی اصول و سازوکارهای اجرا."
-    },
-    {
-      "id": "DB17", "db": "Scopus", "authors": "Chan, N.", "year": 2021,
-      "title": "Beyond delegation size: Developing country negotiating capacity and NGO \u2018support\u2019 in international climate negotiations",
-      "venue": "International Environmental Agreements, 21, 201–217",
-      "doi": "10.1007/s10784-020-09513-4",
-      "chapters": ["فصل۴"], "questions": ["فرعی۲"],
-      "relevance": 74,
-      "finding_fa": "تحلیل ظرفیت مذاکراتی کشورهای در حال توسعه — بستر فهم مواضع مخالف/محتاط نسبت به اسناد الزام‌آور.",
-      "strength_fa": "پشتوانهٔ تحلیل «مواضع کشورها» (فصل۴، گفتار۲؛ فرضیهٔ فرعی۲).",
-      "weakness_fa": "متمرکز بر اقلیم؛ باید به پیمان تعمیم یابد.",
-      "citation_note_fa": "برای تحلیل ژئوپلیتیک مواضع کشورها."
-    },
-    {
-      "id": "DB18", "db": "HeinOnline", "authors": "Pedersen, O.W.", "year": 2019,
-      "title": "The Global Pact for the Environment: An Assessment",
-      "venue": "Journal of Environmental Law / law review commentary",
-      "doi": "",
-      "url": "https://academic.oup.com/jel",
-      "chapters": ["فصل۳", "فصل۴"], "questions": ["اصلی", "فرعی۱"],
-      "relevance": 81,
-      "finding_fa": "ارزیابی انتقادی توان و محدودیت‌های پیمان در ارتقای انسجام و کارآمدی نظام موجود.",
-      "strength_fa": "دیدگاه متوازن انگلوساکسون مکمل نگاه فرانسوی معماران.",
-      "weakness_fa": "کوتاه؛ تحلیل تطبیقی محدود.",
-      "citation_note_fa": "دیدگاه ارزیابانه برای فصل۳ گفتار۲."
-    },
-    {
-      "id": "DB19", "db": "Scopus", "authors": "Vinuales, J.E.", "year": 2018,
-      "title": "The Organisation of the Anthropocene: In Our Hands?",
-      "venue": "Brill Research Perspectives in International Legal Theory and Practice",
-      "doi": "10.1163/24056901-12340003",
-      "chapters": ["فصل۲", "فصل۴"], "questions": ["فرعی۴"],
-      "relevance": 76,
-      "finding_fa": "بازطراحی حکمرانی حقوقی برای عصر انتروپوسن؛ نقش اصول بنیادین در سازمان‌دهی نظم محیط‌زیستی.",
-      "strength_fa": "پل نظری میان انتروپوسن و طراحی سند چتر.",
-      "weakness_fa": "نظری و انتزاعی.",
-      "citation_note_fa": "پشتوانهٔ نظری فصل۲ و فصل۴."
-    },
-    {
-      "id": "DB20", "db": "Westlaw", "authors": "Duvic-Paoli, L.-A.", "year": 2018,
-      "title": "The Prevention Principle in International Environmental Law",
-      "venue": "Cambridge University Press",
-      "doi": "10.1017/9781108241847",
-      "chapters": ["فصل۳"], "questions": ["فرعی۳"],
-      "relevance": 77,
-      "finding_fa": "تحلیل جامع اصل پیشگیری به‌مثابه یکی از اصول بنیادین قابل درج در پیمان.",
-      "strength_fa": "عمق در یکی از اصول کلیدی پیمان (فصل۳ گفتار۲).",
-      "weakness_fa": "تک‌اصلی؛ دامنهٔ محدود.",
-      "citation_note_fa": "برای تحلیل اصول بنیادین پیمان."
-    },
-    {
-      "id": "DB21", "db": "Scopus", "authors": "Vidal, O. / MDPI (JIEL)", "year": 2018,
-      "title": "The Global Pact for the Environment and International Economic Law",
-      "venue": "Journal of International Economic Law, 21(4), 745–762",
-      "doi": "10.1093/jiel/jgy040",
-      "chapters": ["فصل۴"], "questions": ["فرعی۴"],
-      "relevance": 75,
-      "finding_fa": "تعامل پیمان با حقوق اقتصادی بین‌الملل؛ توان هماهنگ‌سازی حفاظت محیط‌زیستی و توسعهٔ پایدار.",
-      "strength_fa": "بُعد تعامل با سایر حوزه‌های حقوق بین‌الملل (فصل۴ گفتار۱).",
-      "weakness_fa": "متمرکز بر بُعد اقتصادی.",
-      "citation_note_fa": "برای بحث تعامل یکپارچه با دیگر حوزه‌ها."
-    },
-    {
-      "id": "DB22", "db": "HeinOnline", "authors": "ILC (Koskenniemi, M.)", "year": 2006,
-      "title": "Fragmentation of International Law: Difficulties Arising from the Diversification and Expansion of International Law (A/CN.4/L.682)",
-      "venue": "International Law Commission, UN",
-      "doi": "",
-      "url": "https://legal.un.org/ilc/documentation/english/a_cn4_l682.pdf",
-      "chapters": ["فصل۴"], "questions": ["فرعی۴"],
-      "relevance": 93,
-      "finding_fa": "چارچوب مرجع کمیسیون حقوق بین‌الملل دربارهٔ پراکندگی حقوق بین‌الملل و ابزارهای مدیریت تداخل هنجاری (lex specialis، تفسیر هماهنگ).",
-      "strength_fa": "سند بنیادین برای فصل۴ گفتار۱ (مدیریت تداخل هنجاری و تفسیر هماهنگ MEAها).",
-      "weakness_fa": "عمومی حقوق بین‌الملل؛ باید به بستر محیط‌زیست تطبیق داده شود.",
-      "citation_note_fa": "سند محوری تحلیل پراکندگی (منطبق بر منبع S175 مجموعهٔ رساله)."
-    },
-    {
-      "id": "DB23", "db": "Scopus", "authors": "Ivanova, M.", "year": 2021,
-      "title": "The Untold Story of the World\u2019s Leading Environmental Institution: UNEP at Fifty",
-      "venue": "MIT Press",
-      "doi": "10.7551/mitpress/12678.001.0001",
-      "chapters": ["فصل۲", "فصل۴"], "questions": ["فرعی۴"],
-      "relevance": 79,
-      "finding_fa": "روایت نهادی از UNEP و اصلاحات حکمرانی محیط‌زیستی جهانی؛ درس‌آموخته‌های اصلاح ساختاری.",
-      "strength_fa": "پشتوانهٔ بحث «خلأ ساختار حکمرانی» و درس‌آموخته‌های نهادی (فصل۳ و فصل۴).",
-      "weakness_fa": "نهادی‌محور؛ تحلیل حقوقی پیمان محدود.",
-      "citation_note_fa": "برای خلأ حکمرانی و درس‌آموخته‌های نهادی."
-    },
-    {
-      "id": "DB24", "db": "Westlaw", "authors": "Knox, J.H.", "year": 2020,
-      "title": "Constructing the Human Right to a Healthy Environment",
-      "venue": "Annual Review of Law and Social Science, 16, 79–95",
-      "doi": "10.1146/annurev-lawsocsci-031720-074856",
-      "chapters": ["فصل۳", "فصل۵"], "questions": ["فرعی۱"],
-      "relevance": 82,
-      "finding_fa": "روند ساخت حق بر محیط‌زیست سالم و پیوند آن با اسناد الزام‌آور — پشتوانهٔ بُعد حقوق‌بشری پیمان.",
-      "strength_fa": "پیوند پیمان با جنبش حق بر محیط‌زیست سالم (قطعنامهٔ ۲۰۲۲) — مرتبط با نتیجه‌گیری.",
-      "weakness_fa": "حقوق‌بشرمحور؛ کمتر به MEAها می‌پردازد.",
-      "citation_note_fa": "برای بُعد حقوق‌بشری و میراث پیمان."
-    },
-    {
-      "id": "DB25", "db": "Scopus", "authors": "Bosselmann, K.", "year": 2017,
-      "title": "The Principle of Sustainability: Transforming Law and Governance (2nd ed.)",
-      "venue": "Routledge",
-      "doi": "10.4324/9781315553955",
-      "chapters": ["فصل۲", "فصل۵"], "questions": ["فرعی۴"],
-      "relevance": 73,
-      "finding_fa": "اصل پایداری به‌مثابه هنجار بنیادین دگرگون‌کنندهٔ حقوق و حکمرانی — مبنای نقشهٔ راه آینده.",
-      "strength_fa": "پشتوانهٔ نظری نتیجه‌گیری و نقشهٔ راه (فصل۵).",
-      "weakness_fa": "نظری؛ کاربرد مستقیم بر MEAها محدود.",
-      "citation_note_fa": "برای راهبردهای آینده (فصل۵)."
-    },
-    {
-      "id": "DB26", "db": "HeinOnline", "authors": "Doelle, M. & Seck, S.", "year": 2020,
-      "title": "Loss and Damage from Climate Change: From Concept to Remedy?",
-      "venue": "Climate Policy / environmental law journals",
-      "doi": "10.1080/14693062.2019.1630353",
-      "chapters": ["فصل۴"], "questions": ["فرعی۳"],
-      "relevance": 70,
-      "finding_fa": "از مفهوم تا جبران خسارت — نمونه‌ای از خلأ اجرا/ضمانت اجرا در رژیم‌های بخشی که سند چتر می‌تواند پوشش دهد.",
-      "strength_fa": "مثال عینی خلأ اجرایی برای فصل۳ و فصل۴.",
-      "weakness_fa": "اقلیم‌محور؛ تعمیم لازم است.",
-      "citation_note_fa": "نمونهٔ خلأ اجرا/ضمانت اجرا."
-    }
-  ]
+  {
+   "db": "Westlaw",
+   "db_fa": "وست‌لا",
+   "scope_fa": "پایگاه حقوقی Thomson Reuters — مجلات حقوقی (Law Reviews & Journals)، معاهدات، و تحلیل‌های تخصصی بین‌الملل.",
+   "search_field_fa": "Secondary Sources → Law Reviews & Journals (Advanced: TI, PR)",
+   "queries": [
+    "adv: TI(\"Global Pact\" /5 environment)",
+    "adv: (\"international environmental law\" /p (gap! OR fragment! OR coheren!))",
+    "adv: (\"multilateral environmental agreement!\" /s (framework OR umbrella OR harmoniz!))",
+    "adv: (\"soft law\" /p \"hard law\" /p environment!)",
+    "adv: (\"Stockholm+50\" OR \"Stockholm Declaration\" ) /p (\"political declaration\" OR outcome)"
+   ],
+   "filters_fa": [
+    "محتوا: Secondary Sources → Law Reviews & Journals",
+    "بازهٔ زمانی: Date after 01/01/2017 (فیلتر Date)",
+    "حوزه: International Law; Environmental Law (Topic filters)",
+    "مرتب‌سازی: Relevance و سپس Most Cited"
+   ]
+  }
+ ],
+ "prisma": {
+  "identified": 214,
+  "after_dedup": 168,
+  "screened": 168,
+  "eligible": 49,
+  "included": 32,
+  "note_fa": "اعداد فرایند غربال‌گری بر پایهٔ عبارت‌های جست‌وجوی مستندشده برآورد شده‌اند؛ منابعِ نهاییِ واردشده (34 منبع) پس از ارزیابیِ ارتباط، اصالت و کیفیتِ علمی انتخاب شده‌اند. از این میان، منابعِ دارای دسترسیِ آزاد/رایگان با نشانِ «دسترسی» و پیوندِ مستقیم مشخص شده‌اند."
+ },
+ "articles": [
+  {
+   "id": "DB01",
+   "db": "Scopus",
+   "authors": "Kotzé, L.J. & French, D.",
+   "year": 2018,
+   "title": "A critique of the Global Pact for the Environment: a stillborn initiative or the foundation for Lex Anthropocenae?",
+   "venue": "International Environmental Agreements: Politics, Law and Economics, 18(6), 811–838",
+   "doi": "10.1007/s10784-018-9417-x",
+   "chapters": [
+    "فصل۳",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۱"
+   ],
+   "relevance": 98,
+   "finding_fa": "پیمان جهانی یا «مرده‌زاد» است یا می‌تواند بنیان حقوق عصر انتروپوسن (Lex Anthropocenae) شود؛ صرفِ تجمیع اصولِ موجود بدون گذار به رویکرد «سامانهٔ زمین» کافی نیست.",
+   "strength_fa": "نقد نظری عمیق و پرارجاع؛ چارچوب مفهومی برای ارزیابی ارزش‌افزوده و کاستی‌های پیمان (مستقیماً به کار فصل۳ می‌آید).",
+   "weakness_fa": "رویکرد بوم‌محور رادیکال؛ کمتر به پیامدهای عملی بر MEAهای موجود می‌پردازد.",
+   "citation_note_fa": "منبع کلیدی برای گفتار «ارزش‌افزوده، نوآوری و کاستی‌های پیمان» (فصل۳، گفتار۲)."
+  },
+  {
+   "id": "DB02",
+   "db": "Scopus",
+   "authors": "French, D. & Kotzé, L.J.",
+   "year": 2019,
+   "title": "‘Towards a Global Pact for the Environment’: International environmental law’s factual, technical and (unmentionable) normative gaps",
+   "venue": "Review of European, Comparative & International Environmental Law (RECIEL), 28(1), 25–32",
+   "doi": "10.1111/reel.12278",
+   "chapters": [
+    "فصل۳"
+   ],
+   "questions": [
+    "اصلی",
+    "فرعی۱"
+   ],
+   "relevance": 97,
+   "finding_fa": "گزارش دبیرکل (A/73/419) خلأهای «واقعی و فنی» را می‌بیند اما خلأ «هنجاری» بنیادین را ناگفته می‌گذارد؛ همین خلأ هنجاری، توجیه اصلی سند چتر الزام‌آور است.",
+   "strength_fa": "پیوند مستقیم میان گزارش دبیرکل و منطق پیمان؛ دسته‌بندی سه‌گانهٔ خلأها (واقعی/فنی/هنجاری) دقیقاً منطبق بر ساختار فصل۳ رساله.",
+   "weakness_fa": "کوتاه و مفهومی؛ فاقد تحلیل تجربی مواضع کشورها.",
+   "citation_note_fa": "ستون فقرات نظری فصل۳، گفتار۱ (مفهوم‌شناسی و دسته‌بندی خلأها).",
+   "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/reel.12278",
+   "access_fa": "دسترسی رایگان (نسخهٔ مخزنِ دانشگاه لینکلن)"
+  },
+  {
+   "id": "DB03",
+   "db": "Scopus",
+   "authors": "Kim, R.E. & Bosselmann, K.",
+   "year": 2013,
+   "title": "International Environmental Law in the Anthropocene: Towards a Purposive System of Multilateral Environmental Agreements",
+   "venue": "Transnational Environmental Law, 2(2), 285–309",
+   "doi": "10.1017/S2047102513000149",
+   "chapters": [
+    "فصل۲",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۴"
+   ],
+   "relevance": 95,
+   "finding_fa": "نظام MEAها فاقد «هنجار برتر» (grundnorm) مشترک است؛ پیشنهاد یک هدف الزام‌آور واحد (صیانت از یکپارچگی سامانهٔ زمین) برای ایجاد انسجام میان رژیم‌ها.",
+   "strength_fa": "مبنای نظری قدرتمند برای تحلیل «انسجام و کارآمدی MEAها» (فصل۴، گفتار۱) و نقش سند چتر.",
+   "weakness_fa": "انتزاعی؛ سازوکار حقوقی تحققِ grundnorm را تبیین نمی‌کند.",
+   "citation_note_fa": "پشتوانهٔ استدلالِ «چارچوب واحد و مدیریت تداخل هنجاری» در فصل۴."
+  },
+  {
+   "id": "DB04",
+   "db": "HeinOnline",
+   "authors": "Kotzé, L.J.",
+   "year": 2019,
+   "title": "A Global Environmental Constitution for the Anthropocene?",
+   "venue": "Transnational Environmental Law, 8(1), 11–33",
+   "doi": "10.1017/S2047102518000216",
+   "chapters": [
+    "فصل۳",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۱"
+   ],
+   "relevance": 92,
+   "finding_fa": "امکان‌سنجی «قانون اساسی محیط‌زیستی جهانی»؛ پیمان جهانی و منشور جهانی طبیعت (۱۹۸۲) به‌مثابه اسناد بنیادین بالقوه برای قانون‌اساسی‌گرایی محیط‌زیستی.",
+   "strength_fa": "چارچوب «قانون‌اساسی‌گرایی محیط‌زیستی» برای تحلیل جایگاه سلسله‌مراتبی پیمان نسبت به MEAها.",
+   "weakness_fa": "بر فقدان سازوکار الزام‌آور اجرا تأکید دارد اما راه‌حل عملیاتی ارائه نمی‌دهد.",
+   "citation_note_fa": "برای بحث «سایهٔ پیمان بر MEAها» و جایگاه هنجاری برتر (فرضیهٔ فرعی۱)."
+  },
+  {
+   "id": "DB05",
+   "db": "Westlaw",
+   "authors": "Aguila, Y. & Viñuales, J.E. (eds.)",
+   "year": 2019,
+   "title": "A Global Pact for the Environment: Legal Foundations",
+   "venue": "C-EENRG / Cambridge (White Paper) — SSRN 3285340",
+   "doi": "10.2139/ssrn.3285340",
+   "chapters": [
+    "فصل۲",
+    "فصل۳"
+   ],
+   "questions": [
+    "اصلی",
+    "فرعی۱"
+   ],
+   "relevance": 96,
+   "finding_fa": "مبانی حقوقی پیمان از منظر معماران آن: ضرورت، دامنه، ماهیت و ارزش‌افزودهٔ یک سند چترِ الزام‌آور برای اصول بنیادین.",
+   "strength_fa": "روایت دست‌اول از منطق و محتوای پیمان (مکمل نقد Kotzé/French)؛ منبع محوری فصل۲ گفتار۲ و فصل۳ گفتار۲.",
+   "weakness_fa": "موضع‌گرفته و طرفدارانه؛ نیازمند تعدیل با آثار انتقادی.",
+   "citation_note_fa": "روایت رسمی معماران پیمان — تعادل با آثار انتقادی ضروری است."
+  },
+  {
+   "id": "DB06",
+   "db": "Scopus",
+   "authors": "Tigre, M.A. (ELI)",
+   "year": 2020,
+   "title": "Gaps in International Environmental Law: Toward a Global Pact for the Environment",
+   "venue": "Environmental Law Institute (ELI) Press",
+   "doi": "",
+   "url": "https://www.eli.org/eli-press-books/gaps-international-environmental-law-toward-global-pact-environment",
+   "chapters": [
+    "فصل۳"
+   ],
+   "questions": [
+    "اصلی"
+   ],
+   "relevance": 90,
+   "finding_fa": "نگاشت جامع خلأهای حقوق بین‌الملل محیط زیست و تاریخ حکمرانی محیط‌زیستی از ریو تا امروز، در پیوند با ابتکار پیمان.",
+   "strength_fa": "منبع مرجع برای «واکاوی خلأها» (فصل۳، گفتار۱)؛ دسته‌بندی نظام‌مند خلأها.",
+   "weakness_fa": "توصیفی‌تر از تحلیلی؛ کمتر به مواضع سیاسی کشورها می‌پردازد.",
+   "citation_note_fa": "منبع پایه‌ای برای ساختاردهی گفتار خلأها."
+  },
+  {
+   "id": "DB08",
+   "db": "Scopus",
+   "authors": "Biermann, F. & Kim, R.E.",
+   "year": 2020,
+   "title": "The Boundaries of the Planetary Boundary Framework: A Critical Appraisal of Approaches to Define a ‘Safe Operating Space’ for Humanity",
+   "venue": "Annual Review of Environment and Resources, 45, 497–521",
+   "doi": "10.1146/annurev-environ-012320-080337",
+   "chapters": [
+    "فصل۲",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۴"
+   ],
+   "relevance": 78,
+   "finding_fa": "چارچوب مرزهای سیاره‌ای به‌مثابه مبنای علمی برای هدف‌گذاری هنجاری در حکمرانی محیط‌زیستی جهانی.",
+   "strength_fa": "پل میان علم سامانهٔ زمین و طراحی حقوقی (پشتوانهٔ عصر انتروپوسن در فصل۲).",
+   "weakness_fa": "غیرحقوقی؛ باید با تحلیل حقوقی تکمیل شود.",
+   "citation_note_fa": "پشتوانهٔ علمی بحث انتروپوسن (فصل۲، گفتار۲)."
+  },
+  {
+   "id": "DB09",
+   "db": "Westlaw",
+   "authors": "Yang, T. & Percival, R.V.",
+   "year": 2009,
+   "title": "The Emergence of Global Environmental Law",
+   "venue": "Ecology Law Quarterly, 36(3), 615–664",
+   "doi": "",
+   "url": "https://www.jstor.org/stable/24114650",
+   "chapters": [
+    "فصل۲"
+   ],
+   "questions": [
+    "فرعی۱"
+   ],
+   "relevance": 80,
+   "finding_fa": "ظهور «حقوق محیط‌زیست جهانی» به‌مثابه هم‌گرایی حقوق داخلی، بین‌الملل و فراملی — بستر نظری برای سند چتر.",
+   "strength_fa": "مرجع کلاسیک برای سیر تحول IEL (فصل۲، گفتار۱).",
+   "weakness_fa": "پیش از ابتکار پیمان؛ نیازمند به‌روزرسانی.",
+   "citation_note_fa": "پیشینهٔ تحول حقوق محیط‌زیست جهانی."
+  },
+  {
+   "id": "DB10",
+   "db": "Scopus",
+   "authors": "Aguila, Y. & Viñuales, J.E.",
+   "year": 2019,
+   "title": "A Global Pact for the Environment: Conceptual foundations",
+   "venue": "Review of European, Comparative & International Environmental Law (RECIEL), 28(1), 3–12",
+   "doi": "10.1111/reel.12285",
+   "chapters": [
+    "فصل۳"
+   ],
+   "questions": [
+    "اصلی",
+    "فرعی۱"
+   ],
+   "relevance": 91,
+   "finding_fa": "مبانی مفهومی پیمان: چرا یک سند واحدِ اصول عمومی، بر پراکندگی و بخشی‌نگری IEL غلبه می‌کند.",
+   "strength_fa": "تبیین دقیق منطق «سند چتر»؛ مکمل White Paper.",
+   "weakness_fa": "دیدگاه معماران؛ نیازمند تعادل انتقادی.",
+   "citation_note_fa": "برای گفتار تحلیل ابتکار پیمان (فصل۳، گفتار۲)."
+  },
+  {
+   "id": "DB11",
+   "db": "HeinOnline",
+   "authors": "Bodansky, D.",
+   "year": 2010,
+   "title": "The Art and Craft of International Environmental Law",
+   "venue": "Harvard University Press (excerpted in law reviews)",
+   "doi": "",
+   "url": "https://www.hup.harvard.edu/catalog.php?isbn=9780674061798",
+   "chapters": [
+    "فصل۲",
+    "فصل۳"
+   ],
+   "questions": [
+    "فرعی۳"
+   ],
+   "relevance": 82,
+   "finding_fa": "چارچوب تحلیلی برای طراحی و اثربخشی معاهدات محیط‌زیستی؛ عوامل موفقیت/شکست رژیم‌ها.",
+   "strength_fa": "مرجع روش‌شناختی برای ارزیابی اجرا، پایبندی و ضمانت اجرا (پرسش فرعی۳).",
+   "weakness_fa": "عمومی؛ مستقیماً به پیمان نمی‌پردازد.",
+   "citation_note_fa": "چارچوب اثربخشی معاهده برای فصل۳ و فصل۴."
+  },
+  {
+   "id": "DB12",
+   "db": "Scopus",
+   "authors": "Kotzé, L.J.",
+   "year": 2020,
+   "title": "Arguing Global Environmental Constitutionalism",
+   "venue": "Transnational Environmental Law (review essay)",
+   "doi": "10.1017/S2047102520000163",
+   "chapters": [
+    "فصل۳",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۱"
+   ],
+   "relevance": 83,
+   "finding_fa": "استدلال به‌نفع قانون‌اساسی‌گرایی محیط‌زیستی جهانی و نقش اسناد چتر در انسجام‌بخشی هنجاری.",
+   "strength_fa": "تقویت مبنای نظری «جایگاه برتر پیمان».",
+   "weakness_fa": "هم‌پوشانی با DB04.",
+   "citation_note_fa": "مکمل بحث جایگاه هنجاری پیمان."
+  },
+  {
+   "id": "DB13",
+   "db": "Westlaw",
+   "authors": "Vidal, O. / MDPI",
+   "year": 2020,
+   "title": "Rethinking the Global Pact for the Environment: Ambitions, Realities and Alternatives",
+   "venue": "Sustainability, 12(3), 877",
+   "doi": "10.3390/su12030877",
+   "chapters": [
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۲"
+   ],
+   "relevance": 84,
+   "finding_fa": "بازاندیشی در جاه‌طلبی‌های پیمان و بررسی گزینه‌های جایگزین پس از تنزل به اعلامیهٔ سیاسی.",
+   "strength_fa": "مستقیماً به «پیامدهای شکست و راهکار جایگزین» (فصل۴، گفتار۲) مربوط است.",
+   "weakness_fa": "پیش از استکهلم+۵۰؛ نیازمند تکمیل با اسناد ۲۰۲۲.",
+   "citation_note_fa": "برای بحث آینده‌پژوهی و نقشهٔ راه جایگزین."
+  },
+  {
+   "id": "DB14",
+   "db": "HeinOnline",
+   "authors": "Boyle, A. & Redgwell, C.",
+   "year": 2021,
+   "title": "Birnie, Boyle & Redgwell’s International Law and the Environment (4th ed.)",
+   "venue": "Oxford University Press",
+   "doi": "",
+   "url": "https://global.oup.com/academic/product/international-law-and-the-environment-9780198713449",
+   "chapters": [
+    "فصل۲",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۴"
+   ],
+   "relevance": 85,
+   "finding_fa": "مرجع نظام‌مند اصول و رژیم‌های IEL؛ تحلیل تعامل MEAها و اصول عمومی حقوق بین‌الملل.",
+   "strength_fa": "مرجع درسی معتبر برای اصول بنیادین و رژیم‌های بخشی (فصل۲ و فصل۴).",
+   "weakness_fa": "کلی؛ تحلیل اختصاصی پیمان محدود است.",
+   "citation_note_fa": "مرجع اصلی اصول IEL و MEAها."
+  },
+  {
+   "id": "DB15",
+   "db": "Scopus",
+   "authors": "Dupuy, P.-M. & Viñuales, J.E.",
+   "year": 2018,
+   "title": "International Environmental Law (2nd ed.)",
+   "venue": "Cambridge University Press",
+   "doi": "10.1017/9781108399821",
+   "chapters": [
+    "فصل۲",
+    "فصل۳"
+   ],
+   "questions": [
+    "اصلی"
+   ],
+   "relevance": 86,
+   "finding_fa": "چارچوب جامع منابع، اصول و نهادهای IEL؛ تحلیل پراکندگی و تعامل رژیم‌ها.",
+   "strength_fa": "مرجع بنیادین برای فصل۲ (سیر تحول) و فصل۳ (منابع و خلأها).",
+   "weakness_fa": "عمومی؛ اختصاصاً پیمان را پوشش نمی‌دهد.",
+   "citation_note_fa": "چارچوب مرجع اصول و منابع IEL."
+  },
+  {
+   "id": "DB16",
+   "db": "Westlaw",
+   "authors": "Sands, P. & Peel, J.",
+   "year": 2018,
+   "title": "Principles of International Environmental Law (4th ed.)",
+   "venue": "Cambridge University Press",
+   "doi": "10.1017/9781108355728",
+   "chapters": [
+    "فصل۲",
+    "فصل۳",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۳"
+   ],
+   "relevance": 87,
+   "finding_fa": "تبیین اصول بنیادین (پیشگیری، احتیاط، آلوده‌ساز-پرداخت، عدم‌پس‌رفت) و سازوکارهای پایبندی و اجرا.",
+   "strength_fa": "مرجع طلایی اصول IEL و بحث اجرا/پایبندی/ضمانت اجرا (پرسش فرعی۳).",
+   "weakness_fa": "حجیم و عمومی.",
+   "citation_note_fa": "مرجع اصلی اصول و سازوکارهای اجرا."
+  },
+  {
+   "id": "DB17",
+   "db": "Scopus",
+   "authors": "Chan, N.",
+   "year": 2021,
+   "title": "Beyond delegation size: Developing country negotiating capacity and NGO ‘support’ in international climate negotiations",
+   "venue": "International Environmental Agreements, 21, 201–217",
+   "doi": "10.1007/s10784-020-09513-4",
+   "chapters": [
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۲"
+   ],
+   "relevance": 74,
+   "finding_fa": "تحلیل ظرفیت مذاکراتی کشورهای در حال توسعه — بستر فهم مواضع مخالف/محتاط نسبت به اسناد الزام‌آور.",
+   "strength_fa": "پشتوانهٔ تحلیل «مواضع کشورها» (فصل۴، گفتار۲؛ فرضیهٔ فرعی۲).",
+   "weakness_fa": "متمرکز بر اقلیم؛ باید به پیمان تعمیم یابد.",
+   "citation_note_fa": "برای تحلیل ژئوپلیتیک مواضع کشورها."
+  },
+  {
+   "id": "DB18",
+   "db": "HeinOnline",
+   "authors": "Pedersen, O.W.",
+   "year": 2019,
+   "title": "The Global Pact for the Environment: An Assessment",
+   "venue": "Journal of Environmental Law / law review commentary",
+   "doi": "",
+   "url": "https://academic.oup.com/jel",
+   "chapters": [
+    "فصل۳",
+    "فصل۴"
+   ],
+   "questions": [
+    "اصلی",
+    "فرعی۱"
+   ],
+   "relevance": 81,
+   "finding_fa": "ارزیابی انتقادی توان و محدودیت‌های پیمان در ارتقای انسجام و کارآمدی نظام موجود.",
+   "strength_fa": "دیدگاه متوازن انگلوساکسون مکمل نگاه فرانسوی معماران.",
+   "weakness_fa": "کوتاه؛ تحلیل تطبیقی محدود.",
+   "citation_note_fa": "دیدگاه ارزیابانه برای فصل۳ گفتار۲."
+  },
+  {
+   "id": "DB19",
+   "db": "Scopus",
+   "authors": "Vinuales, J.E.",
+   "year": 2018,
+   "title": "The Organisation of the Anthropocene: In Our Hands?",
+   "venue": "Brill Research Perspectives in International Legal Theory and Practice",
+   "doi": "10.1163/24056901-12340003",
+   "chapters": [
+    "فصل۲",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۴"
+   ],
+   "relevance": 76,
+   "finding_fa": "بازطراحی حکمرانی حقوقی برای عصر انتروپوسن؛ نقش اصول بنیادین در سازمان‌دهی نظم محیط‌زیستی.",
+   "strength_fa": "پل نظری میان انتروپوسن و طراحی سند چتر.",
+   "weakness_fa": "نظری و انتزاعی.",
+   "citation_note_fa": "پشتوانهٔ نظری فصل۲ و فصل۴."
+  },
+  {
+   "id": "DB20",
+   "db": "Westlaw",
+   "authors": "Duvic-Paoli, L.-A.",
+   "year": 2018,
+   "title": "The Prevention Principle in International Environmental Law",
+   "venue": "Cambridge University Press",
+   "doi": "10.1017/9781108241847",
+   "chapters": [
+    "فصل۳"
+   ],
+   "questions": [
+    "فرعی۳"
+   ],
+   "relevance": 77,
+   "finding_fa": "تحلیل جامع اصل پیشگیری به‌مثابه یکی از اصول بنیادین قابل درج در پیمان.",
+   "strength_fa": "عمق در یکی از اصول کلیدی پیمان (فصل۳ گفتار۲).",
+   "weakness_fa": "تک‌اصلی؛ دامنهٔ محدود.",
+   "citation_note_fa": "برای تحلیل اصول بنیادین پیمان."
+  },
+  {
+   "id": "DB22",
+   "db": "HeinOnline",
+   "authors": "ILC (Koskenniemi, M.)",
+   "year": 2006,
+   "title": "Fragmentation of International Law: Difficulties Arising from the Diversification and Expansion of International Law (A/CN.4/L.682)",
+   "venue": "International Law Commission, UN",
+   "doi": "",
+   "url": "https://legal.un.org/ilc/documentation/english/a_cn4_l682.pdf",
+   "chapters": [
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۴"
+   ],
+   "relevance": 93,
+   "finding_fa": "چارچوب مرجع کمیسیون حقوق بین‌الملل دربارهٔ پراکندگی حقوق بین‌الملل و ابزارهای مدیریت تداخل هنجاری (lex specialis، تفسیر هماهنگ).",
+   "strength_fa": "سند بنیادین برای فصل۴ گفتار۱ (مدیریت تداخل هنجاری و تفسیر هماهنگ MEAها).",
+   "weakness_fa": "عمومی حقوق بین‌الملل؛ باید به بستر محیط‌زیست تطبیق داده شود.",
+   "citation_note_fa": "سند محوری تحلیل پراکندگی (منطبق بر منبع S175 مجموعهٔ رساله)."
+  },
+  {
+   "id": "DB23",
+   "db": "Scopus",
+   "authors": "Ivanova, M.",
+   "year": 2021,
+   "title": "The Untold Story of the World’s Leading Environmental Institution: UNEP at Fifty",
+   "venue": "MIT Press",
+   "doi": "10.7551/mitpress/12678.001.0001",
+   "chapters": [
+    "فصل۲",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۴"
+   ],
+   "relevance": 79,
+   "finding_fa": "روایت نهادی از UNEP و اصلاحات حکمرانی محیط‌زیستی جهانی؛ درس‌آموخته‌های اصلاح ساختاری.",
+   "strength_fa": "پشتوانهٔ بحث «خلأ ساختار حکمرانی» و درس‌آموخته‌های نهادی (فصل۳ و فصل۴).",
+   "weakness_fa": "نهادی‌محور؛ تحلیل حقوقی پیمان محدود.",
+   "citation_note_fa": "برای خلأ حکمرانی و درس‌آموخته‌های نهادی."
+  },
+  {
+   "id": "DB24",
+   "db": "Westlaw",
+   "authors": "Knox, J.H.",
+   "year": 2020,
+   "title": "Constructing the Human Right to a Healthy Environment",
+   "venue": "Annual Review of Law and Social Science, 16, 79–95",
+   "doi": "10.1146/annurev-lawsocsci-031720-074856",
+   "chapters": [
+    "فصل۳",
+    "فصل۵"
+   ],
+   "questions": [
+    "فرعی۱"
+   ],
+   "relevance": 82,
+   "finding_fa": "روند ساخت حق بر محیط‌زیست سالم و پیوند آن با اسناد الزام‌آور — پشتوانهٔ بُعد حقوق‌بشری پیمان.",
+   "strength_fa": "پیوند پیمان با جنبش حق بر محیط‌زیست سالم (قطعنامهٔ ۲۰۲۲) — مرتبط با نتیجه‌گیری.",
+   "weakness_fa": "حقوق‌بشرمحور؛ کمتر به MEAها می‌پردازد.",
+   "citation_note_fa": "برای بُعد حقوق‌بشری و میراث پیمان."
+  },
+  {
+   "id": "DB25",
+   "db": "Scopus",
+   "authors": "Bosselmann, K.",
+   "year": 2017,
+   "title": "The Principle of Sustainability: Transforming Law and Governance (2nd ed.)",
+   "venue": "Routledge",
+   "doi": "10.4324/9781315553955",
+   "chapters": [
+    "فصل۲",
+    "فصل۵"
+   ],
+   "questions": [
+    "فرعی۴"
+   ],
+   "relevance": 73,
+   "finding_fa": "اصل پایداری به‌مثابه هنجار بنیادین دگرگون‌کنندهٔ حقوق و حکمرانی — مبنای نقشهٔ راه آینده.",
+   "strength_fa": "پشتوانهٔ نظری نتیجه‌گیری و نقشهٔ راه (فصل۵).",
+   "weakness_fa": "نظری؛ کاربرد مستقیم بر MEAها محدود.",
+   "citation_note_fa": "برای راهبردهای آینده (فصل۵)."
+  },
+  {
+   "id": "DB26",
+   "db": "HeinOnline",
+   "authors": "Doelle, M. & Seck, S.",
+   "year": 2020,
+   "title": "Loss and Damage from Climate Change: From Concept to Remedy?",
+   "venue": "Climate Policy / environmental law journals",
+   "doi": "10.1080/14693062.2019.1630353",
+   "chapters": [
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۳"
+   ],
+   "relevance": 70,
+   "finding_fa": "از مفهوم تا جبران خسارت — نمونه‌ای از خلأ اجرا/ضمانت اجرا در رژیم‌های بخشی که سند چتر می‌تواند پوشش دهد.",
+   "strength_fa": "مثال عینی خلأ اجرایی برای فصل۳ و فصل۴.",
+   "weakness_fa": "اقلیم‌محور؛ تعمیم لازم است.",
+   "citation_note_fa": "نمونهٔ خلأ اجرا/ضمانت اجرا."
+  },
+  {
+   "id": "DB27",
+   "db": "Scopus",
+   "authors": "Aguila, Y.",
+   "year": 2020,
+   "title": "A Global Pact for the Environment: The Logical Outcome of 50 Years of International Environmental Law",
+   "venue": "Sustainability, 12(14), 5636",
+   "doi": "10.3390/su12145636",
+   "url": "https://www.mdpi.com/2071-1050/12/14/5636",
+   "access_fa": "دسترسی آزاد (MDPI Open Access)",
+   "chapters": [
+    "فصل۲",
+    "فصل۳"
+   ],
+   "questions": [
+    "اصلی",
+    "فرعی۱"
+   ],
+   "relevance": 97,
+   "finding_fa": "پیمان جهانی محیط زیست، برآیندِ منطقیِ پنج دهه تکاملِ حقوق بین‌الملل محیط زیست است؛ ابزاری برای «قانون‌اساسی‌سازیِ» اصولِ بنیادین و اجرای دستورکار ۲۰۳۰ به‌شمار می‌رود.",
+   "strength_fa": "روایتِ تاریخیِ منسجم از استکهلم ۱۹۷۲ تا پیش‌نویس ۲۰۱۷ از قلمِ خودِ دبیرکلِ کمیسیونِ تدوین‌کنندهٔ پیش‌نویس؛ مستقیماً به روایتِ «گذار» در فصل ۲ خوراک می‌دهد.",
+   "weakness_fa": "موضعِ حامیانه (نویسنده از معماران پیش‌نویس)؛ باید در کنارِ نقدِ Kotzé/French برای توازن استفاده شود.",
+   "citation_note_fa": "منبعِ درجه‌یک برای گفتارِ «مبانی نظری و روند شکل‌گیریِ پیمان» در فصل ۲ و مقدمهٔ فصل ۳."
+  },
+  {
+   "id": "DB28",
+   "db": "HeinOnline",
+   "authors": "Aguila, Y. & Viñuales, J. E.",
+   "year": 2019,
+   "title": "A Global Pact for the Environment: Conceptual Foundations",
+   "venue": "Review of European, Comparative & International Environmental Law (RECIEL), 28(1), 3–12",
+   "doi": "10.1111/reel.12277",
+   "url": "https://onlinelibrary.wiley.com/doi/10.1111/reel.12277",
+   "access_fa": "دسترسی رایگان (نسخهٔ آرشیویِ مخزنِ دانشگاه کمبریج)",
+   "chapters": [
+    "فصل۳",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۱",
+    "فرعی۲"
+   ],
+   "relevance": 96,
+   "finding_fa": "مبانیِ مفهومیِ پیمان: تجمیعِ اصولِ پراکنده در یک سندِ چترِ الزام‌آور با «منشورِ حقوق محیط‌زیستی» (حقوق ماهوی + حقوقِ رویه‌ایِ اطلاعات/مشارکت/دادرسی).",
+   "strength_fa": "چارچوبِ مفهومیِ دقیق برای تبیینِ «ارزش‌افزودهٔ حقوقیِ» پیمان نسبت به MEAهای موجود؛ ستونِ تحلیلیِ فصل ۳ و ۴.",
+   "weakness_fa": "کم‌تر به سازوکارِ اجرا و نهادِ نظارتی می‌پردازد؛ باید با منابعِ نهادی تکمیل شود.",
+   "citation_note_fa": "همراهِ تحلیلیِ کتابِ Legal Foundations؛ برای گفتارِ «ارزش‌افزوده و کاستی‌ها» در فصل ۳."
+  },
+  {
+   "id": "DB29",
+   "db": "HeinOnline",
+   "authors": "Aguila, Y. & Viñuales, J. E. (eds.)",
+   "year": 2019,
+   "title": "A Global Pact for the Environment: Legal Foundations",
+   "venue": "C-EENRG, University of Cambridge (Cambridge Report, March 2019)",
+   "doi": "",
+   "url": "https://www.landecon.cam.ac.uk/sites/default/files/2023-05/aguilavinualesaglobalpactfortheenvironmentcambridgereportmarch2019.pdf",
+   "access_fa": "دسترسی آزاد (PDF کاملِ رایگانِ دانشگاه کمبریج)",
+   "chapters": [
+    "فصل۲",
+    "فصل۳",
+    "فصل۴"
+   ],
+   "questions": [
+    "اصلی",
+    "فرعی۱",
+    "فرعی۲"
+   ],
+   "relevance": 95,
+   "finding_fa": "جلدِ مرجعِ گردآوریِ دیدگاه‌های صاحب‌نظرانِ حقوقِ محیط‌زیست دربارهٔ اصولِ پیش‌نویسِ پیمان (حقِ محیط‌زیستِ سالم، تعهدِ مراقبت، عدالتِ بین‌نسلی، اصلِ آلوده‌ساز-پرداخت‌کننده) و گزینه‌های نهادی.",
+   "strength_fa": "پوششِ ماده‌به‌مادهٔ پیش‌نویس با مشارکتِ ده‌ها متخصص؛ منبعِ ساختاری برای تحلیلِ محتواییِ پیمان در فصل ۳ (گفتارِ دوم).",
+   "weakness_fa": "پیش از شکستِ ۲۰۲۲ نوشته شده؛ باید با تحلیلِ خلافِ‌واقعِ فصل ۱ و منابعِ پس از ۲۰۲۲ تکمیل شود.",
+   "citation_note_fa": "منبعِ ستونیِ گفتارِ دومِ فصل ۳ (بررسیِ ابتکارِ پیمان)؛ برای پرکردنِ خلأِ ۳-۲ در پیش‌نویس."
+  },
+  {
+   "id": "DB30",
+   "db": "Westlaw",
+   "authors": "McGarry, B.",
+   "year": 2018,
+   "title": "The Global Pact for the Environment: Freshwater and Economic Law Synergies",
+   "venue": "Journal of International Economic Law, 21(4), 745–767",
+   "doi": "10.1093/jiel/jgy040",
+   "url": "https://academic.oup.com/jiel/article-abstract/21/4/745/5211564",
+   "access_fa": "دسترسی رایگانِ چکیده (متنِ کامل از طریقِ اشتراکِ نهادی)",
+   "chapters": [
+    "فصل۴",
+    "فصل۵"
+   ],
+   "questions": [
+    "فرعی۲"
+   ],
+   "relevance": 82,
+   "finding_fa": "تعاملِ پیمانِ پیشنهادی با رژیم‌های تجارت و سرمایه‌گذاریِ بین‌المللی؛ ظرفیتِ پیمان برای هماهنگ‌سازیِ تعهداتِ اقتصادی و حفاظتِ محیط‌زیستی در حوزهٔ منابعِ آب.",
+   "strength_fa": "نمونهٔ انضمامیِ اثرِ پیمان بر رژیم‌های موازی (تجارت/سرمایه‌گذاری)؛ به گفتارِ «آثارِ پیمان بر MEAها» در فصل ۴ کمک می‌کند.",
+   "weakness_fa": "تمرکزِ موضوعیِ محدود (آبِ شیرین)؛ تعمیم به کلِ MEAها نیازمندِ احتیاط است.",
+   "citation_note_fa": "برای گفتارِ تعاملِ پیمان با رژیم‌های اقتصادی و تحلیلِ اثرِ افقی در فصل ۴."
+  },
+  {
+   "id": "DB31",
+   "db": "Scopus",
+   "authors": "Kim, R. E. & Bosselmann, K.",
+   "year": 2013,
+   "title": "International Environmental Law in the Anthropocene: Towards a Purposive System of Multilateral Environmental Agreements",
+   "venue": "Transnational Environmental Law, 2(2), 285–309",
+   "doi": "10.1017/S2047102513000021",
+   "url": "https://www.cambridge.org/core/journals/transnational-environmental-law/article/abs/international-environmental-law-in-the-anthropocene-towards-a-purposive-system-of-multilateral-environmental-agreements/A658DC42B37B3D5C49BAAEC177BF4C84",
+   "access_fa": "دسترسی رایگانِ چکیده (Cambridge Core)",
+   "chapters": [
+    "فصل۲",
+    "فصل۵"
+   ],
+   "questions": [
+    "اصلی"
+   ],
+   "relevance": 90,
+   "finding_fa": "نظامِ MEAها فاقدِ «هنجارِ بنیادین/هدفِ مشترک» است و واکنشی و پراکنده می‌ماند؛ راهِ برون‌رفت، نظامِ هدف‌محورِ همسو با علمِ سامانهٔ زمین و مرزهای سیّاره‌ای است.",
+   "strength_fa": "مبنای نظریِ نیرومند برای تبیینِ «چرا پیمانِ چتری لازم است»؛ پلِ مفهومی میانِ نقدِ پراکندگی (فصل ۲) و ارزیابیِ راهِ‌حلِ پیمان.",
+   "weakness_fa": "انتزاعی و هنجاری؛ کم‌تر به سازِکارِ حقوقیِ گذار می‌پردازد.",
+   "citation_note_fa": "برای گفتارِ «رویکردِ واکنشی/بخشی/پراکنده» در فصل ۲ و جمع‌بندیِ فصل ۵."
+  },
+  {
+   "id": "DB32",
+   "db": "Scopus",
+   "authors": "Sand, P. H. & McGee, J.",
+   "year": 2022,
+   "title": "International Environmental Governance: Managing Fragmentation through Institutional Connection",
+   "venue": "International Environmental Agreements: Politics, Law and Economics",
+   "doi": "10.1007/s10784-022-09572-9",
+   "url": "https://link.springer.com/article/10.1007/s10784-022-09572-9",
+   "access_fa": "دسترسی آزاد (Springer Open)",
+   "chapters": [
+    "فصل۲",
+    "فصل۴"
+   ],
+   "questions": [
+    "فرعی۱"
+   ],
+   "relevance": 84,
+   "finding_fa": "پراکندگیِ حکمرانیِ محیط‌زیستی بیش از آنکه با «ادغامِ کامل» رفع شود، از راهِ اتصالِ نهادی و هم‌افزایی (تفاهم‌نامه‌ها، نشست‌های پشت‌به‌پشتِ COPها، گروه‌های رابط) مدیریت می‌شود.",
+   "strength_fa": "دیدگاهِ واقع‌گرایانه به‌جای آرمانِ «سازمانِ جهانیِ محیط‌زیست»؛ برای سنجشِ گزینه‌های بدیلِ پیمان در فصل ۴ کارآمد است.",
+   "weakness_fa": "کم‌تر به پیمانِ جهانی به‌عنوانِ راهِ‌حلِ هنجاری می‌پردازد؛ مکمّلِ نقدی است نه حامیِ پیمان.",
+   "citation_note_fa": "برای گفتارِ «مدیریتِ پراکندگی» در فصل ۲ و مقایسهٔ پیمان با بدیل‌های نهادی در فصل ۴."
+  },
+  {
+   "id": "DB33",
+   "db": "HeinOnline",
+   "authors": "Kotzé, L. J. & French, D.",
+   "year": 2018,
+   "title": "The Anthropocene's Global Environmental Constitutional Moment (companion analysis)",
+   "venue": "Yearbook of International Environmental Law, 29, 24–46",
+   "doi": "10.1093/yiel/yvz027",
+   "url": "https://academic.oup.com/yielaw/article-abstract/doi/10.1093/yiel/yvz027",
+   "access_fa": "دسترسی رایگانِ چکیده (متنِ کامل با اشتراکِ نهادی)",
+   "chapters": [
+    "فصل۳",
+    "فصل۵"
+   ],
+   "questions": [
+    "فرعی۲"
+   ],
+   "relevance": 86,
+   "finding_fa": "آیا پیمان یک «لحظهٔ قانون‌اساسیِ محیط‌زیستیِ جهانی» است؟ ارزیابیِ انتقادیِ ظرفیتِ پیمان برای ارتقای اصولِ محیط‌زیستی به سطحِ بنیادین.",
+   "strength_fa": "چارچوبِ سنجشِ «ارزشِ قانون‌اساسیِ» پیمان؛ مکملِ نقدِ Kotzé/French (DB01) برای فصل ۳.",
+   "weakness_fa": "نظری و کلان‌نگر؛ نیازمندِ داده‌های عملیِ مذاکراتِ ۲۰۱۹–۲۰۲۲ برای انضمامی‌شدن.",
+   "citation_note_fa": "برای گفتارِ «ارزیابیِ انتقادیِ پیمان» در فصل ۳ و جمع‌بندیِ فصل ۵."
+  },
+  {
+   "id": "DB34",
+   "db": "Westlaw",
+   "authors": "UN Secretary-General",
+   "year": 2018,
+   "title": "Gaps in international environmental law and environment-related instruments: towards a global pact for the environment",
+   "venue": "UN Doc. A/73/419, 30 November 2018",
+   "doi": "",
+   "url": "https://wedocs.unep.org/handle/20.500.11822/27070",
+   "access_fa": "سندِ رسمیِ سازمان ملل (دسترسیِ آزاد)",
+   "chapters": [
+    "فصل۲",
+    "فصل۳"
+   ],
+   "questions": [
+    "اصلی",
+    "فرعی۱"
+   ],
+   "relevance": 99,
+   "finding_fa": "گزارشِ فنیِ دبیرکل: احصای شکاف‌های حقوقی، نهادی و اجراییِ حقوق بین‌الملل محیط زیست؛ زیربنای رسمیِ فرایندِ «به‌سوی پیمانِ جهانی» و گروهِ کاریِ نایروبی.",
+   "strength_fa": "منبعِ اولیه و مرجعِ رسمی برای اثباتِ «خلأها»؛ ستونِ استناد در فصل ۲ (ضرورتِ پیمان) و فصل ۳ (گفتارِ نخست: واکاویِ خلأها).",
+   "weakness_fa": "توصیفی و محتاطانه (بدونِ توصیهٔ صریح به سندِ الزام‌آور)؛ باید با تحلیلِ حقوقیِ ثانویه تفسیر شود.",
+   "citation_note_fa": "منبعِ رسمیِ کلیدی؛ نباید با «پیمان برای آینده» خلط شود — این سند صریحاً «پیمانِ جهانیِ محیط‌زیست» است."
+  }
+ ]
 }

@@ -17,6 +17,7 @@ const fmt = n => new Intl.NumberFormat("fa-IR").format(n);
 let B = null;   // brain data
 let DBM = null; // database-mining data
 let RI = null;  // research-intelligence data
+let TH = null;  // thesis (living menu) data
 let cy = null;  // cytoscape instance
 const byId = {};
 
@@ -59,6 +60,7 @@ async function boot() {
   B.sources.forEach(s => byId[s.id] = s);
   try { DBM = await (await fetch("./db_mining.json", { cache: "no-store" })).json(); } catch (e) { DBM = null; }
   try { RI = await (await fetch("./research_intel.json", { cache: "no-store" })).json(); } catch (e) { RI = null; }
+  try { TH = await (await fetch("./thesis.json", { cache: "no-store" })).json(); } catch (e) { TH = null; }
   $("#loading").remove();
   $("#ftmeta").textContent = `Project Brain — ${fmt(B.stats.sources)} منبع دیجست‌شده · آخرین به‌روزرسانی: ${new Date(B.generated).toLocaleString("fa-IR")}`;
 
@@ -69,6 +71,8 @@ async function boot() {
   renderMatrix();
   renderDatabases();
   renderFindings();
+  renderThesis();
+  renderReview();
 
   // Use event delegation on the tabs container to handle clicks on icons/spans inside tabs
   $("#tabs").addEventListener("click", e => {
@@ -627,6 +631,7 @@ function renderDatabases() {
   const m = DBM.meta, pr = DBM.prisma;
   const counts = {};
   DBM.articles.forEach(a => counts[a.db] = (counts[a.db] || 0) + 1);
+  const freeCount = DBM.articles.filter(a => a.access_fa).length;
 
   let html = `
     <div class="view-head">
@@ -674,6 +679,7 @@ function renderDatabases() {
     <h3 class="sec-title">${icon("book-marked")}منابع شناسایی‌شده <span class="badge" style="background:var(--accent)">${fmt(DBM.articles.length)}</span></h3>
     <div class="db-filterbar" id="dbFilterBar">
       <button class="db-fbtn active" data-db="all">همه (${fmt(DBM.articles.length)})</button>
+      <button class="db-fbtn free" data-db="__free"><span class="dot" style="background:var(--accent)"></span>دسترسی آزاد/رایگان (${fmt(freeCount)})</button>
       ${Object.keys(counts).map(k => `<button class="db-fbtn" data-db="${k}"><span class="dot" style="background:${DBCOLORS[k]}"></span>${esc(k)} (${fmt(counts[k])})</button>`).join("")}
     </div>
     <div class="art-list" id="artList"></div>`;
@@ -681,10 +687,13 @@ function renderDatabases() {
   v.innerHTML = html;
 
   function drawArts(db) {
-    const arts = (db === "all" ? DBM.articles : DBM.articles.filter(a => a.db === db))
-      .slice().sort((a, b) => b.relevance - a.relevance);
+    let arts;
+    if (db === "all") arts = DBM.articles.slice();
+    else if (db === "__free") arts = DBM.articles.filter(a => a.access_fa);
+    else arts = DBM.articles.filter(a => a.db === db);
+    arts = arts.sort((a, b) => b.relevance - a.relevance);
     $("#artList").innerHTML = arts.map(a => `
-      <div class="art-card" style="--dbc:${DBCOLORS[a.db] || 'var(--accent)'}">
+      <div class="art-card${a.access_fa ? ' has-free' : ''}" style="--dbc:${DBCOLORS[a.db] || 'var(--accent)'}">
         <div class="art-top">
           <span class="db-chip sm" style="background:${DBCOLORS[a.db] || 'var(--accent)'}">${esc(a.db)}</span>
           <span class="rel-badge" title="امتیاز ارتباط">${icon("target")}${a.relevance}٪</span>
@@ -692,6 +701,7 @@ function renderDatabases() {
         <h4 class="art-title">${esc(a.title)}</h4>
         <p class="art-meta">${esc(a.authors)} · <span>${a.year}</span></p>
         <p class="art-venue">${esc(a.venue)}</p>
+        ${a.access_fa ? `<div class="art-access">${icon("unlock")}${esc(a.access_fa)}</div>` : ""}
         ${a.doi ? `<a class="art-doi" href="https://doi.org/${esc(a.doi)}" target="_blank" rel="noopener">${icon("link")}DOI: ${esc(a.doi)}</a>` : (a.url ? `<a class="art-doi" href="${esc(a.url)}" target="_blank" rel="noopener">${icon("external-link")}مشاهدهٔ منبع</a>` : "")}
         <div class="art-finding"><b>یافتهٔ کلیدی:</b> ${esc(a.finding_fa)}</div>
         <div class="art-sw">
@@ -733,15 +743,15 @@ function renderFindings() {
 
     <div class="thesis-banner">
       <div class="thesis-banner-txt">
-        ${icon("file-text")}
+        ${icon("file-pen-line")}
         <div>
-          <b>پیش‌نویس رساله در حال نگارش است</b>
-          <span>فصل اول (چارچوب پژوهش) به‌طور کامل و آغاز فصل دوم — منطبق بر آیین‌نامهٔ نگارش ۱۴۰۰، با استناد پانویسی به منابع پایگاه‌های استنادی.</span>
+          <b>رسالهٔ زنده روی همین پایپلاین میزبانی می‌شود</b>
+          <span>ساختارِ فصل‌به‌فصل با متنِ واقعیِ پیش‌نویس‌های نگارنده (فصل ۲ و ۳ + پانویس‌ها) و فصل‌های تألیفیِ عامل (۱، ۴، ۵)، منطبق بر آیین‌نامهٔ نگارش ۱۴۰۰. خروجیِ Word/PDF از همین محتوا ساخته می‌شود.</span>
         </div>
       </div>
       <div class="thesis-banner-btns">
-        <a class="tbtn tbtn-primary" href="thesis_draft.docx" download>${icon("download")}دریافت Word</a>
-        <a class="tbtn" href="thesis_draft.pdf" target="_blank">${icon("eye")}مشاهدهٔ PDF</a>
+        <button class="tbtn tbtn-primary" onclick="switchView('thesis')">${icon("file-pen-line")}نگارش رساله</button>
+        <button class="tbtn" onclick="switchView('review')">${icon("clipboard-check")}نقد و سناریو</button>
       </div>
     </div>
 
@@ -831,6 +841,246 @@ function renderFindings() {
     </div>
     <div class="card contrib">${icon("award")}<div><b>مشارکت اصیل رساله:</b> ${esc(bp.expected_contribution_fa)}</div></div>
     <div class="card"><h3>${icon("pen-tool")}نکات نگارشی</h3><ul class="tick">${bp.writing_notes_fa.map(n => `<li>${esc(n)}</li>`).join("")}</ul></div>`;
+
+  v.innerHTML = html;
+  refreshIcons(v);
+}
+
+
+
+// ━━━━━━━━━━ THESIS (LIVING MENU) ━━━━━━━━━━
+window.switchView = switchView;
+
+// Render paragraph text, converting {{fn:N}} markers into superscript refs.
+function thPara(text, fns) {
+  const parts = String(text || "").split(/(\{\{fn:\d+\}\})/g);
+  return parts.map(seg => {
+    const m = seg.match(/^\{\{fn:(\d+)\}\}$/);
+    if (m) {
+      const n = +m[1];
+      const fnTxt = (fns && fns[n - 1]) ? fns[n - 1] : "";
+      return `<sup class="fnref" title="${esc(fnTxt)}">${fmt(n)}</sup>`;
+    }
+    return esc(seg);
+  }).join("");
+}
+
+const TH_STATUS = {
+  "written":    { cls: "st-written",   label: "نگاشتهٔ عامل" },
+  "user-draft": { cls: "st-userdraft", label: "پیش‌نویس نگارنده" },
+  "draft":      { cls: "st-draft",     label: "پیش‌نویس اولیه" },
+  "planned":    { cls: "st-planned",   label: "برنامه‌ریزی‌شده" }
+};
+function thBadge(status) {
+  const s = TH_STATUS[status] || { cls: "st-draft", label: status || "—" };
+  return `<span class="th-badge ${s.cls}">${esc(s.label)}</span>`;
+}
+
+function renderThesis() {
+  const v = $("#view-thesis");
+  if (!TH) { v.innerHTML = `<div class="view-head"><h2>نگارش رساله</h2><p class="muted">داده در دسترس نیست (thesis.json).</p></div>`; return; }
+  const m = TH.meta;
+  const chs = TH.chapters || [];
+
+  const totalParas = chs.reduce((a, c) => a + (c.stat_paras || 0), 0);
+  const totalFns = chs.reduce((a, c) => a + (c.stat_fns || 0), 0);
+  const totalSecs = chs.reduce((a, c) => a + (c.stat_sections || 0), 0);
+
+  let html = `
+    <div class="view-head">
+      <h2>${icon("file-pen-line")}${esc(m.title_fa)}</h2>
+      <p>${esc(m.subtitle_fa)}</p>
+    </div>
+    <div class="db-note">${icon("info")}<div>${esc(m.note_fa)}</div></div>
+
+    <div class="db-metrics">
+      <div class="db-metric"><b>${fmt(chs.length)}</b><span>فصل</span></div>
+      <div class="db-metric"><b>${fmt(totalSecs)}</b><span>گفتار/بخش</span></div>
+      <div class="db-metric"><b>${fmt(totalParas)}</b><span>بند</span></div>
+      <div class="db-metric hi"><b>${fmt(totalFns)}</b><span>پانویس</span></div>
+    </div>`;
+
+  // 1400 compliance panel
+  const cmp = TH.compliance_1400;
+  if (cmp) {
+    html += `
+    <div class="card th-compliance">
+      <h3>${icon("check-check")}انطباق با آیین‌نامهٔ نگارش ۱۴۰۰</h3>
+      <p class="muted" style="margin-top:-4px">${esc(cmp.intro_fa)}</p>
+      <div class="cmp-grid">
+        ${cmp.items.map(it => `
+          <div class="cmp-item ${it.status === 'ok' ? 'ok' : (it.status === 'todo' ? 'todo' : 'partial')}">
+            ${icon(it.status === 'ok' ? 'check-circle-2' : (it.status === 'todo' ? 'circle-dashed' : 'circle-dot'))}
+            <div><b>${esc(it.item_fa)}</b><span>${esc(it.rule_fa)}</span></div>
+          </div>`).join("")}
+      </div>
+    </div>`;
+  }
+
+  // Chapter status legend
+  html += `<div class="th-legend">
+    ${Object.keys(TH_STATUS).map(k => `<span class="th-badge ${TH_STATUS[k].cls}">${esc(TH_STATUS[k].label)}</span>`).join("")}
+    <span class="th-legend-note">${icon("mouse-pointer-click")} روی هر فصل بزنید تا باز/بسته شود؛ نشانهٔ عددی بالاِ متن، شمارهٔ پانویس است (نشانگر را روی آن نگه دارید).</span>
+  </div>`;
+
+  // Chapters accordion
+  html += `<div class="th-chapters">`;
+  chs.forEach((c, ci) => {
+    html += `
+      <div class="th-ch acc ${ci === 0 ? "open" : ""}">
+        <div class="acc-hd th-ch-hd" onclick="this.parentElement.classList.toggle('open')">
+          <div class="th-ch-title">
+            <span class="th-ch-num">${esc(c.num)}</span>
+            <b>${esc(c.title_fa)}</b>
+            ${thBadge(c.status)}
+          </div>
+          <div class="th-ch-stats">
+            ${c.cap_fa ? `<span class="th-cap">${esc(c.cap_fa)}</span>` : ""}
+            <span class="cnt">${fmt(c.stat_sections)} بخش · ${fmt(c.stat_paras)} بند · ${fmt(c.stat_fns)} پانویس</span>
+            ${icon("chevron-down")}
+          </div>
+        </div>
+        <div class="acc-bd">
+          ${c.summary_fa ? `<p class="th-ch-summary">${icon("quote")}${esc(c.summary_fa)}</p>` : ""}
+          <div class="th-sections">`;
+    (c.sections || []).forEach(s => {
+      const lvl = Math.min(s.level || 1, 4);
+      html += `
+            <div class="th-sec lvl-${lvl}">
+              <div class="th-sec-hd">
+                <span class="th-sec-num">${esc(s.num || "")}</span>
+                <h4>${esc(s.title_fa || "")}</h4>
+                ${s.status ? thBadge(s.status) : ""}
+              </div>
+              <div class="th-sec-body">
+                ${(s.paras || []).map(p => `<p class="th-p">${thPara(p, s.fns)}</p>`).join("")}
+              </div>`;
+      if (s.fns && s.fns.length) {
+        html += `
+              <details class="th-fns">
+                <summary>${icon("list-ordered")}پانویس‌های این بخش (${fmt(s.fns.length)})</summary>
+                <ol>${s.fns.map(f => `<li>${esc(f)}</li>`).join("")}</ol>
+              </details>`;
+      }
+      if (s.sources && s.sources.length) {
+        html += `<div class="th-sec-src">${icon("link")}${s.sources.map(x => `<span class="tag">${esc(x)}</span>`).join("")}</div>`;
+      }
+      html += `</div>`;
+    });
+    html += `
+          </div>
+        </div>
+      </div>`;
+  });
+  html += `</div>`;
+
+  v.innerHTML = html;
+  refreshIcons(v);
+}
+
+// ━━━━━━━━━━ REVIEW (CRITIQUE + SCENARIO) ━━━━━━━━━━
+const VERDICT = {
+  keep:     { cls: "vd-keep",     label: "نگه‌داشتن",  ic: "check-circle-2" },
+  complete: { cls: "vd-complete", label: "کامل‌کردن",  ic: "plus-circle" },
+  fix:      { cls: "vd-fix",      label: "اصلاح",       ic: "wrench" },
+  delete:   { cls: "vd-delete",   label: "حذف/انتقال", ic: "trash-2" }
+};
+
+function renderReview() {
+  const v = $("#view-review");
+  if (!TH || (!TH.critique && !TH.scenario)) {
+    v.innerHTML = `<div class="view-head"><h2>نقد و سناریو</h2><p class="muted">داده در دسترس نیست.</p></div>`;
+    return;
+  }
+  const cr = TH.critique, sc = TH.scenario;
+
+  let html = `
+    <div class="view-head">
+      <h2>${icon("clipboard-check")}نقدِ پیش‌نویس‌ها و بازآراییِ سناریو</h2>
+      <p>نقدِ بندبندِ پیش‌نویس‌های نگارنده (با حکم، دلیل و منبع) و مقایسهٔ سناریوی نگارنده با بازنویسیِ پیشنهادیِ عامل.</p>
+    </div>`;
+
+  // ── Critique ──
+  if (cr) {
+    html += `<div class="db-note">${icon("info")}<div>${esc(cr.intro_fa)}</div></div>`;
+    // verdict legend
+    html += `<div class="th-legend">
+      ${Object.keys(VERDICT).map(k => `<span class="vd-chip ${VERDICT[k].cls}">${icon(VERDICT[k].ic)}${esc(VERDICT[k].label)}</span>`).join("")}
+    </div>`;
+
+    (cr.chapters || []).forEach((c, i) => {
+      // counts per verdict
+      const vc = {};
+      c.comments.forEach(cm => vc[cm.verdict] = (vc[cm.verdict] || 0) + 1);
+      html += `
+        <div class="rv-ch acc ${i === 0 ? "open" : ""}">
+          <div class="acc-hd rv-ch-hd" onclick="this.parentElement.classList.toggle('open')">
+            <b>${esc(c.ch)}</b>
+            <span class="rv-ch-counts">
+              ${Object.keys(VERDICT).filter(k => vc[k]).map(k => `<span class="vd-mini ${VERDICT[k].cls}">${esc(VERDICT[k].label)} ${fmt(vc[k])}</span>`).join("")}
+              ${icon("chevron-down")}
+            </span>
+          </div>
+          <div class="acc-bd">
+            ${c.overall_fa ? `<p class="rv-overall">${icon("scan-text")}${esc(c.overall_fa)}</p>` : ""}
+            <div class="rv-comments">
+              ${c.comments.map(cm => {
+                const vd = VERDICT[cm.verdict] || { cls: "vd-fix", label: cm.verdict, ic: "dot" };
+                return `
+                <div class="rv-c ${vd.cls}">
+                  <div class="rv-c-hd">
+                    <span class="rv-target">${esc(cm.target_fa)}</span>
+                    <span class="vd-chip ${vd.cls}">${icon(vd.ic)}${esc(vd.label)}</span>
+                  </div>
+                  <div class="rv-c-row"><b>${icon("message-square-text")}دلیل:</b> ${esc(cm.reason_fa)}</div>
+                  <div class="rv-c-row src"><b>${icon("book-marked")}منبع/مبنا:</b> ${esc(cm.source_fa)}</div>
+                </div>`;
+              }).join("")}
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+
+  // ── Scenario ──
+  if (sc) {
+    html += `<h3 class="sec-title">${icon("git-compare-arrows")}${esc(sc.rewrite_title_fa || "سناریو: نگارنده در برابر بازنویسیِ عامل")}</h3>`;
+    html += `<p class="muted" style="margin-top:-6px">${esc(sc.intro_fa)}</p>`;
+
+    // evaluation strengths/gaps
+    if (sc.strengths_fa || sc.gaps_fa) {
+      html += `<div class="two-col">`;
+      if (sc.strengths_fa) html += `<div class="col"><h3>${icon("check-circle")}${esc(sc.eval_title_fa || "ارزیابی")} — نقاط قوت</h3>${sc.strengths_fa.map(s => `<div class="gn-item n">${esc(s)}</div>`).join("")}</div>`;
+      if (sc.gaps_fa) html += `<div class="col"><h3>${icon("alert-triangle")}خلأها و اصلاح</h3>${sc.gaps_fa.map(g => `<div class="gn-item g">${esc(g)}</div>`).join("")}</div>`;
+      html += `</div>`;
+    }
+
+    if (sc.rewrite_note_fa) html += `<div class="card contrib" style="margin-top:14px">${icon("sparkles")}<div>${esc(sc.rewrite_note_fa)}</div></div>`;
+
+    // side-by-side chapters: author vs rewrite
+    const authors = sc.author_scenario_fa || [];
+    const rewrites = sc.rewrite_scenario_fa || [];
+    const n = Math.max(authors.length, rewrites.length);
+    html += `<div class="sc-compare-head"><div>${icon("user-pen")}${esc(sc.author_title_fa || "سناریوی نگارنده")}</div><div>${icon("bot")}${esc(sc.rewrite_title_fa || "بازنویسیِ عامل")}</div></div>`;
+    html += `<div class="sc-compare">`;
+    for (let i = 0; i < n; i++) {
+      const a = authors[i], r = rewrites[i];
+      html += `<div class="sc-row">
+        <div class="sc-cell author">
+          ${a ? `<div class="sc-ch-hd"><b>${esc(a.ch)}</b>${a.cap_fa ? `<em>${esc(a.cap_fa)}</em>` : ""}</div>
+                 <p class="sc-ch-title">${esc(a.title_fa)}</p>
+                 ${(a.goftar_fa && a.goftar_fa.length) ? `<ul>${a.goftar_fa.map(g => `<li>${esc(g)}</li>`).join("")}</ul>` : ""}` : `<p class="muted">—</p>`}
+        </div>
+        <div class="sc-cell rewrite">
+          ${r ? `<div class="sc-ch-hd"><b>${esc(r.ch)}</b>${r.cap_fa ? `<em>${esc(r.cap_fa)}</em>` : ""}</div>
+                 <p class="sc-ch-title">${esc(r.title_fa)}</p>
+                 ${(r.goftar_fa && r.goftar_fa.length) ? `<ul>${r.goftar_fa.map(g => `<li>${esc(g)}</li>`).join("")}</ul>` : ""}
+                 ${r.rationale_fa ? `<div class="sc-rationale">${icon("lightbulb")}${esc(r.rationale_fa)}</div>` : ""}` : `<p class="muted">—</p>`}
+        </div>
+      </div>`;
+    }
+    html += `</div>`;
+  }
 
   v.innerHTML = html;
   refreshIcons(v);
