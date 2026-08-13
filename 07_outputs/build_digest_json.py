@@ -12,9 +12,11 @@ by_id = {a["id"]: a for a in arts}
 
 sources = []
 for sid in R.ORDER:
-    a = by_id[sid]; nr = R.NARR[sid]
+    a = by_id[sid]; nr = R.NARR[sid]; fa = R.PERSIAN[sid]
     sources.append({
         "id": sid,
+        "name_fa": fa["name"],
+        "title_fa": fa["title"],
         "title": a.get("title", ""),
         "authors": a.get("authors", ""),
         "year": a.get("year", ""),

@@ -19,7 +19,7 @@ let DBM = null; // database-mining data
 let RI = null;  // research-intelligence data
 let TH = null;  // thesis (living menu) data
 let SD = null;  // source-digest data (هضم منابع)
-let GKG = null;      // knowledge-graph canvas state
+let cy = null;      // cytoscape instance
 const byId = {};
 
 // ─── Lucide icons helper ───
@@ -46,6 +46,7 @@ function applyTheme(t) {
     btn.innerHTML = `<i data-lucide="${t === "dark" ? "moon" : "sun"}"></i>`;
     refreshIcons(btn);
   }
+  if (cy) styleGraph();
 }
 
 // ─── Boot ───
@@ -273,265 +274,118 @@ function renderOverview() {
 }
 
 // ━━━━━━━━━━ GRAPH ━━━━━━━━━━
-// ── Knowledge graph: custom 2.5-D glowing canvas (WebGL-free, additive bloom) ──
-const G3D_PALETTE = [
-  "#00e68a", "#4da6ff", "#f0b040", "#a78bfa", "#f472b6",
-  "#ff5c6c", "#38e1c6", "#ffd23f", "#7ee787", "#ff9f6b",
-  "#6c7dff", "#e879f9", "#34d399", "#fb7185", "#60a5fa",
-  "#facc15", "#c084fc", "#2dd4bf", "#f97316", "#22d3ee",
-  "#a3e635", "#f87171"
-];
-function themeColor(idx) { return G3D_PALETTE[idx % G3D_PALETTE.length]; }
-
-const _spriteCache = {};
-function _hexA(hex, a) {
-  const h = hex.replace("#", "");
-  const r = parseInt(h.substr(0, 2), 16), g = parseInt(h.substr(2, 2), 16), b = parseInt(h.substr(4, 2), 16);
-  return `rgba(${r},${g},${b},${a})`;
+// ── Knowledge graph: Cytoscape.js (clean solid nodes, clickable, detail panel) ──
+function graphColors() {
+  const cs = getComputedStyle(document.documentElement);
+  return {
+    core: cs.getPropertyValue("--core").trim(),
+    supp: cs.getPropertyValue("--supp").trim(),
+    peri: cs.getPropertyValue("--peri").trim(),
+    theme: cs.getPropertyValue("--accent3").trim(),
+    line: cs.getPropertyValue("--line").trim(),
+    ink: cs.getPropertyValue("--ink").trim(),
+    muted: cs.getPropertyValue("--muted").trim(),
+    bg: cs.getPropertyValue("--panel").trim(),
+  };
 }
-function glowSprite(color) {
-  if (_spriteCache[color]) return _spriteCache[color];
-  const S = 64, cv = document.createElement("canvas"); cv.width = cv.height = S;
-  const ctx = cv.getContext("2d"), c = S / 2;
-  const g = ctx.createRadialGradient(c, c, 0, c, c, c);
-  g.addColorStop(0, "#ffffff");
-  g.addColorStop(0.16, color);
-  g.addColorStop(0.46, _hexA(color, 0.42));
-  g.addColorStop(1, _hexA(color, 0));
-  ctx.fillStyle = g; ctx.fillRect(0, 0, S, S);
-  _spriteCache[color] = cv; return cv;
-}
-function _hash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
-function _rand(seed) { let t = (seed >>> 0) + 0x6D2B79F5; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
 
-// Build node/link geometry: themes on a Fibonacci sphere, sources clustered around their primary theme.
-function buildKGData() {
-  const themeNodes = B.graph.nodes.filter(n => n.data.kind === "theme");
-  const themeColorMap = {}, centers = {};
-  const T = Math.max(1, themeNodes.length);
-  themeNodes.forEach((n, i) => {
-    themeColorMap[n.data.id] = themeColor(i);
-    const y = T > 1 ? 1 - (i / (T - 1)) * 2 : 0;
-    const rr = Math.sqrt(Math.max(0, 1 - y * y));
-    const phi = i * 2.399963;
-    const R = 165;
-    centers[n.data.id] = { x: Math.cos(phi) * rr * R, y: y * R, z: Math.sin(phi) * rr * R };
-  });
-  const srcTheme = {};
-  B.graph.edges.forEach(e => {
-    const { source, target } = e.data;
-    if (themeColorMap[target] && !srcTheme[source]) srcTheme[source] = target;
-    if (themeColorMap[source] && !srcTheme[target]) srcTheme[target] = source;
-  });
-  const nodes = B.graph.nodes.map(n => {
-    const d = n.data;
-    if (d.kind === "theme") {
-      const c = centers[d.id];
-      return { id: d.id, kind: "theme", title: d.label, color: themeColorMap[d.id],
-               r: Math.max(7, Math.min(15, 4 + (d.weight || 4) * 0.08)), x: c.x, y: c.y, z: c.z };
-    }
-    const t = srcTheme[d.id];
-    const c = t ? centers[t] : { x: 0, y: 0, z: 0 };
-    const col = t ? themeColorMap[t] : "#8896b0";
-    const h = _hash(d.id);
-    const spread = (t ? 66 : 210) * (d.importance === "core" ? 0.62 : d.importance === "peripheral" ? 1.12 : 0.88);
-    const size = d.importance === "core" ? 5.4 : d.importance === "peripheral" ? 2.3 : 3.6;
-    return { id: d.id, kind: "source", title: d.title, doc_type: d.doc_type, importance: d.importance, color: col, r: size,
-             x: c.x + (_rand(h) * 2 - 1) * spread, y: c.y + (_rand(h + 7) * 2 - 1) * spread, z: c.z + (_rand(h + 13) * 2 - 1) * spread };
-  });
-  const idx = {}; nodes.forEach((n, i) => idx[n.id] = i);
-  const links = [];
-  B.graph.edges.forEach(e => { const a = idx[e.data.source], b = idx[e.data.target]; if (a != null && b != null) links.push([a, b]); });
-  return { nodes, links };
+function styleGraph() {
+  if (!cy) return;
+  const c = graphColors();
+  const isDark = document.documentElement.getAttribute("data-theme") !== "light";
+  const halo = isDark ? "#0a1226" : "#ffffff";           // label halo for legibility
+  cy.style([
+    // ---- source nodes: clean solid discs ----
+    { selector: "node[kind='source']", style: {
+        "background-color": e => e.data("importance") === "core" ? c.core : e.data("importance") === "peripheral" ? c.peri : c.supp,
+        "background-opacity": 1,
+        width: e => e.data("importance") === "core" ? 26 : e.data("importance") === "peripheral" ? 13 : 18,
+        height: e => e.data("importance") === "core" ? 26 : e.data("importance") === "peripheral" ? 13 : 18,
+        "border-width": 1.5, "border-color": halo, "border-opacity": 0.9,
+        color: c.ink, "font-size": 9, "font-weight": 600,
+        "text-valign": "top", "text-halign": "center", "text-margin-y": -3,
+        "text-outline-width": 2.5, "text-outline-color": halo, "text-outline-opacity": 1,
+        // only label the important (core) sources by default → readable, uncluttered
+        label: e => e.data("importance") === "core" ? (e.data("label") || "") : ""
+    }},
+    // ---- theme nodes: solid accent pills, always labelled ----
+    { selector: "node[kind='theme']", style: {
+        "background-color": c.theme, "background-opacity": 1, shape: "round-rectangle",
+        label: "data(label)",
+        width: e => 44 + Math.min(80, (e.data("weight") || 1) * 5),
+        height: 26, "font-size": 10.5, "font-weight": 700, color: "#0a1226",
+        "text-valign": "center", "text-halign": "center",
+        "text-wrap": "wrap", "text-max-width": "110", padding: 6,
+        "border-width": 0
+    }},
+    { selector: "edge", style: { width: 1, "line-color": c.line, opacity: 0.28, "curve-style": "haystack" }},
+    // dim everything not in the selected neighbourhood
+    { selector: ".faded", style: { opacity: 0.05, "text-opacity": 0 }},
+    // highlighted neighbourhood: reveal labels of every connected source too
+    { selector: ".hl", style: { opacity: 1 }},
+    { selector: "node.hl[kind='source']", style: {
+        label: "data(label)", "font-size": 10, "z-index": 20,
+        "border-width": 2.5, "border-color": c.theme
+    }},
+    { selector: "edge.hl", style: { "line-color": c.theme, width: 2.5, opacity: 0.95 }},
+  ]);
 }
 
 function renderGraph() {
   const v = $("#view-graph");
-  if (v.dataset.built) { if (GKG) GKG.resize(); return; }
+  if (v.dataset.built) return;
   v.dataset.built = "1";
   v.innerHTML = `
     <div class="view-head">
-      <h2>${icon("share-2")}نقشه دانش سه‌بعدی</h2>
-      <p>هر کره = یک منبع یا محور موضوعی · رنگ = خوشهٔ موضوعی · اندازه = اهمیت/وزن · خطوط = پیوند منبع–محور</p>
+      <h2>${icon("share-2")}نقشه دانش</h2>
+      <p>گره‌های دایره‌ای = منابع · مستطیل‌های کهربایی = محورهای موضوعی · خطوط = ارتباط منبع–محور</p>
     </div>
     <div class="graph-controls">
-      <button class="facet active" data-imp="all">همهٔ منابع</button>
+      <button class="facet active" data-imp="all">همه</button>
       <button class="facet" data-imp="core">فقط هسته‌ای</button>
-      <button class="icon-btn active" id="rotBtn" title="چرخش خودکار">${icon("rotate-3d")}</button>
       <button class="icon-btn" id="fitBtn" title="بازنشانی نما">${icon("maximize-2")}</button>
     </div>
-    <div id="graph3d" class="graph3d-wrap">
-      <canvas id="kgCanvas"></canvas>
-      <div class="kg-tip" id="kgTip"></div>
-    </div>
-    <div class="graph-hint">${icon("mouse-pointer-2")} کشیدن با ماوس: چرخش · اسکرول: بزرگ‌نمایی · کلیک روی گره: جزئیات منبع/محور</div>
+    <div id="cy"></div>
     <div class="graph-legend">
-      <span><i class="dot" style="background:var(--accent3)"></i>محور موضوعی (بزرگ)</span>
-      <span><i class="dot" style="background:var(--core)"></i>منبع هسته‌ای</span>
-      <span><i class="dot" style="background:var(--supp)"></i>منبع پشتیبان</span>
-      <span><i class="dot" style="background:var(--peri)"></i>منبع حاشیه‌ای</span>
+      <span><i class="dot" style="background:var(--core);color:var(--core)"></i>هسته‌ای</span>
+      <span><i class="dot" style="background:var(--supp);color:var(--supp)"></i>پشتیبان</span>
+      <span><i class="dot" style="background:var(--peri);color:var(--peri)"></i>حاشیه‌ای</span>
+      <span><i class="dot" style="background:var(--accent3);color:var(--accent3)"></i>محور موضوعی</span>
     </div>`;
   refreshIcons(v);
-  startKG();
 
-  $("#rotBtn").onclick = () => { GKG.auto = !GKG.auto; $("#rotBtn").classList.toggle("active", GKG.auto); };
-  $("#fitBtn").onclick = () => { GKG.rx = -0.32; GKG.ry = 0.2; GKG.zoom = 1; };
+  cy = cytoscape({
+    container: $("#cy"),
+    elements: [...B.graph.nodes, ...B.graph.edges],
+    layout: { name: "cose", animate: false, nodeRepulsion: 10000, idealEdgeLength: 75, padding: 35 },
+    minZoom: 0.15, maxZoom: 3.5,
+  });
+  styleGraph();
+
+  cy.on("tap", "node", evt => {
+    const n = evt.target;
+    cy.elements().addClass("faded");
+    n.removeClass("faded");
+    n.neighborhood().removeClass("faded").addClass("hl");
+    n.connectedEdges().removeClass("faded").addClass("hl");
+    if (n.data("kind") === "source") openSource(n.id());
+    else showThemeSources(n.data("label"));
+  });
+  cy.on("tap", e => { if (e.target === cy) cy.elements().removeClass("faded hl"); });
+  $("#fitBtn").onclick = () => { cy.elements().removeClass("faded hl"); cy.fit(null, 30); };
   $$("#view-graph .facet[data-imp]").forEach(b => b.onclick = () => {
     $$("#view-graph .facet[data-imp]").forEach(x => x.classList.remove("active"));
     b.classList.add("active");
-    GKG.setFilter(b.dataset.imp);
-  });
-}
-
-function startKG() {
-  const canvas = $("#kgCanvas"), tip = $("#kgTip");
-  const ctx = canvas.getContext("2d");
-  const dpr = Math.min(2, window.devicePixelRatio || 1);
-  const full = buildKGData();
-  const state = {
-    data: full, rx: -0.32, ry: 0.2, zoom: 1, auto: true,
-    drag: false, moved: false, lx: 0, ly: 0, P: [], hover: -1, focal: 560,
-  };
-  GKG = state;
-
-  function resize() {
-    const w = canvas.clientWidth || 900, h = canvas.clientHeight || 520;
-    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
-  }
-  state.resize = resize;
-  resize();
-
-  function project(n) {
-    const cy = Math.cos(state.ry), sy = Math.sin(state.ry), cx = Math.cos(state.rx), sx = Math.sin(state.rx);
-    let x = n.x * cy - n.z * sy;
-    let z = n.x * sy + n.z * cy;
-    let y = n.y * cx - z * sx;
-    z = n.y * sx + z * cx;
-    const s = state.focal / (state.focal + z) * state.zoom;
-    return { sx: x * s, sy: y * s, s, z, r: n.r };
-  }
-
-  function frame() {
-    if (state.auto && !state.drag) state.ry += 0.0015;
-    const W = canvas.width, H = canvas.height;
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, W, H);
-    ctx.save();
-    ctx.translate(W / 2, H / 2);
-    const nodes = state.data.nodes, links = state.data.links;
-    const P = nodes.map(project);
-    state.P = P;
-    // edges — faint, depth-attenuated
-    ctx.globalCompositeOperation = "source-over";
-    ctx.lineWidth = Math.max(0.5, 0.55 * dpr);
-    for (let k = 0; k < links.length; k++) {
-      const pa = P[links[k][0]], pb = P[links[k][1]];
-      if (!pa || !pb) continue;
-      const depth = (pa.z + pb.z) / 2;
-      const al = Math.max(0.025, 0.15 - depth * 0.0004);
-      ctx.strokeStyle = `rgba(120,155,215,${al})`;
-      ctx.beginPath(); ctx.moveTo(pa.sx, pa.sy); ctx.lineTo(pb.sx, pb.sy); ctx.stroke();
-    }
-    // nodes — additive glow, painter's order (far → near)
-    const order = nodes.map((_, i) => i).sort((i, j) => P[j].z - P[i].z);
-    ctx.globalCompositeOperation = "lighter";
-    for (const i of order) {
-      const n = nodes[i], p = P[i];
-      const vr = Math.max(1.1, n.r * p.s * dpr);
-      const D = vr * 3.2;
-      ctx.globalAlpha = Math.min(1, 0.5 + p.s * 0.4);
-      ctx.drawImage(glowSprite(n.color), p.sx - D, p.sy - D, D * 2, D * 2);
-    }
-    // hover ring
-    if (state.hover >= 0 && P[state.hover]) {
-      const p = P[state.hover], n = nodes[state.hover];
-      ctx.globalCompositeOperation = "source-over";
-      ctx.globalAlpha = 1;
-      ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 1.5 * dpr;
-      ctx.beginPath(); ctx.arc(p.sx, p.sy, Math.max(4, n.r * p.s * dpr) + 5 * dpr, 0, Math.PI * 2); ctx.stroke();
-    }
-    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
-    ctx.restore();
-    state.raf = requestAnimationFrame(frame);
-  }
-  state.raf = requestAnimationFrame(frame);
-
-  function pick(mx, my) {
-    // mx,my in device px relative to canvas center
-    const W = canvas.width, H = canvas.height;
-    const px = mx - W / 2, py = my - H / 2;
-    let best = -1, bestD = 1e9;
-    for (let i = 0; i < state.P.length; i++) {
-      const p = state.P[i]; if (!p) continue;
-      const rr = Math.max(4, state.data.nodes[i].r * p.s * dpr) + 7 * dpr;
-      const d = (p.sx - px) ** 2 + (p.sy - py) ** 2;
-      if (d < rr * rr && p.z < bestD) { best = i; bestD = p.z; }
-    }
-    return best;
-  }
-  function evPos(e) {
-    const rect = canvas.getBoundingClientRect();
-    return { x: (e.clientX - rect.left) * dpr, y: (e.clientY - rect.top) * dpr };
-  }
-  canvas.addEventListener("mousedown", e => { state.drag = true; state.moved = false; const p = evPos(e); state.lx = p.x; state.ly = p.y; });
-  window.addEventListener("mouseup", () => { state.drag = false; });
-  canvas.addEventListener("mousemove", e => {
-    const p = evPos(e);
-    if (state.drag) {
-      state.ry += (p.x - state.lx) * 0.005 / dpr;
-      state.rx += (p.y - state.ly) * 0.005 / dpr;
-      state.rx = Math.max(-1.4, Math.min(1.4, state.rx));
-      state.lx = p.x; state.ly = p.y; state.moved = true;
-      tip.style.display = "none";
-    } else {
-      const hit = pick(p.x, p.y);
-      state.hover = hit;
-      canvas.style.cursor = hit >= 0 ? "pointer" : "grab";
-      if (hit >= 0) {
-        const n = state.data.nodes[hit];
-        tip.innerHTML = `<b>${esc(n.title || n.id)}</b><br><span>${n.kind === "theme" ? "محور موضوعی" : (n.id + " · " + (n.doc_type || "منبع"))}</span>`;
-        tip.style.display = "block";
-        const rect = canvas.getBoundingClientRect();
-        tip.style.left = (e.clientX - rect.left + 14) + "px";
-        tip.style.top = (e.clientY - rect.top + 14) + "px";
-      } else { tip.style.display = "none"; }
-    }
-  });
-  canvas.addEventListener("mouseleave", () => { state.hover = -1; tip.style.display = "none"; });
-  canvas.addEventListener("wheel", e => {
-    e.preventDefault();
-    state.zoom = Math.max(0.4, Math.min(3.2, state.zoom * (1 - e.deltaY * 0.0011)));
-  }, { passive: false });
-  canvas.addEventListener("click", e => {
-    if (state.moved) return;
-    const p = evPos(e);
-    const hit = pick(p.x, p.y);
-    if (hit >= 0) {
-      const n = state.data.nodes[hit];
-      if (n.kind === "source") openSource(n.id); else showThemeSources(n.title);
-    }
-  });
-
-  state.setFilter = imp => {
-    if (imp === "core") {
-      const keepThemes = new Set(full.nodes.filter(n => n.kind === "theme").map(n => n.id));
-      const keep = new Set(full.nodes.filter(n => n.kind === "theme" || n.importance === "core").map(n => n.id));
-      const nodes = full.nodes.filter(n => keep.has(n.id));
-      const remap = {}; nodes.forEach((n, i) => remap[n.id] = i);
-      const links = [];
-      full.links.forEach(([a, b]) => {
-        const na = full.nodes[a], nb = full.nodes[b];
-        if (keep.has(na.id) && keep.has(nb.id)) links.push([remap[na.id], remap[nb.id]]);
+    const imp = b.dataset.imp;
+    cy.batch(() => {
+      cy.nodes("[kind='source']").forEach(n => {
+        n.style("display", imp === "all" || n.data("importance") === "core" ? "element" : "none");
       });
-      state.data = { nodes, links };
-    } else {
-      state.data = full;
-    }
-    state.hover = -1;
-  };
-
-  window.addEventListener("resize", resize);
+    });
+    cy.layout({ name: "cose", animate: false, nodeRepulsion: 10000, idealEdgeLength: 75 }).run();
+  });
 }
+
 
 function showThemeSources(theme) {
   const ids = (B.themes.find(t => t.name === theme) || {}).source_ids || [];
@@ -964,8 +818,9 @@ function renderDigest() {
           <span class="rel-badge" title="امتیاز ارتباط">${icon("target")}${s.relevance}٪</span>
           ${s.caution ? `<span class="dg-warn">${icon("alert-triangle")}پیش‌چاپِ داوری‌نشده</span>` : ""}
         </div>
-        <h4 class="dg-title">${esc(s.title)}</h4>
-        <p class="dg-meta">${esc(s.authors)} · <span>${s.year}</span> · ${esc(s.venue)}</p>
+        <h4 class="dg-title">${esc(s.title_fa || s.title)}</h4>
+        <p class="dg-meta">${esc(s.name_fa || s.authors)} · <span>${fmt(s.year)}</span> · ${esc(s.venue)}</p>
+        <p class="dg-meta-en" dir="ltr">${esc(s.title)} — ${esc(s.authors)}</p>
         ${s.doi ? `<a class="art-doi" href="https://doi.org/${esc(s.doi)}" target="_blank" rel="noopener">${icon("link")}DOI: ${esc(s.doi)}</a>` : ""}
 
         <div class="dg-block">

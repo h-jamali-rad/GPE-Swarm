@@ -39,6 +39,29 @@ INTRO = [
 
 ORDER = ["DB35", "DB39", "DB38", "DB37", "DB36", "DB40"]
 
+# Persian-first display identity for each source so that headings and the
+# reference list read RTL/Persian-first (never lead with an English string).
+# The English author string / title is still shown, but only as a labelled
+# inline value inside the bibliographic identity block.
+PERSIAN = {
+    "DB35": {"name": "تیگره",
+             "title": "تحولِ حقوق بین‌الملل محیط زیست در میانهٔ بن‌بستِ سیاسی: حقوقِ محیط‌زیستی همچون زمینهٔ مشترک"},
+    "DB39": {"name": "تیلر",
+             "title": "آیا اهدافِ پیمانِ جهانیِ پیشنهادیِ محیط زیست مطلوب‌اند و آیا پیمان ارزش‌افزوده‌ای به حقوق بین‌الملل محیط زیست می‌افزاید؟"},
+    "DB38": {"name": "چاباسون و اِژه",
+             "title": "شکستِ پیمانِ جهانیِ محیط زیست: فرصتی ازدست‌رفته یا تیری ازکنارگذشته؟"},
+    "DB37": {"name": "کمیسیون حقوق بین‌الملل (کوسکِنیِمی)",
+             "title": "نتیجه‌گیریِ کارِ گروهِ مطالعاتیِ چندپارگیِ حقوق بین‌الملل: دشواری‌های ناشی از تنوع و گسترشِ حقوق بین‌الملل"},
+    "DB36": {"name": "داموآ و همکاران",
+             "title": "بن‌بست در انتروپوسن: معاهداتِ ناکارآمد و کشمکش بر سرِ حکمرانیِ سیّاره‌ای"},
+    "DB40": {"name": "پیش‌نویسِ پیمان (گروهِ حقوق‌دانان / IUCN)",
+             "title": "پیش‌نویسِ پیمانِ جهانیِ محیط زیست — ۲۶ ماده"},
+}
+
+_FA_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
+def fa_num(x):
+    return str(x).translate(_FA_DIGITS)
+
 NARR = {
     "DB35": {
         "points": [
@@ -233,26 +256,29 @@ def main():
     B.add_heading(doc, "", "فهرستِ منابعِ بررسی‌شده", 2, 14)
     for i, sid in enumerate(ORDER, 1):
         a = by_id[sid]
+        fa = PERSIAN[sid]
         pre = "⚠ " if NARR.get(sid, {}).get("caution") else ""
-        line = f"{pre}{a['authors']} ({a['year']}) — {a['title']}"
+        line = f"{pre}{fa['name']} ({fa_num(a['year'])}) — {fa['title']}"
         p = doc.add_paragraph(); B.make_rtl(p, justify=False, after=3)
-        r = p.add_run(f"{i}. "); B.set_run_fonts(r, 13, 11, bold=True, color="b08d3f")
+        r = p.add_run(f"{fa_num(i)}. "); B.set_run_fonts(r, 13, 11, bold=True, color="b08d3f")
         r2 = p.add_run(line); B.set_run_fonts(r2, 12, 11)
     doc.add_page_break()
 
     # per-source
     for idx, sid in enumerate(ORDER, 1):
-        a = by_id[sid]; nr = NARR[sid]
-        B.add_heading(doc, "", f"منبعِ {idx}: {a['title']}", 1, 15)
+        a = by_id[sid]; nr = NARR[sid]; fa = PERSIAN[sid]
+        B.add_heading(doc, "", f"منبعِ {fa_num(idx)}: {fa['name']} ({fa_num(a['year'])})", 1, 15)
 
         B.add_heading(doc, "", "الف) شناسنامهٔ کتاب‌شناختی", 2, 13)
+        label_line(doc, "عنوان (فارسی):", fa["title"])
+        label_line(doc, "عنوانِ اصلی (لاتین):", str(a.get("title", "")))
         label_line(doc, "پدیدآور:", str(a.get("authors", "")))
-        label_line(doc, "سالِ انتشار:", str(a.get("year", "")))
+        label_line(doc, "سالِ انتشار:", fa_num(a.get("year", "")))
         label_line(doc, "محلِ انتشار:", str(a.get("venue", "")))
         label_line(doc, "پایگاه:", str(a.get("db", "")))
         if a.get("doi"):
             label_line(doc, "DOI:", str(a.get("doi")))
-        label_line(doc, "درجهٔ ارتباط با رساله:", f"{a.get('relevance','')} از ۱۰۰")
+        label_line(doc, "درجهٔ ارتباط با رساله:", f"{fa_num(a.get('relevance',''))} از ۱۰۰")
         if nr.get("caution"):
             p = doc.add_paragraph(); B.make_rtl(p, justify=True, after=4)
             r = p.add_run("⚠ هشدارِ اعتبار: "); B.set_run_fonts(r, 13, 11, bold=True, color="b03a2e")
