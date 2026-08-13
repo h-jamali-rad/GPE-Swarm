@@ -14,8 +14,19 @@ from docx import Document
 from docx.shared import Pt, Mm
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
 
 import build_thesis_docx as B  # reuse helpers
+
+# ── brand palette (matches the site: deep petrol + gold on light) ──
+NAVY   = "123a52"   # H1 bars
+GOLD   = "b08d3f"   # accents / rules
+INK    = "14203a"   # strong text
+SUBBG  = "eaf1f6"   # light subheading band
+CARDBG = "f5f8fb"   # bibliographic card
+GREEN  = "1e6b3a"
+RED    = "b03a2e"
+PURPLE = "5a4a8a"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "..", "web", "گزارش_تحلیل_منابع.docx")
@@ -194,29 +205,91 @@ UPGRADES_TAIL = (
 )
 
 
-def hr(doc):
-    p = doc.add_paragraph()
+# ── OOXML ordering-safe paragraph decorations ──────────────────────────────
+# pBdr and shd must precede bidi/spacing/jc in a valid <w:pPr>; append blindly
+# and Word (though not LibreOffice) may drop them. Insert them before the first
+# "later" child so both Word and LibreOffice honour the colour/border.
+_LATER = {qn("w:tabs"), qn("w:bidi"), qn("w:spacing"), qn("w:ind"),
+          qn("w:contextualSpacing"), qn("w:jc"), qn("w:textDirection"), qn("w:rPr")}
+
+def _insert_ordered(p, el):
     ppr = p._p.get_or_add_pPr()
+    ref = None
+    for child in ppr:
+        if child.tag in _LATER:
+            ref = child; break
+    if ref is not None:
+        ref.addprevious(el)
+    else:
+        ppr.append(el)
+
+def set_shading(p, fill):
+    shd = OxmlElement("w:shd")
+    shd.set(w("val"), "clear"); shd.set(w("color"), "auto"); shd.set(w("fill"), fill)
+    _insert_ordered(p, shd)
+
+def set_borders(p, color=NAVY, sz="6", space="4", sides=("top", "bottom", "left", "right")):
     pbdr = OxmlElement("w:pBdr")
-    bottom = OxmlElement("w:bottom")
-    bottom.set(w("val"), "single"); bottom.set(w("sz"), "6")
-    bottom.set(w("space"), "1"); bottom.set(w("color"), "b08d3f")
-    pbdr.append(bottom); ppr.append(pbdr)
-    p.paragraph_format.space_after = Pt(2)
+    for s in sides:
+        el = OxmlElement("w:" + s)
+        el.set(w("val"), "single"); el.set(w("sz"), sz)
+        el.set(w("space"), space); el.set(w("color"), color)
+        pbdr.append(el)
+    _insert_ordered(p, pbdr)
 
 
-def label_line(doc, label, value, color="14203a"):
-    p = doc.add_paragraph(); B.make_rtl(p, justify=False, after=3)
+def hr(doc, color=GOLD, sz="6"):
+    p = doc.add_paragraph()
+    B.make_rtl(p, justify=False, after=2)
+    set_borders(p, color=color, sz=sz, space="1", sides=("bottom",))
+    return p
+
+
+def heading_bar(doc, text, fill=NAVY, fg="ffffff", fa_pt=15, before=14):
+    """Full-width colour bar heading — right-aligned RTL, white text."""
+    p = doc.add_paragraph(); B.make_rtl(p, justify=False, before=before, after=8)
+    p.paragraph_format.right_indent = Mm(1); p.paragraph_format.left_indent = Mm(1)
+    set_shading(p, fill)
+    set_borders(p, color=fill, sz="2", space="6")
+    r = p.add_run(text); B.set_run_fonts(r, fa_pt, 12, bold=True, color=fg)
+    return p
+
+
+def subheading(doc, text, fa_pt=13):
+    """Light band subheading with a thick gold right accent border."""
+    p = doc.add_paragraph(); B.make_rtl(p, justify=False, before=10, after=6)
+    p.paragraph_format.right_indent = Mm(1)
+    set_shading(p, SUBBG)
+    set_borders(p, color=GOLD, sz="24", space="6", sides=("right",))
+    r = p.add_run(text); B.set_run_fonts(r, fa_pt, 12, bold=True, color=NAVY)
+    return p
+
+
+def label_line(doc, label, value, color=INK, fill=None, after=3):
+    p = doc.add_paragraph(); B.make_rtl(p, justify=False, after=after)
+    if fill:
+        set_shading(p, fill)
+        p.paragraph_format.right_indent = Mm(3); p.paragraph_format.left_indent = Mm(3)
     r = p.add_run(label + " "); B.set_run_fonts(r, 12, 11, bold=True, color=color)
     r2 = p.add_run(value); B.set_run_fonts(r2, 12, 11, bold=False)
     return p
 
 
-def bullet(doc, text, mark="◄ ", mcolor="b08d3f"):
+def bullet(doc, text, mark="◄ ", mcolor=GOLD):
     p = doc.add_paragraph(); B.make_rtl(p, justify=True, after=4)
     p.paragraph_format.right_indent = Mm(6)
     r = p.add_run(mark); B.set_run_fonts(r, 13, 11, bold=True, color=mcolor)
     r2 = p.add_run(text); B.set_run_fonts(r2, 13, 11)
+    return p
+
+
+def banner(doc, text, fill=NAVY, fg="ffffff", fa_pt=22, before=0, after=8):
+    """Centered colour banner (used on the cover)."""
+    p = doc.add_paragraph(); B.make_rtl(p, justify=False, before=before, after=after)
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    set_shading(p, fill)
+    set_borders(p, color=fill, sz="2", space="10")
+    r = p.add_run(text); B.set_run_fonts(r, fa_pt, 13, bold=True, color=fg)
     return p
 
 
@@ -233,95 +306,101 @@ def main():
     B.set_rtl_section(doc)
     fns = B.Footnotes(doc)
 
-    # cover
+    # ── cover ──
     for _ in range(3):
         doc.add_paragraph()
-    B.center_para(doc, "گزارشِ تفصیلیِ تحلیل و هضمِ منابعِ کلیدیِ پژوهش", fa_pt=22, bold=True, after=10)
-    B.center_para(doc, "شکل‌گیریِ پیمانِ جهانیِ محیط زیست و تأثیرات آن بر موافقت‌نامه‌های چندجانبهٔ محیط‌زیستی",
-                  fa_pt=15, after=8)
-    hr(doc)
-    B.center_para(doc, "سندِ شفافیتِ استناد: از منبع تا نتیجه‌گیری", fa_pt=13, after=6)
-    for _ in range(7):
+    banner(doc, "گزارشِ تفصیلیِ تحلیل و هضمِ منابعِ کلیدیِ پژوهش", fill=NAVY, fa_pt=22, after=0)
+    banner(doc, "شکل‌گیریِ پیمانِ جهانیِ محیط زیست و تأثیرات آن بر موافقت‌نامه‌های چندجانبهٔ محیط‌زیستی",
+           fill="1c4a63", fa_pt=14, after=0)
+    banner(doc, "سندِ شفافیتِ استناد: از منبع تا نتیجه‌گیری", fill=GOLD, fg="1a1205", fa_pt=13, after=6)
+    for _ in range(6):
         doc.add_paragraph()
+    hr(doc)
     B.center_para(doc, "تهیه‌شده توسطِ سامانهٔ هوشمندِ پژوهش (Project Brain)", fa_pt=12, after=4)
     B.center_para(doc, "HJR's Agentic Architecture @2026 — Dedicated for Dr. Masoud Ahsannejad", fa_pt=11, after=4)
     doc.add_page_break()
 
-    # intro
-    B.add_heading(doc, "", "مقدمه: روشِ هضم و تحلیلِ منابع", 1, 16)
+    # ── intro ──
+    heading_bar(doc, "مقدمه: روشِ هضم و تحلیلِ منابع", fa_pt=16, before=0)
     for para in INTRO:
         B.add_para(doc, fns, para, fa_pt=14, indent=6)
     doc.add_paragraph()
 
-    B.add_heading(doc, "", "فهرستِ منابعِ بررسی‌شده", 2, 14)
+    subheading(doc, "فهرستِ منابعِ بررسی‌شده")
     for i, sid in enumerate(ORDER, 1):
         a = by_id[sid]
         fa = PERSIAN[sid]
         pre = "⚠ " if NARR.get(sid, {}).get("caution") else ""
         line = f"{pre}{fa['name']} ({fa_num(a['year'])}) — {fa['title']}"
-        p = doc.add_paragraph(); B.make_rtl(p, justify=False, after=3)
-        r = p.add_run(f"{fa_num(i)}. "); B.set_run_fonts(r, 13, 11, bold=True, color="b08d3f")
+        p = doc.add_paragraph(); B.make_rtl(p, justify=False, after=4)
+        p.paragraph_format.right_indent = Mm(2)
+        set_borders(p, color="dfe6ee", sz="4", space="3", sides=("bottom",))
+        r = p.add_run(f"{fa_num(i)}. "); B.set_run_fonts(r, 14, 12, bold=True, color=GOLD)
         r2 = p.add_run(line); B.set_run_fonts(r2, 12, 11)
     doc.add_page_break()
 
-    # per-source
+    # ── per-source ──
     for idx, sid in enumerate(ORDER, 1):
         a = by_id[sid]; nr = NARR[sid]; fa = PERSIAN[sid]
-        B.add_heading(doc, "", f"منبعِ {fa_num(idx)}: {fa['name']} ({fa_num(a['year'])})", 1, 15)
+        heading_bar(doc, f"منبعِ {fa_num(idx)}: {fa['name']} ({fa_num(a['year'])})", fa_pt=15, before=0)
 
-        B.add_heading(doc, "", "الف) شناسنامهٔ کتاب‌شناختی", 2, 13)
-        label_line(doc, "عنوان (فارسی):", fa["title"])
-        label_line(doc, "عنوانِ اصلی (لاتین):", str(a.get("title", "")))
-        label_line(doc, "پدیدآور:", str(a.get("authors", "")))
-        label_line(doc, "سالِ انتشار:", fa_num(a.get("year", "")))
-        label_line(doc, "محلِ انتشار:", str(a.get("venue", "")))
-        label_line(doc, "پایگاه:", str(a.get("db", "")))
+        subheading(doc, "الف) شناسنامهٔ کتاب‌شناختی")
+        rows = [("عنوان (فارسی):", fa["title"]),
+                ("عنوانِ اصلی (لاتین):", str(a.get("title", ""))),
+                ("پدیدآور:", str(a.get("authors", ""))),
+                ("سالِ انتشار:", fa_num(a.get("year", ""))),
+                ("محلِ انتشار:", str(a.get("venue", ""))),
+                ("پایگاه:", str(a.get("db", "")))]
         if a.get("doi"):
-            label_line(doc, "DOI:", str(a.get("doi")))
-        label_line(doc, "درجهٔ ارتباط با رساله:", f"{fa_num(a.get('relevance',''))} از ۱۰۰")
+            rows.append(("DOI:", str(a.get("doi"))))
+        rows.append(("درجهٔ ارتباط با رساله:", f"{fa_num(a.get('relevance',''))} از ۱۰۰"))
+        for lbl, val in rows:
+            label_line(doc, lbl, val, fill=CARDBG, after=1)
         if nr.get("caution"):
             p = doc.add_paragraph(); B.make_rtl(p, justify=True, after=4)
-            r = p.add_run("⚠ هشدارِ اعتبار: "); B.set_run_fonts(r, 13, 11, bold=True, color="b03a2e")
+            set_shading(p, "fbeceb"); set_borders(p, color=RED, sz="18", space="6", sides=("right",))
+            p.paragraph_format.right_indent = Mm(3); p.paragraph_format.left_indent = Mm(3)
+            r = p.add_run("⚠ هشدارِ اعتبار: "); B.set_run_fonts(r, 13, 11, bold=True, color=RED)
             r2 = p.add_run("این منبع پیش‌چاپِ داوری‌نشده (non-peer-reviewed preprint) است و با احتیاط و در کنارِ منابعِ داوری‌شده استناد شده است.")
             B.set_run_fonts(r2, 13, 11)
 
-        B.add_heading(doc, "", "ب) دایجستِ کامل و نکاتِ استخراج‌شده", 2, 13)
+        subheading(doc, "ب) دایجستِ کامل و نکاتِ استخراج‌شده")
         B.add_para(doc, fns, a.get("finding_fa", ""), fa_pt=14, indent=6)
         p = doc.add_paragraph(); B.make_rtl(p, justify=False, after=3)
-        r = p.add_run("نکاتِ کلیدیِ استخراج‌شده:"); B.set_run_fonts(r, 13, 11, bold=True, color="14203a")
+        r = p.add_run("نکاتِ کلیدیِ استخراج‌شده:"); B.set_run_fonts(r, 13, 11, bold=True, color=NAVY)
         for pt in nr["points"]:
             bullet(doc, pt)
         if a.get("strength_fa"):
-            label_line(doc, "نقطهٔ قوت:", a["strength_fa"], color="1e6b3a")
+            label_line(doc, "نقطهٔ قوت:", a["strength_fa"], color=GREEN)
         if a.get("weakness_fa"):
-            label_line(doc, "نقطهٔ ضعف/ملاحظه:", a["weakness_fa"], color="b03a2e")
+            label_line(doc, "نقطهٔ ضعف/ملاحظه:", a["weakness_fa"], color=RED)
 
-        B.add_heading(doc, "", "ج) کجا و چگونه در پژوهش به‌کار رفت", 2, 13)
-        label_line(doc, "فصولِ کاربرد:", "، ".join(a.get("chapters", [])) or "—")
-        label_line(doc, "پرسش‌های مرتبط:", "، ".join(a.get("questions", [])) or "—")
+        subheading(doc, "ج) کجا و چگونه در پژوهش به‌کار رفت")
+        label_line(doc, "فصولِ کاربرد:", "، ".join(a.get("chapters", [])) or "—", fill=CARDBG, after=1)
+        label_line(doc, "پرسش‌های مرتبط:", "، ".join(a.get("questions", [])) or "—", fill=CARDBG, after=1)
         B.add_para(doc, fns, nr["usage"], fa_pt=14, indent=6)
 
-        B.add_heading(doc, "", "د) سهمِ آن در بهینه‌سازیِ نتیجه‌گیری و سناریو", 2, 13)
+        subheading(doc, "د) سهمِ آن در بهینه‌سازیِ نتیجه‌گیری و سناریو")
         B.add_para(doc, fns, nr["opt"], fa_pt=14, indent=6)
         if a.get("citation_note_fa"):
-            label_line(doc, "یادداشتِ استناد:", a["citation_note_fa"], color="5a4a8a")
+            label_line(doc, "یادداشتِ استناد:", a["citation_note_fa"], color=PURPLE)
 
         hr(doc)
         if idx < len(ORDER):
             doc.add_page_break()
 
-    # synthesis
+    # ── synthesis ──
     doc.add_page_break()
-    B.add_heading(doc, "", "جمع‌بندی: چگونه این منابع نتیجه‌گیریِ سناریوی ما را بهینه کردند", 1, 16)
+    heading_bar(doc, "جمع‌بندی: چگونه این منابع نتیجه‌گیریِ سناریوی ما را بهینه کردند", fa_pt=16, before=0)
     for para in SYNTHESIS:
         B.add_para(doc, fns, para, fa_pt=14, indent=6)
 
-    # concrete upgrades
+    # ── concrete upgrades ──
     doc.add_paragraph()
-    B.add_heading(doc, "", "ارتقاهای عملیِ اعمال‌شده بر نتیجه‌گیری در پیِ این هضم", 1, 16)
+    heading_bar(doc, "ارتقاهای عملیِ اعمال‌شده بر نتیجه‌گیری در پیِ این هضم", fa_pt=16)
     B.add_para(doc, fns, UPGRADES_INTRO, fa_pt=14, indent=6)
     for u in UPGRADES:
-        bullet(doc, u, mark="✔ ", mcolor="1e6b3a")
+        bullet(doc, u, mark="✔ ", mcolor=GREEN)
     B.add_para(doc, fns, UPGRADES_TAIL, fa_pt=14, indent=6)
 
     doc.add_paragraph()

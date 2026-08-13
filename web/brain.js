@@ -331,10 +331,167 @@ function styleGraph() {
   ]);
 }
 
-function renderGraph() {
-  const v = $("#view-graph");
-  if (v.dataset.built) return;
-  v.dataset.built = "1";
+// Distinct hues for theme clusters → colourful, readable spheres (like the sample).
+const THEME_PALETTE = [
+  "#00e68a", "#4da6ff", "#f0b040", "#ff6b9d", "#a78bfa", "#5ad1c8",
+  "#ffb703", "#ef6f6c", "#7cc4ff", "#c3f584", "#ff9f45", "#b892ff",
+  "#4dd0a0", "#ffd166", "#f78fb3", "#6ee7ff", "#c0eb75", "#ffa07a",
+  "#9be7c4", "#e0aaff", "#8ecae6", "#ff8fab"
+];
+let graph3d = null;
+
+function webglOK() {
+  try {
+    const c = document.createElement("canvas");
+    return !!(window.WebGLRenderingContext &&
+      (c.getContext("webgl2") || c.getContext("webgl") || c.getContext("experimental-webgl")));
+  } catch (e) { return false; }
+}
+
+// Transform Cytoscape-style B.graph into {nodes, links} with colours + sizes.
+function buildGraphData() {
+  const nodes = B.graph.nodes.map(n => Object.assign({}, n.data));
+  const links = B.graph.edges.map(e => ({ source: e.data.source, target: e.data.target }));
+  const deg = {};
+  links.forEach(l => { deg[l.source] = (deg[l.source] || 0) + 1; deg[l.target] = (deg[l.target] || 0) + 1; });
+  // assign each theme a distinct colour
+  const themeColor = {};
+  let ti = 0;
+  nodes.forEach(n => { if (n.kind === "theme") themeColor[n.id] = THEME_PALETTE[ti++ % THEME_PALETTE.length]; });
+  // map each source → the themes it connects to
+  const srcThemes = {};
+  links.forEach(l => {
+    const s = l.source, t = l.target;
+    if (String(t).startsWith("T_")) (srcThemes[s] = srcThemes[s] || []).push(t);
+    if (String(s).startsWith("T_")) (srcThemes[t] = srcThemes[t] || []).push(s);
+  });
+  // assign each source to ONE cluster, load-balanced across its themes → vibrant, evenly-coloured clusters
+  const themeLoad = {}; Object.keys(themeColor).forEach(t => themeLoad[t] = 0);
+  const srcTheme = {};
+  Object.keys(srcThemes).forEach(s => {
+    const ts = srcThemes[s];
+    let best = ts[0];
+    ts.forEach(t => { if ((themeLoad[t] || 0) < (themeLoad[best] || 0)) best = t; });
+    srcTheme[s] = best; themeLoad[best] = (themeLoad[best] || 0) + 1;
+  });
+  nodes.forEach(n => {
+    n.deg = deg[n.id] || 1;
+    if (n.kind === "theme") {
+      n.isTheme = true;
+      n.color = themeColor[n.id];
+      n.name = n.label;
+      n.size = 8 + Math.min(46, n.deg * 1.4);
+      n.tooltip = n.label;
+    } else {
+      const tc = srcTheme[n.id];
+      n.color = tc ? themeColor[tc] : "#8ea2c4";
+      n.size = n.importance === "core" ? 3 + Math.min(11, n.deg * 0.7)
+             : n.importance === "peripheral" ? 1.6 : 2.4;
+      n.tooltip = n.title || n.id;
+    }
+  });
+  return { nodes, links };
+}
+
+const DIM_NODE = "rgba(120,140,175,0.10)";
+
+function build3D(v) {
+  v.innerHTML = `
+    <div class="view-head">
+      <h2>${icon("share-2")}نقشه دانش</h2>
+      <p>هر کره یک منبع است؛ کره‌های بزرگِ برچسب‌دار، محورهای موضوعی‌اند و رنگِ هر منبع نشان‌دهندهٔ خوشهٔ موضوعیِ آن است. با ماوس بچرخانید، اسکرول کنید تا زوم شود و روی هر گره کلیک کنید تا جزئیات باز شود.</p>
+    </div>
+    <div class="graph-controls">
+      <button class="icon-btn active" id="rotBtn" title="چرخش خودکار">${icon("rotate-cw")}</button>
+      <button class="icon-btn" id="fitBtn" title="بازنشانی نما">${icon("maximize-2")}</button>
+      <span class="g3d-hint">${icon("mouse-pointer-click")}<span>چرخش با درگ · زوم با اسکرول · کلیک برای جزئیات</span></span>
+    </div>
+    <div id="graph3d"></div>
+    <div class="graph-legend">
+      <span><i class="dot" style="background:#00e68a"></i>گره‌های بزرگ‌تر = پرارتباط‌تر</span>
+      <span><i class="dot" style="background:#f0b040"></i>محورِ موضوعی (برچسب‌دار)</span>
+      <span class="muted">رنگِ هر منبع = خوشهٔ موضوعیِ آن</span>
+    </div>`;
+  refreshIcons(v);
+
+  const container = $("#graph3d");
+  const data = buildGraphData();
+  const light = document.documentElement.getAttribute("data-theme") === "light";
+  const bg = light ? "#eaf0f8" : "#050a16";
+  const baseLink = light ? "rgba(90,120,160,0.22)" : "rgba(130,160,210,0.14)";
+  const hlLink = "#00e68a";
+
+  let hlNode = null;
+  const nbr = new Set();
+  const nodeColor = n => (hlNode && !nbr.has(n.id)) ? DIM_NODE : n.color;
+  const linkColor = l => {
+    const s = typeof l.source === "object" ? l.source.id : l.source;
+    const t = typeof l.target === "object" ? l.target.id : l.target;
+    if (!hlNode) return baseLink;
+    return (s === hlNode.id || t === hlNode.id) ? hlLink : "rgba(120,140,175,0.04)";
+  };
+  const refresh = () => { graph3d.nodeColor(nodeColor).linkColor(linkColor); };
+
+  let fitted = false;
+  graph3d = ForceGraph3D()(container)
+    .graphData(data)
+    .backgroundColor(bg)
+    .showNavInfo(false)
+    .nodeRelSize(4)
+    .nodeVal(n => n.size)
+    .nodeColor(nodeColor)
+    .nodeOpacity(1)
+    .nodeResolution(16)
+    .linkColor(linkColor)
+    .linkWidth(l => (hlNode && ((typeof l.source === "object" ? l.source.id : l.source) === hlNode.id || (typeof l.target === "object" ? l.target.id : l.target) === hlNode.id)) ? 1.2 : 0.4)
+    .linkOpacity(0.5)
+    .nodeLabel(n => `<div class="g3d-tip">${esc(n.tooltip)}</div>`)
+    .onNodeClick(n => {
+      hlNode = n; nbr.clear(); nbr.add(n.id);
+      data.links.forEach(l => {
+        const s = typeof l.source === "object" ? l.source.id : l.source;
+        const t = typeof l.target === "object" ? l.target.id : l.target;
+        if (s === n.id) nbr.add(t);
+        if (t === n.id) nbr.add(s);
+      });
+      refresh();
+      const r = Math.hypot(n.x, n.y, n.z) || 1;
+      const k = 1 + 120 / r;
+      graph3d.cameraPosition({ x: n.x * k, y: n.y * k, z: n.z * k }, n, 900);
+      if (n.isTheme) showThemeSources(n.name); else openSource(n.id);
+    })
+    .onBackgroundClick(() => { hlNode = null; nbr.clear(); refresh(); })
+    .cooldownTime(6000)
+    .onEngineStop(() => graph3d.zoomToFit(700, 55));
+
+  // spread clusters apart for a clean, readable layout
+  graph3d.d3Force("charge").strength(-90);
+  if (graph3d.d3Force("link")) graph3d.d3Force("link").distance(l => (typeof l.target === "object" && l.target.isTheme ? 30 : 44));
+
+  const resize = () => graph3d.width(container.clientWidth).height(container.clientHeight);
+  resize();
+  window.addEventListener("resize", resize);
+  // frame the cloud while the layout settles (safety, in case engine cools slowly)
+  [1200, 2600, 4200, 6200].forEach(t => setTimeout(() => { if (!hlNode) graph3d.zoomToFit(600, 55); }, t));
+
+  // controls
+  let rotating = true;
+  const controls = graph3d.controls();
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 0.55;
+  $("#rotBtn").onclick = e => {
+    rotating = !rotating;
+    controls.autoRotate = rotating;
+    e.currentTarget.classList.toggle("active", rotating);
+  };
+  $("#fitBtn").onclick = () => {
+    hlNode = null; nbr.clear(); refresh();
+    graph3d.zoomToFit(700, 40);
+  };
+}
+
+// ── 2D fallback (Cytoscape) — used only when WebGL/3D is unavailable ──
+function build2D(v) {
   v.innerHTML = `
     <div class="view-head">
       <h2>${icon("share-2")}نقشه دانش</h2>
@@ -384,6 +541,17 @@ function renderGraph() {
     });
     cy.layout({ name: "cose", animate: false, nodeRepulsion: 10000, idealEdgeLength: 75 }).run();
   });
+}
+
+function renderGraph() {
+  const v = $("#view-graph");
+  if (v.dataset.built) return;
+  v.dataset.built = "1";
+  if (typeof ForceGraph3D !== "undefined" && webglOK()) {
+    try { build3D(v); return; }
+    catch (e) { console.warn("3D graph failed, using 2D fallback:", e); }
+  }
+  build2D(v);
 }
 
 
