@@ -1437,6 +1437,15 @@ function renderCompile() {
       </div>
     </div>
 
+    <div class="dg-report" style="margin:14px 0 6px">
+      ${icon("clipboard-check")}
+      <div class="dg-report-txt"><b>گزارشِ اجرای اصلاحاتِ رساله (۹۰ بند)</b><span>سندِ شفافیتِ اجرا در پاسخ به گزارشِ بررسیِ تطبیقیِ نسخهٔ اول و دوم</span></div>
+      <div class="dg-report-btns">
+        <a class="dg-dl pdf" href="./${encodeURIComponent("گزارش_اصلاحات_رساله.pdf")}" target="_blank" rel="noopener">${icon("file-text")}دانلود PDF</a>
+        <a class="dg-dl doc" href="./${encodeURIComponent("گزارش_اصلاحات_رساله.docx")}" target="_blank" rel="noopener">${icon("file-type-2")}دانلود Word</a>
+      </div>
+    </div>
+
     <div class="doc-scroll" id="doc-preview">`;
 
   // ── Cover / title page ──
@@ -1501,6 +1510,19 @@ function renderCompile() {
         <div class="doc-sec lvl-${lvl}">
           <h${Math.min(lvl+2,6)} class="doc-sec-h"><span class="doc-sec-num">${esc(s.num||"")}</span>${esc(s.title_fa||"")}</h${Math.min(lvl+2,6)}>
           ${(s.paras||[]).map(p=>`<p class="doc-p">${thPara(p, s.fns)}</p>`).join("")}`;
+      if (s.table && (s.table.headers || s.table.rows)) {
+        const t = s.table;
+        html += `<div class="doc-table-wrap">`;
+        if (t.caption) html += `<div class="doc-table-cap">${esc(t.caption)}</div>`;
+        html += `<table class="doc-table" dir="rtl">`;
+        if (t.headers && t.headers.length) {
+          html += `<thead><tr>${t.headers.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead>`;
+        }
+        if (t.rows && t.rows.length) {
+          html += `<tbody>${t.rows.map(r=>`<tr>${r.map(cell=>`<td>${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody>`;
+        }
+        html += `</table></div>`;
+      }
       if (s.fns && s.fns.length) {
         html += `<div class="doc-fns"><b>پانویس‌ها:</b><ol>${s.fns.map(f=>`<li>${esc(f)}</li>`).join("")}</ol></div>`;
       }

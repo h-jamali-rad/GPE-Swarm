@@ -187,6 +187,40 @@ def center_para(doc, text, fa_pt=14, bold=False, before=0, after=6):
     r = p.add_run(text); set_run_fonts(r, fa_pt, 12, bold=bold)
     return p
 
+def add_table(doc, table_dict):
+    """Render an RTL analytical table. table_dict = {headers:[...], rows:[[...],...], caption?}."""
+    headers = table_dict.get("headers", [])
+    rows = table_dict.get("rows", [])
+    if not headers or not rows:
+        return
+    cap = table_dict.get("caption")
+    if cap:
+        p = doc.add_paragraph(); make_rtl(p, justify=False, before=6, after=2)
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        r = p.add_run(cap); set_run_fonts(r, 12, 11, bold=True)
+    t = doc.add_table(rows=1, cols=len(headers))
+    try:
+        t.style = "Table Grid"
+    except Exception:
+        pass
+    # make the whole table right-to-left
+    tblPr = t._tbl.tblPr
+    bidi = OxmlElement("w:bidiVisual"); tblPr.append(bidi)
+    hdr = t.rows[0].cells
+    for i, h in enumerate(headers):
+        hdr[i].text = ""
+        pp = hdr[i].paragraphs[0]; make_rtl(pp, justify=False); pp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        rr = pp.add_run(str(h)); set_run_fonts(rr, 12, 10, bold=True)
+    for row in rows:
+        cells = t.add_row().cells
+        for i, val in enumerate(row):
+            if i >= len(cells):
+                break
+            cells[i].text = ""
+            pp = cells[i].paragraphs[0]; make_rtl(pp, justify=False); pp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            rr = pp.add_run(str(val)); set_run_fonts(rr, 12, 10)
+    doc.add_paragraph()
+
 def add_toc(doc):
     p = doc.add_paragraph(); make_rtl(p, justify=False); p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
     run = p.add_run()
@@ -269,6 +303,8 @@ def main():
             sfns = s.get("fns", [])
             for para in s.get("paras", []):
                 add_para(doc, fns, para, fa_pt=14, en_pt=11, after=6, indent=8, section_fns=sfns)
+            if s.get("table"):
+                add_table(doc, s["table"])
         doc.add_page_break()
 
     # ── Glossary ──

@@ -1020,6 +1020,12 @@ table.matrix tbody th:hover{color:var(--accent)}
 .doc-sec-num { color: #00915a; font-weight: 800; }
 .doc-p { text-align: justify; margin-bottom: 8px; font-size: .96rem; }
 .doc-p .fnref { color: #1a5fb4; font-weight: 700; cursor: help; }
+.doc-table-wrap { margin: 12px 0 14px; overflow-x: auto; }
+.doc-table-cap { font-weight: 800; color: #14243f; font-size: .9rem; text-align: center; margin-bottom: 6px; }
+.doc-table { width: 100%; border-collapse: collapse; font-size: .88rem; direction: rtl; }
+.doc-table th, .doc-table td { border: 1px solid #c7cfda; padding: 7px 10px; text-align: right; vertical-align: top; }
+.doc-table thead th { background: #123a52; color: #fff; font-weight: 700; }
+.doc-table tbody tr:nth-child(even) td { background: #f2f6fa; }
 .doc-fns { margin-top: 10px; padding: 8px 12px; background: #f0f0e8; border-radius: 8px; font-size: .82rem; color: #444; }
 .doc-fns ol { padding-right: 20px; margin-top: 4px; }
 .doc-fns li { margin-bottom: 3px; }
