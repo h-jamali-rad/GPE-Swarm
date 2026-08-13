@@ -73,6 +73,8 @@ async function boot() {
   renderFindings();
   renderThesis();
   renderReview();
+  renderCompile();
+  renderProof();
 
   // Use event delegation on the tabs container to handle clicks on icons/spans inside tabs
   $("#tabs").addEventListener("click", e => {
@@ -89,11 +91,23 @@ async function boot() {
 
 function switchView(v) {
   $$("#tabs .tab").forEach(t => t.classList.toggle("active", t.dataset.view === v));
-  $$(".view").forEach(s => s.classList.toggle("active", s.id === "view-" + v));
+  $$(".view").forEach(s => {
+    const on = s.id === "view-" + v;
+    s.classList.toggle("active", on);
+    if (on) {
+      // retrigger the enter animation
+      s.classList.remove("view-enter");
+      void s.offsetWidth;
+      s.classList.add("view-enter");
+    }
+  });
   location.hash = v;
   if (v === "graph") renderGraph();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+// programmatic nav used by hub cards
+function goView(v) { switchView(v); }
 
 // ─── Animated Counter ───
 function animateCounters() {
@@ -130,6 +144,23 @@ function renderOverview() {
     ${partial ? `<div class="progress-note">${icon("clock")}دیجست در حال تکمیل — ${fmt(s.sources)} از ۱۹۸ منبع پردازش شده</div>` : ""}
     <h1 class="hero-title">Project Brain: نقشه مفهومی منابع رساله</h1>
     <p class="hero-sub">شکل‌گیری پیمان جهانی محیط زیست و تأثیرات آن بر موافقت‌نامه‌های چندجانبه محیط‌زیستی</p>
+
+    <div class="hub" id="ov-hub">
+      ${[
+        {v:"compile", ic:"book-marked", t:"تدوین پایان‌نامه", d:"مشاهدهٔ کاملِ رساله + دریافتِ Word و PDF در قالب ۱۴۰۰", hot:true},
+        {v:"thesis",  ic:"file-pen-line", t:"نگارش رساله", d:"متنِ زندهٔ فصل‌ها با پانویس و انطباق ۱۴۰۰"},
+        {v:"findings",ic:"compass", t:"نتایج و مسیر پژوهش", d:"یافته‌های کلیدی، نقشهٔ استدلال و پاسخِ پرسش‌ها"},
+        {v:"review",  ic:"clipboard-check", t:"نقد و سناریو", d:"نقدِ بندبندِ پیش‌نویس‌ها و بازآراییِ ساختار"},
+        {v:"databases",ic:"database", t:"پایگاه‌های استنادی", d:"۳۸ منبعِ شناسایی‌شده در Westlaw · HeinOnline · Scopus"},
+        {v:"proof",   ic:"badge-check", t:"سندِ فرایند", d:"روشِ ساخت، تضمینِ اصالت و زنجیرهٔ استناد"}
+      ].map((c,i)=>`
+        <button class="hub-card ${c.hot?'hot':''}" style="--d:${i*70}ms" onclick="goView('${c.v}')">
+          <span class="hub-ic">${icon(c.ic)}</span>
+          <span class="hub-t">${esc(c.t)}</span>
+          <span class="hub-d">${esc(c.d)}</span>
+          <span class="hub-go">${icon("arrow-left")}</span>
+        </button>`).join("")}
+    </div>
 
     <div class="kpi-row">
       <div class="kpi">
@@ -1081,6 +1112,273 @@ function renderReview() {
     }
     html += `</div>`;
   }
+
+  v.innerHTML = html;
+  refreshIcons(v);
+}
+
+
+
+// ━━━━━━━━━━ COMPILE THESIS (تدوین پایان‌نامه) ━━━━━━━━━━
+function renderCompile() {
+  const v = $("#view-compile");
+  if (!TH) { v.innerHTML = `<div class="view-head"><h2>تدوین پایان‌نامه</h2><p class="muted">داده در دسترس نیست (thesis.json).</p></div>`; return; }
+  const m = TH.meta;
+  const chs = TH.chapters || [];
+  const gl = TH.glossary || [];
+  const db = TH.debate || {};
+  const cm = TH.conclusion_methodology || {};
+  const refs = TH.references || { fa: [], en: [] };
+  const ab = TH.en_abstract || {};
+
+  // ── Toolbar with download buttons ──
+  let html = `
+    <div class="view-head">
+      <h2>${icon("book-marked")}تدوین و صدور پایان‌نامه</h2>
+      <p>رسالهٔ کامل، منطبق بر آیین‌نامهٔ نگارش ۱۴۰۰، در همین‌جا قابل مشاهده است و می‌توانید نسخهٔ Word و PDF را دریافت کنید.</p>
+    </div>
+
+    <div class="compile-bar">
+      <div class="cb-info">
+        ${icon("shield-check")}
+        <div>
+          <b>خروجیِ منطبق بر قالب ۱۴۰۰</b>
+          <span>قلم B Nazanin ۱۴، حاشیهٔ ۳/۳/۳٫۵/۳، فاصلهٔ خطوط ۱٫۳، پانویس‌های واقعیِ Word، فهرست خودکار</span>
+        </div>
+      </div>
+      <div class="cb-actions">
+        <a class="btn-dl docx" href="./thesis_1400.docx" download>${icon("file-text")}دریافت Word (۱۴۰۰)</a>
+        <a class="btn-dl pdf" href="./thesis_1400.pdf" download>${icon("file-down")}دریافت رساله به‌صورت PDF</a>
+        <button class="btn-dl print" onclick="window.print()">${icon("printer")}چاپ</button>
+      </div>
+    </div>
+
+    <div class="doc-scroll" id="doc-preview">`;
+
+  // ── Cover / title page ──
+  html += `
+      <section class="doc-page cover">
+        <div class="cover-top">
+          <p class="cv-uni">${esc(m.university_fa || "")}</p>
+          <p class="cv-deg">${esc(m.degree_fa || "")}</p>
+        </div>
+        <div class="cover-mid">
+          <span class="cv-kicker">عنوان رساله</span>
+          <h1 class="cv-title">${esc(m.subtitle_fa || m.title_fa)}</h1>
+          <p class="cv-title-en">${esc(ab.title_en || "")}</p>
+        </div>
+        <div class="cover-bot">
+          <p>${esc(m.supervisor_fa || "")}</p>
+          <p class="cv-year">سال تحصیلی ۱۴۰۴–۱۴۰۵</p>
+        </div>
+      </section>`;
+
+  // ── FA abstract (چکیده) ──
+  html += `
+      <section class="doc-block">
+        <h3 class="doc-h">${icon("align-right")}چکیده</h3>
+        <p class="doc-abs">${esc(compileFaAbstract())}</p>
+        <p class="doc-kw"><b>واژگان کلیدی:</b> پیمان جهانی محیط زیست، موافقت‌نامه‌های چندجانبهٔ محیط‌زیستی، چندپارگیِ حقوق بین‌الملل، یکپارچه‌سازیِ نظام‌مند، حق بر محیط‌زیستِ سالم، سند چتر.</p>
+      </section>`;
+
+  // ── TOC ──
+  html += `
+      <section class="doc-block">
+        <h3 class="doc-h">${icon("list-tree")}فهرست مطالب</h3>
+        <div class="doc-toc">`;
+  chs.forEach(c => {
+    html += `<div class="toc-ch"><a onclick="jumpDoc('dc-${esc(c.num)}')"><span class="toc-num">${esc(c.num)}</span>${esc(c.title_fa)}</a></div>`;
+    (c.sections || []).slice(0, 40).forEach(s => {
+      if ((s.level || 1) <= 2) html += `<div class="toc-sec lvl-${Math.min(s.level||1,3)}"><span class="toc-num">${esc(s.num||"")}</span>${esc(s.title_fa||"")}</div>`;
+    });
+  });
+  html += `
+          <div class="toc-ch extra"><a onclick="jumpDoc('dc-glossary')">${icon("book-a")}واژه‌نامهٔ مستند</a></div>
+          <div class="toc-ch extra"><a onclick="jumpDoc('dc-debate')">${icon("scale")}موافقان و مخالفانِ پیمان</a></div>
+          <div class="toc-ch extra"><a onclick="jumpDoc('dc-method')">${icon("compass")}روش‌شناسیِ نتیجه‌گیری</a></div>
+          <div class="toc-ch extra"><a onclick="jumpDoc('dc-refs')">${icon("library")}منابع و مآخذ</a></div>
+          <div class="toc-ch extra"><a onclick="jumpDoc('dc-en')">${icon("languages")}Abstract (English)</a></div>
+        </div>
+      </section>`;
+
+  // ── Chapters (full document flow) ──
+  chs.forEach(c => {
+    html += `
+      <section class="doc-chapter" id="dc-${esc(c.num)}">
+        <div class="doc-ch-head">
+          <span class="doc-ch-kicker">فصل ${esc(c.num)}</span>
+          <h2>${esc(c.title_fa)}</h2>
+          ${c.status ? thBadge(c.status) : ""}
+        </div>
+        ${c.summary_fa ? `<p class="doc-ch-summary">${icon("quote")}${esc(c.summary_fa)}</p>` : ""}`;
+    (c.sections || []).forEach(s => {
+      const lvl = Math.min(s.level || 1, 4);
+      html += `
+        <div class="doc-sec lvl-${lvl}">
+          <h${Math.min(lvl+2,6)} class="doc-sec-h"><span class="doc-sec-num">${esc(s.num||"")}</span>${esc(s.title_fa||"")}</h${Math.min(lvl+2,6)}>
+          ${(s.paras||[]).map(p=>`<p class="doc-p">${thPara(p, s.fns)}</p>`).join("")}`;
+      if (s.fns && s.fns.length) {
+        html += `<div class="doc-fns"><b>پانویس‌ها:</b><ol>${s.fns.map(f=>`<li>${esc(f)}</li>`).join("")}</ol></div>`;
+      }
+      html += `</div>`;
+    });
+    html += `</section>`;
+  });
+
+  // ── Glossary (documented) ──
+  if (gl.length) {
+    html += `
+      <section class="doc-chapter" id="dc-glossary">
+        <div class="doc-ch-head"><span class="doc-ch-kicker">پیوست</span><h2>${icon("book-a")}واژه‌نامهٔ مستندِ اصطلاحات</h2></div>
+        <p class="doc-ch-summary">${icon("shield-check")}هر اصطلاحِ فنیِ رساله به یک منبعِ واقعیِ معتبر گره خورده است؛ هیچ اصطلاحِ ابداعیِ بی‌منبع به کار نرفته است.</p>
+        <div class="gloss-grid">
+          ${gl.map(g=>`
+            <div class="gloss-card">
+              <div class="gloss-term"><b>${esc(g.term_fa)}</b><span class="gloss-en">${esc(g.term_en)}</span></div>
+              <p class="gloss-def">${esc(g.def_fa)}</p>
+              <div class="gloss-src">${icon("book-marked")}${esc(g.source_fa)}</div>
+            </div>`).join("")}
+        </div>
+      </section>`;
+  }
+
+  // ── Debate: proponents vs opponents ──
+  if ((db.proponents||[]).length || (db.opponents||[]).length) {
+    html += `
+      <section class="doc-chapter" id="dc-debate">
+        <div class="doc-ch-head"><span class="doc-ch-kicker">تحلیل</span><h2>${icon("scale")}موافقان و مخالفانِ پیمان جهانی</h2></div>
+        <div class="debate-grid">
+          <div class="debate-col pro">
+            <h4>${icon("thumbs-up")}دیدگاهِ موافقان</h4>
+            ${(db.proponents||[]).map(p=>`<div class="debate-item"><p>${esc(p.point_fa)}</p><span class="debate-src">${icon("book-marked")}${esc(p.source_fa)}</span></div>`).join("")}
+          </div>
+          <div class="debate-col opp">
+            <h4>${icon("thumbs-down")}دیدگاهِ مخالفان</h4>
+            ${(db.opponents||[]).map(p=>`<div class="debate-item"><p>${esc(p.point_fa)}</p><span class="debate-src">${icon("book-marked")}${esc(p.source_fa)}</span></div>`).join("")}
+          </div>
+        </div>
+        ${db.synthesis_fa ? `<div class="debate-synth">${icon("git-merge")}<div><b>جمع‌بندیِ داوری‌شده</b><p>${esc(db.synthesis_fa)}</p></div></div>` : ""}
+      </section>`;
+  }
+
+  // ── Conclusion methodology + citation chips ──
+  if ((cm.models||[]).length) {
+    html += `
+      <section class="doc-chapter" id="dc-method">
+        <div class="doc-ch-head"><span class="doc-ch-kicker">روش‌شناسی</span><h2>${icon("compass")}روش‌شناسیِ نتیجه‌گیری</h2></div>
+        ${cm.intro_fa ? `<p class="doc-ch-summary">${icon("info")}${esc(cm.intro_fa)}</p>` : ""}
+        <div class="method-grid">
+          ${(cm.models||[]).map(md=>`
+            <div class="method-card">
+              <h4>${esc(md.name_fa)}</h4>
+              <p class="method-app">${esc(md.approach_fa)}</p>
+              <p class="method-adopt">${icon("check")}${esc(md.adopt_fa)}</p>
+              <div class="cite-chip">${icon("book-marked")}${esc(md.source_fa)}</div>
+            </div>`).join("")}
+        </div>
+        ${cm.our_method_fa ? `<div class="method-ours">${icon("sparkles")}<div><b>روشِ برگزیدهٔ این رساله</b><p>${esc(cm.our_method_fa)}</p></div></div>` : ""}
+      </section>`;
+  }
+
+  // ── References FA + EN ──
+  html += `
+      <section class="doc-chapter" id="dc-refs">
+        <div class="doc-ch-head"><span class="doc-ch-kicker">منابع</span><h2>${icon("library")}فهرست منابع و مآخذ</h2></div>
+        <h4 class="refs-h">${icon("book")}الف) منابع فارسی</h4>
+        <ol class="refs-list fa">${(refs.fa||[]).map(r=>`<li class="${r.cited?'':'uncited'}">${esc(r.text)}${r.cited?"":` <span class="ref-flag">${icon("alert-triangle")}نمونه — در صورت استفاده تکمیل شود</span>`}</li>`).join("")}</ol>
+        <h4 class="refs-h">${icon("book")}ب) منابع لاتین (Latin References)</h4>
+        <ol class="refs-list en" dir="ltr">${(refs.en||[]).map(r=>`<li>${esc(r.text)}</li>`).join("")}</ol>
+      </section>`;
+
+  // ── EN abstract ──
+  if (ab.body_en) {
+    html += `
+      <section class="doc-chapter en-abstract" id="dc-en" dir="ltr">
+        <div class="doc-ch-head"><span class="doc-ch-kicker">Abstract</span><h2>${esc(ab.title_en||"")}</h2></div>
+        <p class="doc-abs en">${esc(ab.body_en)}</p>
+        <p class="doc-kw en"><b>Keywords:</b> ${(ab.keywords_en||[]).map(esc).join("; ")}.</p>
+      </section>`;
+  }
+
+  html += `</div>`; // doc-scroll
+  v.innerHTML = html;
+  refreshIcons(v);
+}
+
+// concise sourced FA abstract synthesized from the thesis' central argument
+function compileFaAbstract() {
+  return "این رساله فرایندِ شکل‌گیریِ «پیمان جهانی محیط زیست» (۲۰۱۷–۲۰۲۲) و تأثیرِ آن بر موافقت‌نامه‌های چندجانبهٔ محیط‌زیستی (MEAs) را بررسی می‌کند. پرسشِ اصلی این است که شکل‌گیریِ پیمان چه تأثیری بر نظامِ پراکندهٔ MEAها دارد. با روشِ توصیفی‑تحلیلیِ حقوقی و با تکیه بر سندِ چندپارگیِ کمیسیون حقوق بین‌الملل (۲۰۰۶) به‌عنوان چارچوبِ نظری، استدلال می‌شود که هدفِ پیمان — گردآوریِ اصولِ بنیادین در یک سندِ چترِ الزام‌آور و گذارِ تدریجیِ اصول از حقوق نرم به حقوق سخت از رهگذرِ «یکپارچه‌سازیِ نظام‌مند» (مادهٔ ۳۱(۳)(ج) کنوانسیون وین) — موجه بود، اما ابزارِ برگزیده (معاهدهٔ فراگیرِ اجماع‌محورِ واحد) با سرشتِ واکنشی، بخشی و تدریجیِ حقوق بین‌الملل محیط زیست ناسازگار افتاد و به همین سبب مذاکرات در ۲۰۲۲ به معاهده نینجامید. یافتهٔ کانونی این است که تأثیرِ واقعیِ پیمان نه از تصویبِ آن، بلکه از فرایندِ شکل‌گیری و ناکامیِ آن برخاست: تقویتِ گفتمانِ انسجام‌بخشی و زمینه‌سازی برای شناساییِ حقِ جهانی بر محیط‌زیستِ سالم در قطعنامهٔ ۷۶/۳۰۰ مجمع عمومی. رساله در پایان نقشهٔ راهی شش‌ستونه برای تحققِ همان هدف از مسیرهای واقع‌بینانه‌تر (توسعهٔ قضایی، تقویتِ نهادیِ برنامهٔ محیط زیست ملل متحد، بازنگریِ دوره‌ای، خوشه‌بندیِ معاهدات، کاربستِ راهبردیِ حقوق نرم و تفسیرِ یکسانِ اصول) پیشنهاد می‌کند و دلالت‌های آن را برای ایران بازمی‌نماید.";
+}
+
+function jumpDoc(id) {
+  const t = document.getElementById(id);
+  if (t) t.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// ━━━━━━━━━━ PROOF / PROCESS (سندِ فرایند) ━━━━━━━━━━
+function renderProof() {
+  const v = $("#view-proof");
+  const nSrc = (B && B.stats ? B.stats.sources : 0);
+  const nDb = (DBM && DBM.articles ? DBM.articles.length : 0);
+  const nGloss = (TH && TH.glossary ? TH.glossary.length : 0);
+  const chs = (TH && TH.chapters) ? TH.chapters : [];
+  const totalFns = chs.reduce((a,c)=>a+(c.stat_fns||0),0);
+
+  const pipeline = [
+    { ic:"search", t:"۱) جست‌وجوی نظام‌مند", d:"پروتکلِ جست‌وجو در Westlaw، HeinOnline و Scopus؛ ثبتِ عبارت‌ها، فیلترها و بازهٔ زمانی برای قابلیتِ بازتولید (PRISMA)." },
+    { ic:"filter", t:"۲) غربالگری و انتخاب", d:`از میان منابعِ شناسایی‌شده، ${fmt(nDb)} منبعِ مرتبط با معیارهای ورود/خروج انتخاب و به فصل‌ها و پرسش‌ها نگاشت شد.` },
+    { ic:"brain-circuit", t:"۳) دیجستِ عمیق", d:`${fmt(nSrc)} منبع دیجست شد: یافته، نقطهٔ قوت، ضعف و یادداشتِ استناد برای هر منبع استخراج گردید.` },
+    { ic:"pen-line", t:"۴) نگارشِ فصل‌به‌فصل", d:"فصولِ ۲ و ۳ متنِ واقعیِ نگارنده (پیش‌نویس)، و فصولِ ۱، ۴ و ۵ تألیفِ مستندِ عامل با استنادِ درون‌متنی و پانویسِ کامل." },
+    { ic:"shield-check", t:"۵) تضمینِ اصالت", d:"پاکسازیِ کاملِ اصطلاحاتِ ابداعیِ بی‌منبع و جایگزینیِ آن‌ها با اصطلاحاتِ مستندِ کمیسیون حقوق بین‌الملل و کنوانسیون وین." },
+    { ic:"book-marked", t:"۶) صدورِ خروجی", d:"تولیدِ نسخهٔ Word و PDF منطبق بر آیین‌نامهٔ ۱۴۰۰ از همان محتوای زنده، با فهرست و پانویسِ خودکار." }
+  ];
+
+  const guarantees = [
+    { ic:"badge-check", t:"هر اصطلاح، یک منبع", d:`${fmt(nGloss)} اصطلاحِ فنی در واژه‌نامهٔ مستند، هرکدام گره‌خورده به منبعِ واقعی.` },
+    { ic:"list-ordered", t:"استنادِ متراکم", d:`${fmt(totalFns)} پانویسِ واقعیِ Word در سرتاسرِ رساله؛ بدونِ ادعای بی‌منبع.` },
+    { ic:"alert-triangle", t:"شفافیتِ اعتبار", d:"منبعِ پیش‌چاپِ داوری‌نشده (Damoah 2026) صراحتاً علامت‌گذاری شده و در کنارِ منابعِ داوری‌شده به‌کار رفته است." },
+    { ic:"git-branch", t:"تفکیکِ مسئولیت", d:"وضعیتِ هر فصل/بخش (پیش‌نویسِ نگارنده / تألیفِ عامل / در دستِ تکمیل) شفاف نشان داده می‌شود." },
+    { ic:"shield-x", t:"تفکیکِ دو پیمان", d:"«پیمان جهانی محیط زیست» هرگز با «پیمان برای آینده» (۲۰۲۴) خلط نشده است." },
+    { ic:"scale", t:"داوریِ متوازن", d:"دیدگاهِ موافقان و مخالفان به‌تفصیل و با منبع آورده و سپس جمع‌بندیِ مستقل ارائه شده است." }
+  ];
+
+  let html = `
+    <div class="view-head">
+      <h2>${icon("badge-check")}سندِ فرایندِ ساخت و تضمینِ اصالت</h2>
+      <p>این بخش نشان می‌دهد رساله چگونه و با چه تضمین‌هایی از دلِ یک سامانهٔ پژوهشیِ چندعاملی تولید شده است — با تأکید بر مستندبودنِ هر ادعا.</p>
+    </div>
+
+    <div class="proof-metrics">
+      <div class="pm"><b>${fmt(nSrc)}</b><span>منبعِ دیجست‌شده</span></div>
+      <div class="pm"><b>${fmt(nDb)}</b><span>منبعِ استنادیِ منتخب</span></div>
+      <div class="pm"><b>${fmt(totalFns)}</b><span>پانویسِ واقعی</span></div>
+      <div class="pm"><b>${fmt(nGloss)}</b><span>اصطلاحِ مستند</span></div>
+    </div>
+
+    <h3 class="sec-title">${icon("workflow")}زنجیرهٔ فرایندِ پژوهش</h3>
+    <div class="proof-pipeline">
+      ${pipeline.map((p,i)=>`
+        <div class="pp-step" style="--d:${i*90}ms">
+          <div class="pp-ic">${icon(p.ic)}</div>
+          <div class="pp-body"><b>${esc(p.t)}</b><p>${esc(p.d)}</p></div>
+        </div>`).join("")}
+    </div>
+
+    <h3 class="sec-title">${icon("shield-check")}تضمین‌های اصالت و کیفیت</h3>
+    <div class="proof-grid">
+      ${guarantees.map((g,i)=>`
+        <div class="proof-card" style="--d:${i*70}ms">
+          <div class="proof-ic">${icon(g.ic)}</div>
+          <b>${esc(g.t)}</b>
+          <p>${esc(g.d)}</p>
+        </div>`).join("")}
+    </div>
+
+    <div class="proof-cta">
+      ${icon("book-marked")}
+      <div><b>آماده برای تدوینِ نهایی</b><p>برای مشاهدهٔ کاملِ رساله و دریافتِ نسخهٔ Word و PDF در قالب ۱۴۰۰، به بخشِ «تدوین پایان‌نامه» بروید.</p></div>
+      <button class="btn-dl docx" onclick="goView('compile')">${icon("arrow-left")}رفتن به تدوین</button>
+    </div>`;
 
   v.innerHTML = html;
   refreshIcons(v);
