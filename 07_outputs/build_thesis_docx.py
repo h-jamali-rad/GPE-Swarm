@@ -121,6 +121,25 @@ def build_styles(doc):
         frs.font.size = Pt(11)
         va = OxmlElement("w:vertAlign"); va.set(w("val"), "superscript")
         frs.element.get_or_add_rPr().append(va)
+    # Custom RTL heading styles. Critically they carry NO outlineLvl: any
+    # paragraph (or style) with an outline level is remapped by LibreOffice
+    # onto its own LTR built-in Heading style, which drops our bidi and forces
+    # the heading left-to-right. Without outlineLvl the paragraph stays RTL,
+    # and the TOC field collects these headings by STYLE NAME via the \t switch.
+    for nm in ("GPEHeading1", "GPEHeading2", "GPEHeading3"):
+        if nm in names:
+            continue
+        st = styles.add_style(nm, WD_STYLE_TYPE.PARAGRAPH)
+        st.base_style = styles["Normal"]
+        st.next_paragraph_style = styles["Normal"]
+        ppr = st.element.get_or_add_pPr()
+        kn = OxmlElement("w:keepNext"); ppr.append(kn)
+        bd = OxmlElement("w:bidi"); bd.set(w("val"), "1"); ppr.append(bd)
+        jc = OxmlElement("w:jc"); jc.set(w("val"), "right"); ppr.append(jc)
+        rpr = st.element.get_or_add_rPr()
+        rt = OxmlElement("w:rtl"); rt.set(w("val"), "1"); rpr.append(rt)
+        rpr.append(OxmlElement("w:b")); rpr.append(OxmlElement("w:bCs"))
+
 
 FN_RE = re.compile(r"\{\{fn:(\d+)\}\}")
 
@@ -146,11 +165,17 @@ def add_para(doc, fns, text, fa_pt=14, en_pt=11, bold=False, justify=True,
     return p
 
 def add_heading(doc, num, title, level, fa_pt):
-    style = {1:"Heading 1",2:"Heading 2",3:"Heading 3"}.get(level, "Heading 3")
-    p = doc.add_paragraph(style=doc.styles[style])
-    make_rtl(p, justify=False, before=10, after=6)
+    # Plain RTL paragraph (NOT built-in Heading styles). LibreOffice merges the
+    # built-in "Heading N" style names with its own LTR built-ins and drops our
+    # bidi/jc, rendering headings left-to-right. A plain bidi paragraph with a
+    # direct outlineLvl renders RTL correctly AND is still collected by the TOC
+    # field (\o "1-3" gathers paragraphs by outline level, not by style name).
+    nm = {1: "GPEHeading1", 2: "GPEHeading2", 3: "GPEHeading3"}.get(level, "GPEHeading3")
+    p = doc.add_paragraph(style=doc.styles[nm])
+    make_rtl(p, justify=False, before=(14 if level == 1 else 10), after=6)
     txt = (f"{num} " if num else "") + title
-    r = p.add_run(txt); set_run_fonts(r, fa_pt, 12, bold=True, color="000000")
+    r = p.add_run(txt)
+    set_run_fonts(r, fa_pt, 12, bold=True, color="14203a")
     return p
 
 def center_para(doc, text, fa_pt=14, bold=False, before=0, after=6):
@@ -164,7 +189,7 @@ def add_toc(doc):
     run = p.add_run()
     b = OxmlElement("w:fldChar"); b.set(w("fldCharType"), "begin")
     instr = OxmlElement("w:instrText"); instr.set(qn("xml:space"), "preserve")
-    instr.text = 'TOC \\o "1-3" \\h \\z \\u'
+    instr.text = 'TOC \\h \\z \\t "GPEHeading1,1,GPEHeading2,2,GPEHeading3,3"'
     sep = OxmlElement("w:fldChar"); sep.set(w("fldCharType"), "separate")
     t = OxmlElement("w:t"); t.text = "برای به‌روزرسانی فهرست، کلید F9 را فشار دهید."
     e = OxmlElement("w:fldChar"); e.set(w("fldCharType"), "end")
@@ -231,7 +256,7 @@ def main():
 
     # ── Chapters ──
     for c in TH.get("chapters", []):
-        add_heading(doc, "", f"فصل {c.get('num','')}: {c.get('title_fa','')}", 1, 14)
+        add_heading(doc, "", f"{c.get('num','')}: {c.get('title_fa','')}", 1, 14)
         if c.get("summary_fa"):
             add_para(doc, fns, c["summary_fa"], fa_pt=12, en_pt=11, after=8)
         for s in c.get("sections", []):
