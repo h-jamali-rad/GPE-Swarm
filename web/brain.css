@@ -1020,6 +1020,11 @@ table.matrix tbody th:hover{color:var(--accent)}
 .doc-sec-num { color: #00915a; font-weight: 800; }
 .doc-p { text-align: justify; margin-bottom: 8px; font-size: .96rem; }
 .doc-p .fnref { color: #1a5fb4; font-weight: 700; cursor: help; }
+/* ── PRISMA flow-chart ── */
+.prisma-flow-wrap{text-align:center;margin:1.5rem auto;max-width:480px}
+.prisma-svg{width:100%;height:auto;display:block;margin:0 auto}
+@media(max-width:600px){.prisma-flow-wrap{max-width:100%}}
+
 .doc-table-wrap { margin: 12px 0 14px; overflow-x: auto; }
 .doc-table-cap { font-weight: 800; color: #14243f; font-size: .9rem; text-align: center; margin-bottom: 6px; }
 .doc-table { width: 100%; border-collapse: collapse; font-size: .88rem; direction: rtl; }

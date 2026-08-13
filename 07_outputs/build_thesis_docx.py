@@ -304,7 +304,18 @@ def main():
             for para in s.get("paras", []):
                 add_para(doc, fns, para, fa_pt=14, en_pt=11, after=6, indent=8, section_fns=sfns)
             if s.get("table"):
-                add_table(doc, s["table"])
+                tbl = s["table"]
+                # PRISMA section: insert flowchart image + table
+                if tbl.get("caption","").find("PRISMA") >= 0:
+                    prisma_img = os.path.join(HERE, "..", "web", "prisma_flow.png")
+                    if os.path.isfile(prisma_img):
+                        from docx.shared import Cm
+                        p = doc.add_paragraph()
+                        make_rtl(p, after=6)
+                        p.alignment = 1  # CENTER
+                        run = p.add_run()
+                        run.add_picture(prisma_img, width=Cm(12))
+                add_table(doc, tbl)
         doc.add_page_break()
 
     # ── Glossary ──

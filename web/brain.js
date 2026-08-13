@@ -1510,7 +1510,52 @@ function renderCompile() {
         <div class="doc-sec lvl-${lvl}">
           <h${Math.min(lvl+2,6)} class="doc-sec-h"><span class="doc-sec-num">${esc(s.num||"")}</span>${esc(s.title_fa||"")}</h${Math.min(lvl+2,6)}>
           ${(s.paras||[]).map(p=>`<p class="doc-p">${thPara(p, s.fns)}</p>`).join("")}`;
-      if (s.table && (s.table.headers || s.table.rows)) {
+      /* ── PRISMA flow-chart (special render for ۱-۵-۱) ── */
+      if (s.table && s.table.caption && s.table.caption.includes("PRISMA")) {
+        const rows = s.table.rows || [];
+        const vals = rows.map(r => ({ label: r[0], n: r[1] }));
+        const colors = ["#1b4965","#1b8a5a","#f0a500","#c0392b"];
+        const icons  = ["search","layers","check-circle","book-open"];
+        const W = 420, boxH = 54, gap = 32, arrowH = 20;
+        const totalH = vals.length * (boxH + gap + arrowH) - gap - arrowH + 40;
+        let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${totalH}" class="prisma-svg" dir="rtl">
+          <defs>
+            <marker id="prisma-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#555"/>
+            </marker>
+            <filter id="prisma-shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity=".15"/></filter>
+          </defs>`;
+        vals.forEach((v, i) => {
+          const y = 10 + i * (boxH + gap + arrowH);
+          const cx = W / 2;
+          const bx = 40, bw = W - 80;
+          const col = colors[i % colors.length];
+          // box with rounded corners
+          svg += `<rect x="${bx}" y="${y}" width="${bw}" height="${boxH}" rx="12" fill="${col}" filter="url(#prisma-shadow)"/>`;
+          // number badge (circle on left side = right in RTL)
+          svg += `<circle cx="${bx + bw - 28}" cy="${y + boxH/2}" r="18" fill="rgba(255,255,255,.25)"/>`;
+          svg += `<text x="${bx + bw - 28}" y="${y + boxH/2 + 6}" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">${v.n}</text>`;
+          // label text
+          svg += `<text x="${cx - 10}" y="${y + boxH/2 + 6}" text-anchor="middle" fill="#fff" font-size="14" font-family="Vazirmatn,sans-serif">${v.label}</text>`;
+          // arrow down
+          if (i < vals.length - 1) {
+            const ay1 = y + boxH + 4;
+            const ay2 = ay1 + gap + arrowH - 8;
+            svg += `<line x1="${cx}" y1="${ay1}" x2="${cx}" y2="${ay2}" stroke="#555" stroke-width="2" marker-end="url(#prisma-arrow)"/>`;
+            // delta label
+            const delta = parseInt(vals[i].n) - parseInt(vals[i+1].n);
+            if (delta > 0) {
+              svg += `<text x="${cx + 30}" y="${ay1 + (ay2-ay1)/2 + 4}" fill="#888" font-size="11" font-family="Vazirmatn,sans-serif">−${delta} حذف</text>`;
+            }
+          }
+        });
+        svg += `</svg>`;
+        html += `<div class="prisma-flow-wrap">`;
+        if (s.table.caption) html += `<div class="doc-table-cap">${esc(s.table.caption)}</div>`;
+        html += svg + `</div>`;
+      }
+      /* ── generic table (non-PRISMA) ── */
+      else if (s.table && (s.table.headers || s.table.rows)) {
         const t = s.table;
         html += `<div class="doc-table-wrap">`;
         if (t.caption) html += `<div class="doc-table-cap">${esc(t.caption)}</div>`;
