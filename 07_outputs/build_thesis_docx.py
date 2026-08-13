@@ -21,8 +21,11 @@ from docx.opc.part import Part
 from docx.opc.packuri import PackURI
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TH_PATH = os.path.join(HERE, "..", "web", "thesis.json")
-OUT = os.path.join(HERE, "..", "web", "thesis_1400.docx")
+# Prefer the enriched thesis (full reference list, fixed footnotes, expanded
+# chapters 4 & 5). Fall back to the base thesis.json if enrichment is absent.
+_ENRICHED = os.path.join(HERE, "..", "web", "thesis_enriched.json")
+TH_PATH = _ENRICHED if os.path.exists(_ENRICHED) else os.path.join(HERE, "..", "web", "thesis.json")
+OUT = os.path.join(HERE, "..", "web", "thesis_draft.docx")
 
 FA_FONT = "B Nazanin"
 EN_FONT = "Times New Roman"
