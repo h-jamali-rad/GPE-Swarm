@@ -1513,8 +1513,8 @@ function renderCompile() {
       /* ── PRISMA 2020 official flow-diagram (image) for ۱-۵-۱ ── */
       if (s.table && s.table.caption && s.table.caption.includes("PRISMA")) {
         html += `<figure class="prisma-fig">
-          <img class="prisma-img" src="./prisma_flow.png?v=3" alt="نمودار جریانی PRISMA 2020 — فرایند غربال‌گری منابع" loading="lazy">
-          <figcaption class="prisma-cap">نمودار ۱-۱ · فرایندِ غربال‌گریِ منابع بر پایهٔ استانداردِ PRISMA 2020 (Page و همکاران، BMJ 2021;372:n71)</figcaption>
+          <img class="prisma-img" src="./prisma_flow.png?v=4" alt="نمودار جریانی PRISMA 2020 — فرایند غربال‌گری منابع" loading="lazy">
+          <figcaption class="prisma-cap">نمودار ۱-۱ · فرایندِ غربال‌گریِ منابعِ پژوهش بر پایهٔ الگوی استانداردِ PRISMA 2020</figcaption>
         </figure>`;
       }
       /* ── generic table (non-PRISMA) ── */
