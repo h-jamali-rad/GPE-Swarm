@@ -1,0 +1,25 @@
+{
+  "actions": [
+    {
+      "id": "QA-HJR-CA-01",
+      "type": "corrective",
+      "scope": "Source identity (application source seal)",
+      "finding": "QA-CRIT-01 — Parity A04 FAIL: sealed d4b56e6284bb1f682d2eb425762ce094fab818ffe08fb0104ed0ea20a62b71ff vs recomputed e0c950f27843d06a1718bfa096cc466c3b4af02110dff7df90df87e50d52ec14",
+      "root_cause_fa": "مهر پیش از changeset «Port Clinician UI V6.1» محاسبه و هنگام بستهبندی بهروز نشده بود؛ هستهی علمی (مدل/باندل/اسکیما) بایتبهبایت یکسان و متأثر نبود.",
+      "resolution_fa": "بازمهر BUILD_SOURCE_SHA256.txt و بهروزرسانی application_source_sha256 در BUILD_IDENTITY و GATE_STATUS به مقدار بازمحاسبهشده از درخت تحویلی؛ ثبت در CHANGELOG؛ اجرای مجدد کامل Parity.",
+      "before": "221ac84b773789cb9d38ce06a5d2d88bb3eaa21f078edabaa231d76a9f0a960c",
+      "after": "e0c950f27843d06a1718bfa096cc466c3b4af02110dff7df90df87e50d52ec14",
+      "files_touched": [
+        "01_APPLICATION/app/BUILD_SOURCE_SHA256.txt",
+        "09_RELEASE_CANDIDATE_CONTROL/PHASE41_CDSS4_BUILD_IDENTITY.json",
+        "09_RELEASE_CANDIDATE_CONTROL/PHASE41_CDSS4_GATE_STATUS.json",
+        "00_CONTROL/PHASE41_CDSS4_CHANGELOG.md"
+      ],
+      "re_run_result": "52/52 PASS",
+      "status": "CLOSED",
+      "sign_off": "HJR's Agentic Architecture developed by Hossein Jamalirad",
+      "timestamp": "2026-09-08T17:45:00Z"
+    }
+  ],
+  "branding": "HJR's Agentic Architecture developed by Hossein Jamalirad"
+}

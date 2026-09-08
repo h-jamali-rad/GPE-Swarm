@@ -1,0 +1,39 @@
+{
+  "tests_total": 36,
+  "pass": 36,
+  "critical_fail": 0,
+  "noncritical_fail": 0,
+  "groups": {
+    "A_SCIENTIFIC_IDENTITY": {
+      "total": 5,
+      "pass": 5,
+      "fail": 0
+    },
+    "B_INPUT_ROBUSTNESS": {
+      "total": 9,
+      "pass": 9,
+      "fail": 0
+    },
+    "C_PERFORMANCE": {
+      "total": 3,
+      "pass": 3,
+      "fail": 0
+    },
+    "D_SECURITY_RBAC": {
+      "total": 12,
+      "pass": 12,
+      "fail": 0
+    },
+    "E_RELEASE_ENGINEERING": {
+      "total": 6,
+      "pass": 6,
+      "fail": 0
+    },
+    "F_RUNTIME": {
+      "total": 1,
+      "pass": 1,
+      "fail": 0
+    }
+  },
+  "container_runtime_available": true
+}

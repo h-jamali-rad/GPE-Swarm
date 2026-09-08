@@ -1,0 +1,37 @@
+{
+  "fixture": "inference_sample.csv (02_TESTS/fixtures)",
+  "expected": "inference_sample_expected.npy",
+  "max_abs_diff_reported": 0.0,
+  "evidence": [
+    {
+      "id": "None",
+      "group": "A_SCIENTIFIC_IDENTITY",
+      "name": "None",
+      "result": "None",
+      "detail": "{'max_abs_probability_difference': 0.0, 'probabilities': [0.06617905692170636, 0.15070212387309828, 0.799971705364552, 0.2468661885125677, 0.28339398500724683]}"
+    },
+    {
+      "id": "None",
+      "group": "B_INPUT_ROBUSTNESS",
+      "name": "None",
+      "result": "None",
+      "detail": "{'probability': 0.062028018916655416, 'warning': 'UNSEEN_CATEGORY'}"
+    },
+    {
+      "id": "None",
+      "group": "C_PERFORMANCE",
+      "name": "None",
+      "result": "None",
+      "detail": "{'n': 50, 'mean_ms': 40.04052869975567, 'median_ms': 38.907318376004696, 'p95_ms': 48.472346644848585, 'p99_ms': 76.50565393269056, 'max_ms': 89.01745826005936, 'engineering_p95_target_ms': 1000}"
+    },
+    {
+      "id": "None",
+      "group": "F_RUNTIME",
+      "name": "None",
+      "result": "None",
+      "detail": "{'status': 'ok', 'app_version': '41.0.0-rc1', 'build_id': 'NOA-mTESE-CDSS-Phase41-RC1', 'deployment_profile': 'onprem', 'model_sha256': 'ff3a815a5f1f21f23e8c6bef5db6b0c376edc158cb0e39d18cc9ebbe123f4aa5', 'schema_sha256': 'ab8e3e1e5fd9b36205f9de0af84ed79719c4882e5843c68af2a781289f348ec4', 'threshold': 0.37, 'external_validation': 'NOT_PERFORMED', 'routine_deployment_readiness': 'NOT_ESTABLISHED'}"
+    }
+  ],
+  "interpretation_fa": "خروجی مدل روی فیکسچر رسمی دقیقاً برابر مقدار منجمد است.",
+  "branding": "HJR's Agentic Architecture developed by Hossein Jamalirad"
+}

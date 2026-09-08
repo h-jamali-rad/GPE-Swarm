@@ -1,0 +1,8 @@
+{
+  "audit_event_columns_reported_by_test": true,
+  "raw_clinical_columns_present": false,
+  "note_fa": "ممیزی فقط ابرداده/رویداد (بدون مقادیر خام بالینی و بدون شناسهی مستقیم بیمار) ذخیره میکند.",
+  "test_id": "D09",
+  "status": "PASS",
+  "branding": "HJR's Agentic Architecture developed by Hossein Jamalirad"
+}

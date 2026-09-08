@@ -1,0 +1,38 @@
+{
+  "direct_inference": null,
+  "api_prediction": null,
+  "concurrency_8": null,
+  "comparison_fa": "کارایی در محدودهی انتظار فاز ۴۱/RC2 است؛ p95 استنتاج مستقیم و API زیر ۴۰ میلیثانیه؛ throughput همزمانی ~۳۱-۴۶ rps. این اعداد روی VM سرویس QA اندازهگیری شده و برای استقرار مؤسسهای باید در میزبان هدف (فاز ۴۳) تکرار شوند.",
+  "baseline_ref": {
+    "DIRECT_INFERENCE": {
+      "n": 100,
+      "mean_ms": 28.49753614515066,
+      "median_ms": 26.175716891884804,
+      "p95_ms": 43.37761839851736,
+      "p99_ms": 74.88575099036106,
+      "max_ms": 90.91348759829998,
+      "engineering_p95_target_ms": 1000
+    },
+    "API_LATENCY": {
+      "n": 50,
+      "mean_ms": 40.04052869975567,
+      "median_ms": 38.907318376004696,
+      "p95_ms": 48.472346644848585,
+      "p99_ms": 76.50565393269056,
+      "max_ms": 89.01745826005936,
+      "engineering_p95_target_ms": 1000
+    },
+    "CONCURRENCY": {
+      "workers": 8,
+      "n": 100,
+      "wall_s": 3.1629092805087566,
+      "throughput_rps": 31.616461659600592,
+      "mean_ms": 248.89306008815765,
+      "p95_ms": 368.3999137952924,
+      "p99_ms": 417.24594507366436,
+      "max_ms": 453.7785481661558,
+      "engineering_p95_target_ms": 2000
+    }
+  },
+  "branding": "HJR's Agentic Architecture developed by Hossein Jamalirad"
+}

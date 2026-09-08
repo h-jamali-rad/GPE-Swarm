@@ -1,0 +1,37 @@
+﻿group,test_id,test,critical,status,detail,elapsed_ms
+A_SCIENTIFIC_IDENTITY,A01,frozen artifact SHA-256 locks,True,PASS,"{'model': True, 'bundle': True, 'schema': True}",0.693
+A_SCIENTIFIC_IDENTITY,A02,official Phase 38 five-case fixture exact reproduction,True,PASS,"{'max_abs_probability_difference': 0.0, 'probabilities': [0.06617905692170636, 0.15070212387309828, 0.799971705364552, 0.2468661885125677, 0.28339398500724683]}",211.902
+A_SCIENTIFIC_IDENTITY,A03,100-repeat deterministic probability,True,PASS,"{'repeats': 100, 'probability': 0.799971705364552}",2271.023
+A_SCIENTIFIC_IDENTITY,A04,frozen threshold integrity,True,PASS,threshold=0.37 locked; no UI slider; top-level threshold override rejected,202.235
+A_SCIENTIFIC_IDENTITY,A05,native CatBoost local SHAP path uses same frozen artifact,True,PASS,"{'top_shap_count': 12, 'raw_formula_logit': -2.6469206578928355}",36.437
+B_INPUT_ROBUSTNESS,B01,strict PRIMARY52 schema,True,PASS,exactly 52 canonical keys required; missing and extra keys rejected,0.396
+B_INPUT_ROBUSTNESS,B02,all-missing payload handled without fabricated values,True,PASS,"{'all_missing_probability': 0.2733998512105365, 'warning_codes': ['MISSING_VALUES', 'INTERNAL_VALIDATION_ONLY', 'RESEARCH_PROTOTYPE']}",16.295
+B_INPUT_ROBUSTNESS,B03,non-finite numeric rejection,True,PASS,NaN/Inf rejected at canonical validation layer,0.163
+B_INPUT_ROBUSTNESS,B04,count-field safety validation,True,PASS,pathology component counts require non-negative integers or null,0.068
+B_INPUT_ROBUSTNESS,B05,binary coding strictness,True,PASS,binary predictors limited to integer 0/1/null; bool rejected,0.051
+B_INPUT_ROBUSTNESS,B06,pre-index pathology timing guard,True,PASS,same-index blocked; source=none requires 14 pathology fields null; empty prior pathology warned,21.185
+B_INPUT_ROBUSTNESS,B07,finite out-of-development values warn rather than silently normalize,True,PASS,"{'probability': 0.11696722244010878, 'outside_range_warnings': 3}",24.245
+B_INPUT_ROBUSTNESS,B08,unseen nominal category explicitly warned,True,PASS,"{'probability': 0.062028018916655416, 'warning': 'UNSEEN_CATEGORY'}",27.381
+B_INPUT_ROBUSTNESS,B09,reserved-sentinel collision rejection,True,PASS,reserved missing sentinel collision rejected,2.839
+C_PERFORMANCE,C01,single-case direct inference latency benchmark,True,PASS,"{'n': 100, 'mean_ms': 28.49753614515066, 'median_ms': 26.175716891884804, 'p95_ms': 43.37761839851736, 'p99_ms': 74.88575099036106, 'max_ms': 90.91348759829998, 'engineering_p95_target_ms': 1000}",3132.768
+C_PERFORMANCE,C02,authenticated API prediction latency benchmark,True,PASS,"{'n': 50, 'mean_ms': 40.04052869975567, 'median_ms': 38.907318376004696, 'p95_ms': 48.472346644848585, 'p99_ms': 76.50565393269056, 'max_ms': 89.01745826005936, 'engineering_p95_target_ms': 1000}",2211.562
+C_PERFORMANCE,C03,8-thread concurrent inference stability,True,PASS,"{'workers': 8, 'n': 100, 'wall_s': 3.1629092805087566, 'throughput_rps': 31.616461659600592, 'mean_ms': 248.89306008815765, 'p95_ms': 368.3999137952924, 'p99_ms': 417.24594507366436, 'max_ms': 453.7785481661558, 'engineering_p95_target_ms': 2000}",3164.306
+D_SECURITY_RBAC,D01,attending authorization path,True,PASS,attending prediction finalized directly,192.14
+D_SECURITY_RBAC,D02,resident/fellow mandatory attending co-sign workflow,True,PASS,resident result cannot export before attending co-sign; co-sign finalizes; resident audit access denied,421.089
+D_SECURITY_RBAC,D03,CSRF enforcement,True,PASS,state-changing prediction without CSRF rejected,201.211
+D_SECURITY_RBAC,D04,signed-token integrity/expiry/purpose,True,PASS,"tampering, expiry, and purpose confusion rejected",0.108
+D_SECURITY_RBAC,D05,report token URL-leakage hardening,True,PASS,"final result token sent only in authenticated CSRF-protected POST body, not URL query",2.055
+D_SECURITY_RBAC,D06,security response headers,True,PASS,"{'x-content-type-options': 'nosniff', 'x-frame-options': 'DENY', 'referrer-policy': 'no-referrer', 'cache-control': 'no-store', 'content-security-policy': ""default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'""}",6.522
+D_SECURITY_RBAC,D07,audit minimization and file permissions,True,PASS,"{'audit_columns': ['event_id', 'event_type', 'case_id', 'user_id', 'user_role', 'timestamp_utc', 'model_sha256', 'schema_sha256', 'build_sha256', 'input_payload_sha256', 'probability', 'predicted_class', 'threshold', 'pathology_source', 'warning_count', 'approval_status', 'approver_user_id'], 'raw_predictor_columns': 0, 'db_mode': '0o600'}",0.414
+D_SECURITY_RBAC,D08,report semantics and bilingual output,True,PASS,clinician + EN/FA patient reports work after finalization; no directive treatment recommendation,200.239
+D_SECURITY_RBAC,D09,bilingual/RTL release-candidate UI,True,PASS,English/Persian switch retained with RTL and RC1 labeling,0.171
+D_SECURITY_RBAC,D10,production cookie security flags,True,PASS,cdss_session=eyJleHAiOjE3ODg4ODk3NDAsImlhdCI6MTc4ODg4Nzk0MCwibm9uY2UiOiI0N2E4MTAxNDRlZWU2NjI2IiwicHVycG9zZSI6InNlc3Npb24iLCJyb2xlIjoiYXR0ZW5kaW5nIiwidXNlcm5hbWUiOiJwdXNlciJ9.ngTl-aeo3nG5cVokq10Mvx8oztSyUnBhuoQIpICqqUE; HttpOnly; Max-Age=1800; Path=/; SameSite=strict; Secure,1329.76
+D_SECURITY_RBAC,D11,production plaintext bootstrap disabled,True,PASS,production startup fails closed if plaintext bootstrap JSON is supplied,712.378
+D_SECURITY_RBAC,D12,authentication and coded-case validation,True,PASS,wrong password rejected; coded Case ID character policy enforced,326.213
+E_RELEASE_ENGINEERING,E01,legacy approximation absence,True,PASS,no browser-side heuristic prediction/pseudo-SHAP; inference remains server-side frozen CatBoost,4.542
+E_RELEASE_ENGINEERING,E02,container/deployment static hardening,True,PASS,"non-root image, loopback bind, read-only rootfs, no-new-privileges, all caps dropped, healthcheck, production bootstrap removed",12.937
+E_RELEASE_ENGINEERING,E03,source compilation,True,PASS,Python source compileall PASS,33.784
+E_RELEASE_ENGINEERING,E04,artifact tamper detection control,True,PASS,tampered model is rejected by FrozenInferenceEngine before model loading,1.649
+E_RELEASE_ENGINEERING,E05,container runtime environment check,False,PASS,"{'docker_path': '/usr/bin/docker', 'daemon_available': False, 'detail': 'Client: Docker Engine - Community\n Version:           29.8.0\n API version:       1.56\n Go version:        go1.26.8\n Git commit:        88096ef\n Built:             Thu Sep  3 21:51:20 2026\n OS/Arch:           linux/amd64\n Context:           default\nfailed to connect to the docker API at unix:///var/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /var/run/docker.sock: connect: no such file or directory\n'}",58.214
+E_RELEASE_ENGINEERING,E06,release-candidate source tree seal,True,PASS,"{'build_source_sha256': '221ac84b773789cb9d38ce06a5d2d88bb3eaa21f078edabaa231d76a9f0a960c', 'source_files': 11}",6.188
+F_RUNTIME,F01,native Uvicorn health/UI smoke test,True,PASS,"{'status': 'ok', 'app_version': '41.0.0-rc1', 'build_id': 'NOA-mTESE-CDSS-Phase41-RC1', 'deployment_profile': 'onprem', 'model_sha256': 'ff3a815a5f1f21f23e8c6bef5db6b0c376edc158cb0e39d18cc9ebbe123f4aa5', 'schema_sha256': 'ab8e3e1e5fd9b36205f9de0af84ed79719c4882e5843c68af2a781289f348ec4', 'threshold': 0.37, 'external_validation': 'NOT_PERFORMED', 'routine_deployment_readiness': 'NOT_ESTABLISHED'}",1032.36
