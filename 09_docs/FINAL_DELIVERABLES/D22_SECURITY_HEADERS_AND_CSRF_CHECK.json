@@ -1,0 +1,11 @@
+{
+  "csrf_required_on_state_changing": true,
+  "missing_csrf_rejected": true,
+  "security_headers_present": true,
+  "session_expiry_rejected_401": true,
+  "tampered_final_token_rejected": true,
+  "audit_schema_raw_columns": 0,
+  "source_tests": "D01–D09 (Parity run)",
+  "status": "PASS",
+  "branding": "HJR's Agentic Architecture developed by Hossein Jamalirad"
+}

@@ -1,0 +1,24 @@
+{
+  "phase": 41,
+  "release_candidate": "RC2_FINAL_QA",
+  "app_version": "41.0.0-rc2",
+  "build_id": "NOA-mTESE-CDSS-Phase41-RC2",
+  "baseline": {
+    "tests_total": 36,
+    "pass": 36,
+    "critical_fail": 0,
+    "verdict": "PASS"
+  },
+  "parity": {
+    "tests_total": 52,
+    "pass": 52,
+    "critical_fail": 0,
+    "verdict": "PASS"
+  },
+  "fixture_max_abs_diff": 0.0,
+  "scientific_core_sha256": "ff3a815a5f1f21f23e8c6bef5db6b0c376edc158cb0e39d18cc9ebbe123f4aa5",
+  "verdict": "PASS",
+  "branding": "HJR's Agentic Architecture developed by Hossein Jamalirad",
+  "date": "2026-09-08",
+  "gate_fa": "گیت کیفیت نهایی: سبز — مجاز به ادامهی مسیر فاز ۴۲/۴۳"
+}

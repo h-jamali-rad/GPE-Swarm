@@ -1,0 +1,12 @@
+{
+  "model_sha256": "ff3a815a5f1f21f23e8c6bef5db6b0c376edc158cb0e39d18cc9ebbe123f4aa5",
+  "bundle_sha256": "2827ff91090e7e914fbd1eb724eae4d73936dbf8f961c3925d0c669866aeee21",
+  "input_schema_sha256": "ab8e3e1e5fd9b36205f9de0af84ed79719c4882e5843c68af2a781289f348ec4",
+  "ui_api_schema_sha256": "2f71eeeb17a654b26c34ce2c8bab9736b626fb5ab6f67c21f8da2e468df9ed04",
+  "frozen_threshold": 0.37,
+  "positive_class": 1,
+  "predictor_contract": "PRIMARY52",
+  "predictor_count": 52,
+  "lock_status_fa": "قفل علمی در RC1 و RC2 یکسان؛ هیچ بازآموزی/بازتنظیم/بازکالیبراسیونی در چرخهی QA رخ نداد.",
+  "branding": "HJR's Agentic Architecture developed by Hossein Jamalirad"
+}

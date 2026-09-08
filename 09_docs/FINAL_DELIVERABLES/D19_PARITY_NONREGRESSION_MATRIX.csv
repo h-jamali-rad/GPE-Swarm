@@ -1,0 +1,7 @@
+group,tests,pass,fail,verdict,note_fa
+A_CDSS4_IDENTITY,5,5,0,PASS,هویت بیلد پس از بازمهر تأیید شد
+B_MAPPER_UNIT,16,16,0,PASS,نگاشت بالینی CDSS4_ClinicalInput_V1
+C_ENDPOINT_FUNCTIONAL,12,12,0,PASS,عملکرد پایانهای clinical-predict و گزارش
+D_SECURITY_RBAC,10,10,0,PASS,امنیت/نقشها/ممیزی
+E_ENGINEERING_RELEASE,5,5,0,PASS,مهندسی انتشار و مهرها
+F_RUNTIME,4,4,0,PASS,زماناجرای واقعی و بنچمارک

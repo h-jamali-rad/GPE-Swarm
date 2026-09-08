@@ -1,0 +1,9 @@
+item,source,sha256,note_fa
+Frozen model (.cbm),ProjectBrainV4 / Phase16-17,ff3a815a5f1f21f23e8c6bef5db6b0c376edc158cb0e39d18cc9ebbe123f4aa5,هستهی علمی منجمد؛ بدون تغییر در RC1 و RC2
+Inference bundle (.joblib),ProjectBrainV4 / Phase16-17,2827ff91090e7e914fbd1eb724eae4d73936dbf8f961c3925d0c669866aeee21,باندل استنتاج منجمد
+INPUT_SCHEMA.json,Phase16-17,ab8e3e1e5fd9b36205f9de0af84ed79719c4882e5843c68af2a781289f348ec4,اسکیمای ورودی ۵۲ متغیره
+CDSS_UI_API_SCHEMA_PHASE39.json,Phase39/41,2f71eeeb17a654b26c34ce2c8bab9736b626fb5ab6f67c21f8da2e468df9ed04,اسکیمای UI/API
+RC1 application source seal,Phase41-RC1 (git ba28a9c),221ac84b773789cb9d38ce06a5d2d88bb3eaa21f078edabaa231d76a9f0a960c,تأییدشده در Baseline ۳۶/۳۶
+RC2 application source seal,Phase41-RC2 (QA-HJR-CA-01),e0c950f27843d06a1718bfa096cc466c3b4af02110dff7df90df87e50d52ec14,بازمهر پس از Port UI V6.1؛ Parity ۵۲/۵۲
+Baseline result JSON,08_PHASE41_VERIFICATION (run 2026-09-08),cf8e14dd9421addf8ae46fe9672df902dfcf6b9ac39641336c376fd35a787f98,خروجی اجرای مستقل QA
+Parity result JSON,08_CDSS4_VERIFICATION (run 2026-09-08),e931cf88eabe8a84aa612ef70e259450ff51ef1c479bebe0329ef9b0483b24e2,خروجی اجرای مستقل QA

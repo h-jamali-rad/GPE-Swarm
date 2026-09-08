@@ -1,0 +1,38 @@
+{
+  "tests_total": 52,
+  "pass": 52,
+  "critical_fail": 0,
+  "noncritical_fail": 0,
+  "groups": {
+    "A_CDSS4_IDENTITY": {
+      "total": 5,
+      "pass": 5,
+      "fail": 0
+    },
+    "B_MAPPER_UNIT": {
+      "total": 16,
+      "pass": 16,
+      "fail": 0
+    },
+    "C_ENDPOINT_FUNCTIONAL": {
+      "total": 12,
+      "pass": 12,
+      "fail": 0
+    },
+    "D_SECURITY_RBAC": {
+      "total": 10,
+      "pass": 10,
+      "fail": 0
+    },
+    "E_ENGINEERING_RELEASE": {
+      "total": 5,
+      "pass": 5,
+      "fail": 0
+    },
+    "F_RUNTIME": {
+      "total": 4,
+      "pass": 4,
+      "fail": 0
+    }
+  }
+}

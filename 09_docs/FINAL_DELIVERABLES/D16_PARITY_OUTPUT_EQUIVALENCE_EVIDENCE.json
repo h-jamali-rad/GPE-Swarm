@@ -1,0 +1,70 @@
+{
+  "method_fa": "تطابق خروجی مدل CDSS4/RC2 با خروجی منجمد RC1 از سه مسیر مستقل: (۱) اختلاف فیکسچر رسمی ۰٫۰؛ (۲) بایتبهبایت هستهی علمی (مدل، باندل، اسکیمای ورودی، اسکیمای UI)؛ (۳) یکسانبودن فایلهای کد هسته (inference_engine, audit_store, security).",
+  "fixture_max_abs_diff": 0.0,
+  "byte_identical_core": [
+    "NOA_mTESE_Final_Frozen_CatBoost.cbm",
+    "inference_bundle.joblib",
+    "INPUT_SCHEMA.json",
+    "CDSS_UI_API_SCHEMA_PHASE39.json",
+    "FROZEN_THRESHOLD.json",
+    "CDSS_MODEL_MANIFEST_PHASE39.json"
+  ],
+  "byte_identical_code": [
+    "inference_engine.py",
+    "audit_store.py",
+    "security.py"
+  ],
+  "evidence_tests": [
+    {
+      "id": "None",
+      "group": "A_CDSS4_IDENTITY",
+      "name": "None",
+      "result": "None",
+      "detail": "{'status': 'ok', 'app_version': '41.0.0-rc2', 'build_id': 'NOA-mTESE-CDSS-Phase41-RC2', 'deployment_profile': 'onprem', 'model_sha256': 'ff3a815a5f1f21f23e8c6bef5db6b0c376edc158cb0e39d18cc9ebbe123f4aa5', 'schema_sha256': 'ab8e3e1e5fd9b36205f9de0af84ed79719c4882e5843c68af2a781289f348ec4', 'threshold': 0.37, 'external_validation': 'NOT_PERFORMED', 'routine_deployment_readiness': 'NOT_ESTABLISHED'}"
+    },
+    {
+      "id": "None",
+      "group": "B_MAPPER_UNIT",
+      "name": "None",
+      "result": "None",
+      "detail": "{'rt_weighted': 10.0, 'lt_weighted': 2.5}"
+    },
+    {
+      "id": "None",
+      "group": "C_ENDPOINT_FUNCTIONAL",
+      "name": "None",
+      "result": "None",
+      "detail": "{'predict_probability': 0.06617905692170636, 'clinical_probability': 0.06617905692170636, 'delta': 0.0}"
+    },
+    {
+      "id": "None",
+      "group": "C_ENDPOINT_FUNCTIONAL",
+      "name": "None",
+      "result": "None",
+      "detail": "{'predict_probability': 0.06617905692170636, 'clinical_probability': 0.06617905692170636, 'delta': 0.0}"
+    },
+    {
+      "id": "None",
+      "group": "C_ENDPOINT_FUNCTIONAL",
+      "name": "None",
+      "result": "None",
+      "detail": "{'expected': 0.06617905692170636, 'got': 0.06617905692170636, 'delta': 0.0}"
+    },
+    {
+      "id": "None",
+      "group": "F_RUNTIME",
+      "name": "None",
+      "result": "None",
+      "detail": "{'health': {'status': 'ok', 'app_version': '41.0.0-rc2', 'build_id': 'NOA-mTESE-CDSS-Phase41-RC2', 'deployment_profile': 'onprem', 'model_sha256': 'ff3a815a5f1f21f23e8c6bef5db6b0c376edc158cb0e39d18cc9ebbe123f4aa5', 'schema_sha256': 'ab8e3e1e5fd9b36205f9de0af84ed79719c4882e5843c68af2a781289f348ec4', 'threshold': 0.37, 'external_validation': 'NOT_PERFORMED', 'routine_deployment_readiness': 'NOT_ESTA"
+    },
+    {
+      "id": "None",
+      "group": "F_RUNTIME",
+      "name": "None",
+      "result": "None",
+      "detail": "{'n': 120, 'mean_ms': 44.29294199993213, 'p50_ms': 41.22250061482191, 'p95_ms': 70.03567507490516, 'max_ms': 108.64079371094704, 'rps': 22.57696045572074}"
+    }
+  ],
+  "parity_verdict": "FULL_PARITY — PASS",
+  "branding": "HJR's Agentic Architecture developed by Hossein Jamalirad"
+}
